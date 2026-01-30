@@ -1,0 +1,47 @@
+{
+  "cookies": [
+    {
+      "name": "dev-amberg.seliselocal.com",
+      "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5hbnRfaWQiOiJCRTBEMjI0NS0wNTQ2LTRCMDktOEM1My1DRTE2MjQ3N0FDMzMiLCJzdWIiOiI3NmJkZmNjNC1jOGU5LTQyZTktYTM0Yi00MjliMWU2MDZiYTUiLCJzaXRlX2lkIjoiRDUxRjVFQTAtMzhENC00RjlELUEzODItMkJCRTA3NjE4Qzc2Iiwib3JpZ2luIjoiZGV2LWFtYmVyZy5zZWxpc2Vsb2NhbC5jb20iLCJzZXNzaW9uX2lkIjoic2VsaXNlYmxvY2tzLWNlMmE3YmFiLTlmYzgtNDA2Mi1iZjExLTc2M2RiNGUwNTcyZCIsInVzZXJfaWQiOiI3NmJkZmNjNC1jOGU5LTQyZTktYTM0Yi00MjliMWU2MDZiYTUiLCJkaXNwbGF5X25hbWUiOiJFY2FwIFVzZXIiLCJzaXRlX25hbWUiOiJBcmMgVGVhbSIsInVzZXJfbmFtZSI6Imluc3BlY3RvciIsImVtYWlsIjoiZWNhcEBzZWxpc2UuY2giLCJwaG9uZV9udW1iZXIiOiIrNDE3MTM0NTY0NTYiLCJsYW5ndWFnZSI6ImVuLVVTIiwidXNlcl9sb2dnZWRpbiI6IlRydWUiLCJuYW1lIjoiNzZiZGZjYzQtYzhlOS00MmU5LWEzNGItNDI5YjFlNjA2YmE1IiwidXNlcl9hdXRvX2V4cGlyZSI6IkZhbHNlIiwidXNlcl9leHBpcmVfb24iOiIxLzEvMDAwMSAxMjowMDowMCBBTSIsImlhdCI6MTc2OTc5NjkxNSwicm9sZSI6WyJhZG1pbiIsImFub255bW91cyIsImFwcHVzZXIiXSwibmJmIjoxNzY5Nzk2OTE1LCJleHAiOjE3Njk3OTczMzUsImlzcyI6IkNOPUVudGVycHJpc2UgQ2xvdWQgQXBwbGljYXRpb24gUGxhdGZvcm0iLCJhdWQiOiIqIn0.DLR-BeYH7-_gdfPDxWA93Uc0EUbie4aKrUMT8WGqdhWFBb8fWe5uIl8xVUL4jXQPDdf52fRK8fmztiPnxksnElldooI4G1qxkPF41DSZdZJSXJ7AsUvxEhA6KDUs7LF4uZ-k9pek04UEOg8vJCUnrzD5TdbSZ1aaF0soKKi1n-OnUg6k366kwPrKexou3p05KXjL56N26JlfF9cyM7TQJ6ZdQsmfBHbYD300ck5iG1VY6B-p1enVAdzaLWbQeTj9DZ14vhZU7ar4y5e0_B3o56G7ojzdfy_NEjtc-z8xN1RIS-GAmdNb_PBX7i4IjgfD8aJ0wzNJZCyX23vOV6w5SA",
+      "domain": ".seliselocal.com",
+      "path": "/",
+      "expires": 1772388916.891162,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "REFRESH_TOKEN",
+      "value": "794e6b5819ca40d49921134a81c91733",
+      "domain": "dev-amberg.seliselocal.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://dev-amberg.seliselocal.com",
+      "localStorage": [
+        {
+          "name": "loggedIn",
+          "value": "true"
+        },
+        {
+          "name": "tokenGenerationTime",
+          "value": "1769796905005"
+        },
+        {
+          "name": "hasUnreadNotifications",
+          "value": "false"
+        },
+        {
+          "name": "version",
+          "value": "1.7.0"
+        }
+      ]
+    }
+  ]
+}
