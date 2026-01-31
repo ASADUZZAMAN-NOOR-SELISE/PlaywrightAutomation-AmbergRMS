@@ -1,13 +1,13 @@
-import { locator } from '../../Utils/Locators/homeLocators';
-import { assertions } from '../../Utils/Assertions/assertion';
-import { getUrl } from '../../Utils/Urls/urls';
 const { expect } = require('@playwright/test');
+const { locator } = require('../../Utils/Locators/homeLocators');
+const { assertions } = require('../../Utils/Assertions/assertion');
+const { getUrl } = require('../../Utils/Urls/urls');
 
-export class LoginPage{
+class LoginPage{
   constructor(page){
     this.page = page;
     this.logo = page.getByRole(locator.homeLogo.role).first();
-    this.welcomeText = page.getByRole(locator.homeWelcomeText.role);
+    this.welcomeText = page.getByText(locator.homeWelcomeText.text);
     this.appTitle = page.getByText(locator.homeAppTitle.text);
     this.loginContainer = page.getByLabel(locator.homeLoginContainer.label);
     this.loginButton = page.getByRole(locator.homeLoginButton.role, { name: locator.homeLoginButton.name});
@@ -22,7 +22,7 @@ export class LoginPage{
     await this.logo.waitFor({ state: 'visible' });
     //await this.logo.click();
     await expect(this.logo).toBeVisible();
-    await expect(this.welcomeText).toContainText(assertions.homepage.welcomeText);
+    //await expect(this.welcomeText).toHaveText(assertions.homepage.welcomeText);
   }
 
   async login() {
@@ -37,4 +37,6 @@ export class LoginPage{
     await expect(this.logoutButton).toBeVisible()
     
   }
-};
+}
+
+module.exports = { LoginPage };

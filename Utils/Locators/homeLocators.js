@@ -1,11 +1,11 @@
-export const locator = {
+const locator = {
   homeLogo: {
     role: 'img',
     options: { index: 0 }, 
   },
 
   homeWelcomeText: {
-    role: 'paragraph',
+    text: 'Welcome Inspector!',
   },
 
   homeAppTitle: {
@@ -26,3 +26,5 @@ export const locator = {
     name: 'Logout',
   },
 };
+
+module.exports = { locator };
