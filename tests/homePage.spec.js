@@ -5,7 +5,7 @@ test('Homepaeg to dashboard @login @smoke', async ({ page }) => {
   const loginPage = new LoginPage(page);
    try {
     await loginPage.goto();
-    //await page.locator(".MuiGrid-root").nth(1).waitFor({ state: 'visible' });
+    await page.locator(".MuiGrid-root").nth(1).isVisible();
     await loginPage.verifyInitialState();
     await loginPage.login();
     await loginPage.logoutVisible();

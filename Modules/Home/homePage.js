@@ -26,15 +26,14 @@ export class LoginPage{
   }
 
   async login() {
-  await this.appTitle.waitFor({ state: 'visible' }); // wait first
-  await this.appTitle.click();
-  await expect(this.loginContainer).toContainText(assertions.homepage.releaseVersion);
-  await expect(this.loginButton).toBeVisible();
-  await this.loginButton.click();
-}
+    await this.appTitle.waitFor({ state: 'visible' }); 
+    await this.appTitle.click();
+    await expect(this.loginContainer).toContainText(assertions.homepage.releaseVersion);
+    await expect(this.loginButton).toBeVisible();
+    await this.loginButton.click();
+  }
   async logoutVisible(){
     await expect(this.page).toHaveURL(getUrl.urls.loginUrl)
     await expect(this.logoutButton).toBeVisible()
-    
   }
 };

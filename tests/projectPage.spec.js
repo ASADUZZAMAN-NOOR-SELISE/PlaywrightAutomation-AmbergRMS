@@ -9,7 +9,7 @@ test.beforeAll('Homepaeg to dashboard @login @smoke', async ({ browser }) => {
   const loginPage = new LoginPage(page);
    try {
     await loginPage.goto();
-   //await page.locator(".MuiGrid-root").nth(1).waitFor({ state: 'visible' });
+    await page.locator(".MuiGrid-root").nth(1).isVisible();
     await loginPage.verifyInitialState();
     await loginPage.login();
     await loginPage.logoutVisible();
@@ -22,7 +22,7 @@ test.beforeAll('Homepaeg to dashboard @login @smoke', async ({ browser }) => {
   await context.storageState({path: "state.json"}); // session store at > state.json
    webContext = await browser.newContext({storageState: "state.json"}); // webcontext using that session 
 });
-test('store json ', async ({}) => {
+test('store json > Create Project ADIF Template', async ({}) => {
  const page = await webContext.newPage(); // create page under the webContext session
  const loginPage = new LoginPage(page);
  await loginPage.goto();
