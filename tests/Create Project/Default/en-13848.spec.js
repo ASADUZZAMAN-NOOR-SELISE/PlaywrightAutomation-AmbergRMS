@@ -23,7 +23,7 @@ test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
    webContext = await browser.newContext({storageState: "state.json"}); // webcontext using that session 
 });
 
-test.only('EN-13848 @PROJECT-CREATE', async ({}) => {
+test('EN-13848 @PROJECT-CREATE', async ({}) => {
   const page = await webContext.newPage(); // create page under the webContext session
   const loginPage = new LoginPage(page);
   await loginPage.goto();
