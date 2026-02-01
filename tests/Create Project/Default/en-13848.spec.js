@@ -1,0 +1,88 @@
+const { test, expect } = require('@playwright/test');
+const { LoginPage } = require('../../../Modules/Home/homePage');
+
+let webContext
+
+test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  const loginPage = new LoginPage(page);
+   try {
+    await loginPage.goto();
+    await page.locator(".MuiGrid-root").nth(1).isVisible();
+    await loginPage.verifyInitialState();
+    await loginPage.login();
+    await loginPage.logoutVisible();
+  } catch (error) {
+    await page.screenshot({ path: 'login-failure.png', fullPage: true });
+    console.error(' Login test failed:', error.message);
+    throw error;
+  }
+
+  await context.storageState({path: "state.json"}); // session store at > state.json
+   webContext = await browser.newContext({storageState: "state.json"}); // webcontext using that session 
+});
+
+test.only('EN-13848 @PROJECT-CREATE', async ({}) => {
+  const page = await webContext.newPage(); // create page under the webContext session
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await expect(page.getByRole('button', { name: 'New Project' })).toBeVisible();
+  await page.getByRole('button', { name: 'New Project' }).click();
+  await page.getByRole('textbox', { name: 'NameInput' }).click();
+  await page.getByRole('textbox', { name: 'NameInput' }).pressSequentially(" "+'EN-13848', { delay: 500 });
+  await page.getByRole('textbox', { name: 'Number' }).click();
+  await page.getByRole('textbox', { name: 'Number' }).fill('123456789');
+  await page.getByRole('textbox', { name: 'Start Place' }).click();
+  await page.getByRole('textbox', { name: 'Start Place' }).fill('a');
+  await page.getByText('Name *Name *NumberNumber').click();
+  await page.getByRole('textbox', { name: 'End Place' }).click();
+  await page.getByRole('textbox', { name: 'End Place' }).fill('b');
+  await page.getByRole('spinbutton', { name: 'Stationing Start TextField' }).click();
+  await page.getByRole('spinbutton', { name: 'Stationing Start TextField' }).fill('100');
+  await page.getByRole('spinbutton', { name: 'Stationing End TextField' }).click();
+  await page.getByRole('spinbutton', { name: 'Stationing End TextField' }).fill('2000');
+  await page.getByRole('textbox', { name: 'Comment' }).click();
+  await page.getByRole('textbox', { name: 'Comment' }).fill('Default Project');
+  await page.getByRole('textbox', { name: 'Name of Line Section' }).click();
+  await page.getByRole('textbox', { name: 'Name of Line Section' }).fill('Line 1');
+  await page.getByRole('textbox', { name: 'Name of Track' }).click();
+  await page.getByRole('textbox', { name: 'Name of Track' }).fill('Track 1');
+  await page.locator('input[name="CustomerInfo.Name"]').click();
+  await page.locator('input[name="CustomerInfo.Name"]').fill('Customer name ');
+  await page.locator('input[name="CustomerInfo.Street"]').click();
+  await page.locator('input[name="CustomerInfo.Street"]').fill('a');
+  await page.locator('input[name="CustomerInfo.Town"]').click();
+  await page.locator('input[name="CustomerInfo.Town"]').fill('b');
+  await page.locator('input[name="CustomerInfo.PostalCode"]').click();
+  await page.locator('input[name="CustomerInfo.PostalCode"]').fill('12345');
+  await page.locator('input[name="CustomerInfo.Region"]').click();
+  await page.locator('input[name="CustomerInfo.Region"]').fill('c');
+  await page.locator('[id="mui-component-select-CustomerInfo.Country"]').click();
+  await page.getByRole('option', { name: 'American Samoa' }).click();
+  await page.locator('input[name="CustomerInfo.PhoneNumber"]').click();
+  await page.locator('input[name="CustomerInfo.PhoneNumber"]').fill('123456789');
+  await page.locator('input[name="CustomerInfo.Email"]').click();
+  await page.locator('input[name="CustomerInfo.Email"]').fill('customer@gmail.com');
+  await page.locator('input[name="ServiceProviderInfo.Name"]').click();
+  await page.locator('input[name="ServiceProviderInfo.Name"]').fill('Service Provider');
+  await page.locator('input[name="ServiceProviderInfo.Street"]').click();
+  await page.locator('input[name="ServiceProviderInfo.Street"]').fill('a');
+  await page.locator('input[name="ServiceProviderInfo.Town"]').click();
+  await page.locator('input[name="ServiceProviderInfo.Town"]').fill('b');
+  await page.locator('input[name="ServiceProviderInfo.PostalCode"]').click();
+  await page.locator('input[name="ServiceProviderInfo.PostalCode"]').fill('12345');
+  await page.locator('input[name="ServiceProviderInfo.Region"]').click();
+  await page.locator('input[name="ServiceProviderInfo.Region"]').fill('c');
+  await page.getByLabel('', { exact: true }).click();
+  await page.locator('[id="menu-ServiceProviderInfo.Country"] > .MuiBackdrop-root').click();
+  await page.locator('input[name="ServiceProviderInfo.PhoneNumber"]').click();
+  await page.locator('input[name="ServiceProviderInfo.PhoneNumber"]').fill('123456789');
+  await page.locator('input[name="ServiceProviderInfo.Email"]').click();
+  await page.locator('input[name="ServiceProviderInfo.Email"]').fill('service@gmail.com');
+  await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+  await page.getByRole('textbox', { name: 'Search by Project Name' }).click();
+  await page.getByRole('textbox', { name: 'Search by Project Name' }).fill('EN-13848');
+  await expect(page.getByLabel('EN-13848').first()).toBeVisible();
+});
+
