@@ -1,15 +1,18 @@
-const { test, expect } = require('@playwright/test');
+const { test } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Home/homePage');
+const { Common } = require('../../../Modules/Common/common');
+const { AdifIbericoProject } = require('../../../Modules/Project/ADIF/adifIbericoProject');
 
-let webContext
+let webContext;
 
 test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
   const loginPage = new LoginPage(page);
-   try {
+
+  try {
     await loginPage.goto();
-    await page.locator(".MuiGrid-root").nth(1).isVisible();
+    await page.locator('.MuiGrid-root').nth(1).isVisible();
     await loginPage.verifyInitialState();
     await loginPage.login();
     await loginPage.logoutVisible();
@@ -19,81 +22,68 @@ test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
     throw error;
   }
 
-  await context.storageState({path: "state.json"}); // session store at > state.json
-   webContext = await browser.newContext({storageState: "state.json"}); // webcontext using that session 
+  await context.storageState({ path: 'state.json' });
+  webContext = await browser.newContext({ storageState: 'state.json' });
 });
 
-test('ADIF Iberico @PROJECT-CREATE ', async ({}) => {
-  const page = await webContext.newPage(); // create page under the webContext session
+test('ADIF Iberico @PROJECT-CREATE ', async () => {
+  const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
+
+  const common = new Common(page);
+  const adifIberico = new AdifIbericoProject(page);
+
   await loginPage.goto();
-  await expect(page.getByRole('button', { name: 'New Project' })).toBeVisible();
-  await page.getByRole('button', { name: 'New Project' }).click();
-  await page.getByRole('textbox', { name: 'NameInput' }).click();
-  await page.getByRole('textbox', { name: 'NameInput' }).press('CapsLock');
-  await page.waitForTimeout(500);
-  await page.getByRole('textbox', { name: 'NameInput' }).pressSequentially(" "+'ADIF Iberico', { delay: 300 });
-  await page.getByRole('textbox', { name: 'Number' }).click();
-  await page.getByRole('textbox', { name: 'Number' }).fill('123456789');
-  await page.getByRole('textbox', { name: 'Start Place' }).click();
-  await page.getByRole('textbox', { name: 'Start Place' }).fill('a');
-  await page.getByRole('textbox', { name: 'End Place' }).click();
-  await page.getByRole('textbox', { name: 'End Place' }).fill('b');
-  await page.getByRole('spinbutton', { name: 'Stationing Start TextField' }).click();
-  await page.getByRole('spinbutton', { name: 'Stationing Start TextField' }).fill('100');
-  await page.getByRole('spinbutton', { name: 'Stationing End TextField' }).click();
-  await page.getByRole('spinbutton', { name: 'Stationing End TextField' }).fill('3000');
-  await page.getByRole('textbox', { name: 'Name of Line Section' }).click();
-  await page.getByRole('textbox', { name: 'Name of Line Section' }).fill('Line section 1');
-  await page.getByRole('textbox', { name: 'Name of Track' }).click();
-  await page.getByRole('textbox', { name: 'Name of Track' }).fill('Track 1');
-  await page.getByRole('combobox', { name: 'Select configuration template' }).click();
-  await page.getByRole('option', { name: 'AdifIbRico1668Mm' }).click();
-  await page.getByRole('combobox', { name: 'Select Template Option' }).click();
-  await expect(page.getByRole('listbox')).toContainText('ADIF Ibérico 1668 - Generales');
-  await expect(page.getByRole('listbox')).toContainText('ADIF Ibérico 1668 - Tipo de línea A');
-  await expect(page.getByRole('listbox')).toContainText('ADIF Ibérico 1668 - Tipo de línea B');
-  await expect(page.getByRole('listbox')).toContainText('ADIF Ibérico 1668 - Tipo de línea C');
-  await expect(page.getByRole('listbox')).toContainText('ADIF Ibérico 1668 - Tipo de línea D');
-  await expect(page.getByRole('listbox')).toContainText('ADIF Ibérico 1668 - Tipo de línea E');
-  await page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea A' }).click();
-  await page.locator('input[name="CustomerInfo.Name"]').click();
-  await page.locator('input[name="CustomerInfo.Name"]').fill('Company name 1');
-  await page.locator('input[name="CustomerInfo.Street"]').click();
-  await page.locator('input[name="CustomerInfo.Street"]').fill('a');
-  await page.locator('input[name="CustomerInfo.Town"]').click();
-  await page.locator('input[name="CustomerInfo.Town"]').fill('b');
-  await page.locator('input[name="CustomerInfo.PostalCode"]').click();
-  await page.locator('input[name="CustomerInfo.PostalCode"]').fill('1234');
-  await page.locator('input[name="CustomerInfo.Region"]').click();
-  await page.locator('input[name="CustomerInfo.Region"]').fill('c');
+
+  await common.clickNewProject();
+
+  await common.generalInformation({
+    name: 'ADIF Iberico',
+    number: '123456789',
+    startPlace: 'a',
+    endPlace: 'b',
+    stationingStart: '100',
+    stationingEnd: '3000',
+    comment: '', // your original test did not fill comment here
+  });
+
+  await common.templateSelection({
+    lineSectionName: 'Line section 1',
+    trackName: 'Track 1',
+  });
+
+  // ✅ Extracted ADIF Ibérico logic
+  await adifIberico.applyIbericoTemplate({ pick: 'A' });
+
+  // Customer (same as your flow)
+  await common.customerInformation({
+    name: 'Company name 1',
+    street: 'a',
+    town: 'b',
+    postalCode: '1234',
+    region: 'c',
+    phone: '123456789',
+    email: 'example@gmail.com',
+  });
+
+  // Keep your same “double selection” behavior if needed
   await page.locator('[id="mui-component-select-CustomerInfo.Country"]').click();
   await page.getByRole('option', { name: 'Afghanistan' }).click();
   await page.getByRole('combobox', { name: 'Afghanistan' }).click();
   await page.getByRole('option', { name: 'American Samoa' }).click();
-  await page.locator('input[name="CustomerInfo.PhoneNumber"]').click();
-  await page.locator('input[name="CustomerInfo.PhoneNumber"]').fill('123456789');
-  await page.locator('input[name="CustomerInfo.Email"]').click();
-  await page.locator('input[name="CustomerInfo.Email"]').fill('example@gmail.com');
-  await page.locator('input[name="ServiceProviderInfo.Name"]').click();
+
+  // Service provider (kept same way as your script)
   await page.locator('input[name="ServiceProviderInfo.Name"]').fill('Service Provider name');
-  await page.locator('input[name="ServiceProviderInfo.Street"]').click();
   await page.locator('input[name="ServiceProviderInfo.Street"]').fill('a');
-  await page.locator('input[name="ServiceProviderInfo.Town"]').click();
   await page.locator('input[name="ServiceProviderInfo.Town"]').fill('b');
-  await page.locator('input[name="ServiceProviderInfo.PostalCode"]').click();
   await page.locator('input[name="ServiceProviderInfo.PostalCode"]').fill('12345');
-  await page.locator('input[name="ServiceProviderInfo.Region"]').click();
   await page.locator('input[name="ServiceProviderInfo.Region"]').fill('c');
+
   await page.getByLabel('', { exact: true }).click();
   await page.getByRole('option', { name: 'Albania' }).click();
-  await page.locator('input[name="ServiceProviderInfo.PhoneNumber"]').click();
-  await page.locator('input[name="ServiceProviderInfo.PhoneNumber"]').fill('123456789');
-  await page.locator('input[name="ServiceProviderInfo.Email"]').click();
-  await page.locator('input[name="ServiceProviderInfo.Email"]').fill('service@gmail.com');
-  await page.getByRole('button', { name: 'Custom Submit Button' }).click();
-//   await page.getByRole('textbox', { name: 'Search by Project Name' }).click();
-//   await page.getByRole('textbox', { name: 'Search by Project Name' }).fill('ADIF Iberico');
-//   await expect(page.getByLabel('ADIF Iberico').first()).toBeVisible();
-});
 
+  await page.locator('input[name="ServiceProviderInfo.PhoneNumber"]').fill('123456789');
+  await page.locator('input[name="ServiceProviderInfo.Email"]').fill('service@gmail.com');
+
+  await common.submitCreateProject();
+});

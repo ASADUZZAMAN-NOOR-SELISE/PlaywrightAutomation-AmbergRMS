@@ -1,0 +1,325 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - button "Footer Logo" [ref=e5] [cursor=pointer]:
+      - img "Footer Logo" [ref=e6]
+    - generic [ref=e7]:
+      - button "Open notification menu" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+      - button "Support" [ref=e11] [cursor=pointer]: Support
+      - button "Settings" [ref=e12] [cursor=pointer]: Settings
+      - button "Logout" [ref=e13] [cursor=pointer]: Logout
+  - generic [ref=e14]:
+    - generic [ref=e15]:
+      - heading "Projects" [level=2] [ref=e16]
+      - generic [ref=e17]:
+        - form "form" [ref=e19]:
+          - generic "search" [ref=e21]:
+            - generic [ref=e22]:
+              - button "search" [ref=e24] [cursor=pointer]:
+                - img [ref=e25]
+              - textbox "Search by Project Name" [ref=e27]
+              - group
+        - button "Import" [ref=e28] [cursor=pointer]: Import
+        - button "New Project" [ref=e29] [cursor=pointer]: New Project
+    - generic [ref=e30]:
+      - table [ref=e32]:
+        - rowgroup "table head" [ref=e33]:
+          - row "table head cell table head cell table head cell table head cell table head cell" [ref=e34]:
+            - columnheader "table head cell" [ref=e35]:
+              - button "PROJECT NAME" [ref=e36] [cursor=pointer]:
+                - generic [ref=e37]: PROJECT NAME
+                - img [ref=e38]
+            - columnheader "table head cell" [ref=e40]: LOCALIZATION RANGE [m]
+            - columnheader "table head cell" [ref=e41]:
+              - button "DATE OF CREATION" [ref=e42] [cursor=pointer]:
+                - generic [ref=e43]: DATE OF CREATION
+                - img [ref=e44]
+            - columnheader "table head cell" [ref=e46]:
+              - button "LAST MODIFICATION" [ref=e47] [cursor=pointer]:
+                - generic [ref=e48]: LAST MODIFICATION
+                - img [ref=e49]
+            - columnheader "table head cell" [ref=e51]: COMMENT
+        - rowgroup [ref=e52]:
+          - row "Track Data CSV Report Test-1 Track Data CSV Report Test-1 0.00 to 1.00 2026.02.01 23:54:47 2026.02.01 23:55:29 Demo Comment" [ref=e53] [cursor=pointer]:
+            - cell "Track Data CSV Report Test-1 Track Data CSV Report Test-1" [ref=e54]:
+              - generic [ref=e55]:
+                - img "Track Data CSV Report Test-1" [ref=e56]
+                - generic "Track Data CSV Report Test-1" [ref=e57]
+            - cell "0.00 to 1.00" [ref=e58]:
+              - generic "0.00 to 1.00" [ref=e60]
+            - cell "2026.02.01 23:54:47" [ref=e61]:
+              - generic "2026.02.01 23:54:47" [ref=e63]
+            - cell "2026.02.01 23:55:29" [ref=e64]:
+              - generic "2026.02.01 23:55:29" [ref=e66]
+            - cell "Demo Comment" [ref=e67]:
+              - generic "Demo Comment" [ref=e69]
+          - row "Tabular Report Test-1 Tabular Report Test-1 0.00 to 1.00 2026.02.01 23:45:28 2026.02.01 23:46:09 Demo Comment" [ref=e70] [cursor=pointer]:
+            - cell "Tabular Report Test-1 Tabular Report Test-1" [ref=e71]:
+              - generic [ref=e72]:
+                - img "Tabular Report Test-1" [ref=e73]
+                - generic "Tabular Report Test-1" [ref=e74]
+            - cell "0.00 to 1.00" [ref=e75]:
+              - generic "0.00 to 1.00" [ref=e77]
+            - cell "2026.02.01 23:45:28" [ref=e78]:
+              - generic "2026.02.01 23:45:28" [ref=e80]
+            - cell "2026.02.01 23:46:09" [ref=e81]:
+              - generic "2026.02.01 23:46:09" [ref=e83]
+            - cell "Demo Comment" [ref=e84]:
+              - generic "Demo Comment" [ref=e86]
+          - row "project automation-4 project automation-4 0.00 to 1.00 2026.02.01 22:57:02 2026.02.01 22:57:41 Demo Comment" [ref=e87] [cursor=pointer]:
+            - cell "project automation-4 project automation-4" [ref=e88]:
+              - generic [ref=e89]:
+                - img "project automation-4" [ref=e90]
+                - generic "project automation-4" [ref=e91]
+            - cell "0.00 to 1.00" [ref=e92]:
+              - generic "0.00 to 1.00" [ref=e94]
+            - cell "2026.02.01 22:57:02" [ref=e95]:
+              - generic "2026.02.01 22:57:02" [ref=e97]
+            - cell "2026.02.01 22:57:41" [ref=e98]:
+              - generic "2026.02.01 22:57:41" [ref=e100]
+            - cell "Demo Comment" [ref=e101]:
+              - generic "Demo Comment" [ref=e103]
+          - row "KmHm validation Test-1 KmHm validation Test-1 0.00 to 1.00 2026.02.01 22:28:02 2026.02.01 22:28:03 Demo Comment" [ref=e104] [cursor=pointer]:
+            - cell "KmHm validation Test-1 KmHm validation Test-1" [ref=e105]:
+              - generic [ref=e106]:
+                - img "KmHm validation Test-1" [ref=e107]
+                - generic "KmHm validation Test-1" [ref=e108]
+            - cell "0.00 to 1.00" [ref=e109]:
+              - generic "0.00 to 1.00" [ref=e111]
+            - cell "2026.02.01 22:28:02" [ref=e112]:
+              - generic "2026.02.01 22:28:02" [ref=e114]
+            - cell "2026.02.01 22:28:03" [ref=e115]:
+              - generic "2026.02.01 22:28:03" [ref=e117]
+            - cell "Demo Comment" [ref=e118]:
+              - generic "Demo Comment" [ref=e120]
+          - row "project automation-3 project automation-3 0.00 to 1.00 2026.02.01 22:03:22 2026.02.01 22:04:03 Demo Comment" [ref=e121] [cursor=pointer]:
+            - cell "project automation-3 project automation-3" [ref=e122]:
+              - generic [ref=e123]:
+                - img "project automation-3" [ref=e124]
+                - generic "project automation-3" [ref=e125]
+            - cell "0.00 to 1.00" [ref=e126]:
+              - generic "0.00 to 1.00" [ref=e128]
+            - cell "2026.02.01 22:03:22" [ref=e129]:
+              - generic "2026.02.01 22:03:22" [ref=e131]
+            - cell "2026.02.01 22:04:03" [ref=e132]:
+              - generic "2026.02.01 22:04:03" [ref=e134]
+            - cell "Demo Comment" [ref=e135]:
+              - generic "Demo Comment" [ref=e137]
+          - row "B Bauma - 2023.06.21 15:03:55 2026.02.01 21:57:19 -" [ref=e138] [cursor=pointer]:
+            - cell "B Bauma" [ref=e139]:
+              - generic [ref=e140]:
+                - generic "Bauma" [ref=e142]:
+                  - generic [ref=e144]: B
+                - generic "Bauma" [ref=e145]
+            - cell "-" [ref=e146]:
+              - generic "-" [ref=e148]
+            - cell "2023.06.21 15:03:55" [ref=e149]:
+              - generic "2023.06.21 15:03:55" [ref=e151]
+            - cell "2026.02.01 21:57:19" [ref=e152]:
+              - generic "2026.02.01 21:57:19" [ref=e154]
+            - cell "-" [ref=e155]:
+              - generic "-" [ref=e157]
+          - row "project automation-2 project automation-2 0.00 to 1.00 2026.02.01 21:43:06 2026.02.01 21:43:49 Demo Comment" [ref=e158] [cursor=pointer]:
+            - cell "project automation-2 project automation-2" [ref=e159]:
+              - generic [ref=e160]:
+                - img "project automation-2" [ref=e161]
+                - generic "project automation-2" [ref=e162]
+            - cell "0.00 to 1.00" [ref=e163]:
+              - generic "0.00 to 1.00" [ref=e165]
+            - cell "2026.02.01 21:43:06" [ref=e166]:
+              - generic "2026.02.01 21:43:06" [ref=e168]
+            - cell "2026.02.01 21:43:49" [ref=e169]:
+              - generic "2026.02.01 21:43:49" [ref=e171]
+            - cell "Demo Comment" [ref=e172]:
+              - generic "Demo Comment" [ref=e174]
+          - row "project automation-1 project automation-1 0.00 to 1.00 2026.02.01 21:42:43 2026.02.01 21:43:23 Demo Comment" [ref=e175] [cursor=pointer]:
+            - cell "project automation-1 project automation-1" [ref=e176]:
+              - generic [ref=e177]:
+                - img "project automation-1" [ref=e178]
+                - generic "project automation-1" [ref=e179]
+            - cell "0.00 to 1.00" [ref=e180]:
+              - generic "0.00 to 1.00" [ref=e182]
+            - cell "2026.02.01 21:42:43" [ref=e183]:
+              - generic "2026.02.01 21:42:43" [ref=e185]
+            - cell "2026.02.01 21:43:23" [ref=e186]:
+              - generic "2026.02.01 21:43:23" [ref=e188]
+            - cell "Demo Comment" [ref=e189]:
+              - generic "Demo Comment" [ref=e191]
+          - row "Measurement Chart Report Test-1 Measurement Chart Report Test-1 0.00 to 1.00 2026.02.01 21:04:05 2026.02.01 21:04:38 Demo Comment" [ref=e192] [cursor=pointer]:
+            - cell "Measurement Chart Report Test-1 Measurement Chart Report Test-1" [ref=e193]:
+              - generic [ref=e194]:
+                - img "Measurement Chart Report Test-1" [ref=e195]
+                - generic "Measurement Chart Report Test-1" [ref=e196]
+            - cell "0.00 to 1.00" [ref=e197]:
+              - generic "0.00 to 1.00" [ref=e199]
+            - cell "2026.02.01 21:04:05" [ref=e200]:
+              - generic "2026.02.01 21:04:05" [ref=e202]
+            - cell "2026.02.01 21:04:38" [ref=e203]:
+              - generic "2026.02.01 21:04:38" [ref=e205]
+            - cell "Demo Comment" [ref=e206]:
+              - generic "Demo Comment" [ref=e208]
+          - row "SL severity levels test-3 - 2026.02.01 19:31:06 2026.02.01 19:31:06 -" [ref=e209] [cursor=pointer]:
+            - cell "SL severity levels test-3" [ref=e210]:
+              - generic [ref=e211]:
+                - generic "severity levels test-3" [ref=e213]:
+                  - generic [ref=e215]: SL
+                - generic "severity levels test-3" [ref=e216]
+            - cell "-" [ref=e217]:
+              - generic "-" [ref=e219]
+            - cell "2026.02.01 19:31:06" [ref=e220]:
+              - generic "2026.02.01 19:31:06" [ref=e222]
+            - cell "2026.02.01 19:31:06" [ref=e223]:
+              - generic "2026.02.01 19:31:06" [ref=e225]
+            - cell "-" [ref=e226]:
+              - generic "-" [ref=e228]
+          - row "SL severity levels test-2 - 2026.02.01 19:24:00 2026.02.01 19:24:01 -" [ref=e229] [cursor=pointer]:
+            - cell "SL severity levels test-2" [ref=e230]:
+              - generic [ref=e231]:
+                - generic "severity levels test-2" [ref=e233]:
+                  - generic [ref=e235]: SL
+                - generic "severity levels test-2" [ref=e236]
+            - cell "-" [ref=e237]:
+              - generic "-" [ref=e239]
+            - cell "2026.02.01 19:24:00" [ref=e240]:
+              - generic "2026.02.01 19:24:00" [ref=e242]
+            - cell "2026.02.01 19:24:01" [ref=e243]:
+              - generic "2026.02.01 19:24:01" [ref=e245]
+            - cell "-" [ref=e246]:
+              - generic "-" [ref=e248]
+          - row "SL severity levels test-1 - 2026.02.01 18:41:09 2026.02.01 18:41:10 -" [ref=e249] [cursor=pointer]:
+            - cell "SL severity levels test-1" [ref=e250]:
+              - generic [ref=e251]:
+                - generic "severity levels test-1" [ref=e253]:
+                  - generic [ref=e255]: SL
+                - generic "severity levels test-1" [ref=e256]
+            - cell "-" [ref=e257]:
+              - generic "-" [ref=e259]
+            - cell "2026.02.01 18:41:09" [ref=e260]:
+              - generic "2026.02.01 18:41:09" [ref=e262]
+            - cell "2026.02.01 18:41:10" [ref=e263]:
+              - generic "2026.02.01 18:41:10" [ref=e265]
+            - cell "-" [ref=e266]:
+              - generic "-" [ref=e268]
+          - row "IP IF Project Standard 100.00 to 2000.00 2026.02.01 13:44:38 2026.02.01 13:44:38 -" [ref=e269] [cursor=pointer]:
+            - cell "IP IF Project Standard" [ref=e270]:
+              - generic [ref=e271]:
+                - generic "IF Project Standard" [ref=e273]:
+                  - generic [ref=e275]: IP
+                - generic "IF Project Standard" [ref=e276]
+            - cell "100.00 to 2000.00" [ref=e277]:
+              - generic "100.00 to 2000.00" [ref=e279]
+            - cell "2026.02.01 13:44:38" [ref=e280]:
+              - generic "2026.02.01 13:44:38" [ref=e282]
+            - cell "2026.02.01 13:44:38" [ref=e283]:
+              - generic "2026.02.01 13:44:38" [ref=e285]
+            - cell "-" [ref=e286]:
+              - generic "-" [ref=e288]
+          - row "PT prorail test - 2025.11.18 17:14:53 2026.02.01 12:22:14 -" [ref=e289] [cursor=pointer]:
+            - cell "PT prorail test" [ref=e290]:
+              - generic [ref=e291]:
+                - generic "prorail test" [ref=e293]:
+                  - generic [ref=e295]: PT
+                - generic "prorail test" [ref=e296]
+            - cell "-" [ref=e297]:
+              - generic "-" [ref=e299]
+            - cell "2025.11.18 17:14:53" [ref=e300]:
+              - generic "2025.11.18 17:14:53" [ref=e302]
+            - cell "2026.02.01 12:22:14" [ref=e303]:
+              - generic "2026.02.01 12:22:14" [ref=e305]
+            - cell "-" [ref=e306]:
+              - generic "-" [ref=e308]
+          - row "NP New ProRail 1 - 2026.01.29 12:35:48 2026.01.29 13:24:02 -" [ref=e309] [cursor=pointer]:
+            - cell "NP New ProRail 1" [ref=e310]:
+              - generic [ref=e311]:
+                - generic "New ProRail 1" [ref=e313]:
+                  - generic [ref=e315]: NP
+                - generic "New ProRail 1" [ref=e316]
+            - cell "-" [ref=e317]:
+              - generic "-" [ref=e319]
+            - cell "2026.01.29 12:35:48" [ref=e320]:
+              - generic "2026.01.29 12:35:48" [ref=e322]
+            - cell "2026.01.29 13:24:02" [ref=e323]:
+              - generic "2026.01.29 13:24:02" [ref=e325]
+            - cell "-" [ref=e326]:
+              - generic "-" [ref=e328]
+          - row "P3 Prorail 3 - 2025.12.08 13:36:15 2026.01.29 13:05:19 -" [ref=e329] [cursor=pointer]:
+            - cell "P3 Prorail 3" [ref=e330]:
+              - generic [ref=e331]:
+                - generic "Prorail 3" [ref=e333]:
+                  - generic [ref=e335]: P3
+                - generic "Prorail 3" [ref=e336]
+            - cell "-" [ref=e337]:
+              - generic "-" [ref=e339]
+            - cell "2025.12.08 13:36:15" [ref=e340]:
+              - generic "2025.12.08 13:36:15" [ref=e342]
+            - cell "2026.01.29 13:05:19" [ref=e343]:
+              - generic "2026.01.29 13:05:19" [ref=e345]
+            - cell "-" [ref=e346]:
+              - generic "-" [ref=e348]
+          - row "NP new pro rail - 2026.01.29 12:34:50 2026.01.29 12:34:50 -" [ref=e349] [cursor=pointer]:
+            - cell "NP new pro rail" [ref=e350]:
+              - generic [ref=e351]:
+                - generic "new pro rail" [ref=e353]:
+                  - generic [ref=e355]: NP
+                - generic "new pro rail" [ref=e356]
+            - cell "-" [ref=e357]:
+              - generic "-" [ref=e359]
+            - cell "2026.01.29 12:34:50" [ref=e360]:
+              - generic "2026.01.29 12:34:50" [ref=e362]
+            - cell "2026.01.29 12:34:50" [ref=e363]:
+              - generic "2026.01.29 12:34:50" [ref=e365]
+            - cell "-" [ref=e366]:
+              - generic "-" [ref=e368]
+          - row "P prorail - 2026.01.29 12:30:46 2026.01.29 12:32:55 -" [ref=e369] [cursor=pointer]:
+            - cell "P prorail" [ref=e370]:
+              - generic [ref=e371]:
+                - generic "prorail" [ref=e373]:
+                  - generic [ref=e375]: P
+                - generic "prorail" [ref=e376]
+            - cell "-" [ref=e377]:
+              - generic "-" [ref=e379]
+            - cell "2026.01.29 12:30:46" [ref=e380]:
+              - generic "2026.01.29 12:30:46" [ref=e382]
+            - cell "2026.01.29 12:32:55" [ref=e383]:
+              - generic "2026.01.29 12:32:55" [ref=e385]
+            - cell "-" [ref=e386]:
+              - generic "-" [ref=e388]
+          - row "N name - 2026.01.28 19:03:21 2026.01.29 12:29:28 -" [ref=e389] [cursor=pointer]:
+            - cell "N name" [ref=e390]:
+              - generic [ref=e391]:
+                - generic "name" [ref=e393]:
+                  - generic [ref=e395]: "N"
+                - generic "name" [ref=e396]
+            - cell "-" [ref=e397]:
+              - generic "-" [ref=e399]
+            - cell "2026.01.28 19:03:21" [ref=e400]:
+              - generic "2026.01.28 19:03:21" [ref=e402]
+            - cell "2026.01.29 12:29:28" [ref=e403]:
+              - generic "2026.01.29 12:29:28" [ref=e405]
+            - cell "-" [ref=e406]:
+              - generic "-" [ref=e408]
+          - row "ST Shahid test - 2026.01.28 12:12:49 2026.01.28 16:43:30 -" [ref=e409] [cursor=pointer]:
+            - cell "ST Shahid test" [ref=e410]:
+              - generic [ref=e411]:
+                - generic "Shahid test" [ref=e413]:
+                  - generic [ref=e415]: ST
+                - generic "Shahid test" [ref=e416]
+            - cell "-" [ref=e417]:
+              - generic "-" [ref=e419]
+            - cell "2026.01.28 12:12:49" [ref=e420]:
+              - generic "2026.01.28 12:12:49" [ref=e422]
+            - cell "2026.01.28 16:43:30" [ref=e423]:
+              - generic "2026.01.28 16:43:30" [ref=e425]
+            - cell "-" [ref=e426]:
+              - generic "-" [ref=e428]
+      - generic [ref=e430]:
+        - button "Prev" [disabled]:
+          - img
+          - paragraph: Prev
+        - button "Next" [ref=e431] [cursor=pointer]:
+          - paragraph [ref=e432]: Next
+          - img [ref=e433]
+```
