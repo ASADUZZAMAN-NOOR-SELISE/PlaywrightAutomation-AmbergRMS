@@ -3,7 +3,6 @@ import { expect } from '@playwright/test';
 export class Common {
   constructor(page) {
     this.page = page;
-
     this.newProjectButton = page.getByRole('button', { name: 'New Project' });
     this.createProjectHeading = page.getByRole('heading', { name: 'Create Project' });
     this.nameInput = page.getByRole('textbox', { name: 'NameInput' });
@@ -35,7 +34,7 @@ export class Common {
     this.serviceProviderEmailInput = page.locator('input[name="ServiceProviderInfo.Email"]');
     //country menu
     this.serviceProviderCountryBackdrop = page.locator('[id="menu-ServiceProviderInfo.Country"] > .MuiBackdrop-root');
-    this.submitButton = page.getByRole('button', { name: 'Custom Submit Button' });
+    this.submitButton = page.locator("button[type='submit']")
     this.searchByProjectNameInput = page.getByRole('textbox', { name: 'Search by Project Name' });
   }
 

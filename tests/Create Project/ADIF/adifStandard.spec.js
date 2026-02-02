@@ -1,4 +1,4 @@
-const { test } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Home/homePage');
 const { Common } = require('../../../Modules/Common/common');
 const { AdifProject } = require('../../../Modules/Project/ADIF/adifProject');
@@ -44,13 +44,13 @@ test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
     comment: 'General information about the project',
   });
 
-  // line & track (you commented out fillLineAndTrack, so do directly using existing locators)
+
   await common.fillLineAndTrack({ lineSectionName: 'Line section 1', trackName: 'Track 1' });
 
-  // ✅ ADIF template POM
+
   await adifProject.adifTemplateSelect('AdifEstNdar1435Mm');
 
-  // ✅ Common Customer
+  //  Common Customer
   await common.customerInformation({
     name: 'Customer 1',
     street: 'a',
@@ -62,7 +62,7 @@ test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
     email: 'example@gmail.com',
   });
 
-  // ✅ Service provider (if your form requires it)
+  // Service provider (if your form requires it)
   await common.fillServiceProviderInfo({
     name: 'Service Provider',
     street: 'a',
@@ -74,8 +74,7 @@ test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
   });
 
   await common.submitProject();
-
-  // optional verify
-  // await common.searchAndExpectProject('ADIF Project Standard');
+  await common.newProjectButton.waitFor({ state: 'visible' });
+  
 });
 

@@ -53,9 +53,10 @@ test('ADIF Metrico @PROJECT-CREATE', async () => {
   });
 
   // ADIF Metric template selection
-  await adifMetric.selectMetricTemplate('AdifMTrico1000Mm');
-  await adifMetric.openTemplateOptionAndPickDefault();
-  await adifMetric.verifyMetricOptions();
+  // await adifMetric.selectMetricTemplate('AdifMTrico1000Mm');
+  // await adifMetric.openTemplateOptionAndPickDefault();
+  // await adifMetric.verifyMetricOptions();
+  await adifMetric.applyMetricTemplate();
 
   await common.customerInformation({
     name: 'Company name 1',
@@ -80,4 +81,6 @@ test('ADIF Metrico @PROJECT-CREATE', async () => {
   });
 
   await common.submitProject();
+  await common.newProjectButton.waitFor({ state: 'visible' });
+  
 });

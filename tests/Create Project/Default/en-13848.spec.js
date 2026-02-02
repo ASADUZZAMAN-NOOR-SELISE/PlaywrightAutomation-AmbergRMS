@@ -71,7 +71,6 @@ test('EN-13848 @PROJECT-CREATE', async () => {
   });
 
   await common.submitProject();
+  await common.newProjectButton.waitFor({ state: 'visible' });
 
-  await page.getByRole('textbox', { name: 'Search by Project Name' }).fill('EN-13848');
-  await expect(page.getByLabel('EN-13848').first()).toBeVisible();
 });

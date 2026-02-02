@@ -77,4 +77,6 @@ test('ADIF Iberico @PROJECT-CREATE ', async () => {
   });
 
   await common.submitProject();
+  await common.newProjectButton.waitFor({ state: 'visible' });
+  
 });
