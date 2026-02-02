@@ -44,17 +44,22 @@ export class Common {
     await expect(this.createProjectHeading).toBeVisible();
   }
 
+  async getProjectNameErrorText() {
+    const errorLocator = this.page.locator('p');
+    await expect(errorLocator).toBeVisible();
+    const errorText = await errorLocator.textContent();
+    return errorText;
+  }
+
   async generalInformation(data) {
     await this.nameInput.click();
-    await this.nameInput.fill('');
-    await this.nameInput.pressSequentially(" "+ data.name, { delay: 300 });
-
+    //await this.nameInput.fill('');
+    await this.nameInput.pressSequentially(" " +data.name, { delay: 500 });
     await this.numberInput.fill(data.number);
     await this.startPlaceInput.fill(data.startPlace);
     await this.endPlaceInput.fill(data.endPlace);
     await this.stationingStartInput.fill(data.stationingStart);
     await this.stationingEndInput.fill(data.stationingEnd);
-
     await this.commentInput.fill(data.comment);
   }
 
@@ -69,12 +74,17 @@ export class Common {
     await this.customerTownInput.fill(data.town);
     await this.customerPostalCodeInput.fill(data.postalCode);
     await this.customerRegionInput.fill(data.region);
-
     await this.customerCountryDropdown.click();
     await this.page.getByRole('option', { name: data.country }).click();
-
     await this.customerPhoneInput.fill(data.phone);
     await this.customerEmailInput.fill(data.email);
+  }
+
+  async emailErrorValidation(expectedError) {
+    const errorLocator = this.page.locator('p');
+    await expect(errorLocator).toBeVisible();
+    const errorText = await errorLocator.textContent();
+    return errorText;
   }
 
   async fillServiceProviderInfo(data) {

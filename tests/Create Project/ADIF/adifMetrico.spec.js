@@ -1,5 +1,5 @@
 const { test } = require('@playwright/test');
-const { LoginPage } = require('../../../Modules/Home/homePage');
+const { LoginPage } = require('../../../Modules/Login/loginPage');
 import { Common } from '../../../Modules/Common/common';
 import { AdifMetricProject } from '../../../Modules/Project/ADIF/adifMetricProject';
 
@@ -29,14 +29,11 @@ test.beforeAll('Homepage to dashboard', async ({ browser }) => {
 test('ADIF Metrico @PROJECT-CREATE', async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
-
   const common = new Common(page);
   const adifMetric = new AdifMetricProject(page);
 
   await loginPage.goto();
-
   await common.clickNewProject();
-
   await common.generalInformation({
     name: 'ADIF Metrico',
     number: '123456789',
@@ -57,7 +54,6 @@ test('ADIF Metrico @PROJECT-CREATE', async () => {
   // await adifMetric.openTemplateOptionAndPickDefault();
   // await adifMetric.verifyMetricOptions();
   await adifMetric.applyMetricTemplate();
-
   await common.customerInformation({
     name: 'Company name 1',
     street: 'a',

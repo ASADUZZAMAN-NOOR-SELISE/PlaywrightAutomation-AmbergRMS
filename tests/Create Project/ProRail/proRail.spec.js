@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { LoginPage } = require('../../../Modules/Home/homePage');
+const { LoginPage } = require('../../../Modules/Login/loginPage');
 const { Common } = require('../../../Modules/Common/common');
 const {ProRail} = require("../../../Modules/Project/Prorail/proRail");
 

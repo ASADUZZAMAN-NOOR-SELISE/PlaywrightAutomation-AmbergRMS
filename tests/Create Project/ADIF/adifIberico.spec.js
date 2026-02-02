@@ -1,5 +1,5 @@
 const { test } = require('@playwright/test');
-const { LoginPage } = require('../../../Modules/Home/homePage');
+const { LoginPage } = require('../../../Modules/Login/loginPage');
 const { Common } = require('../../../Modules/Common/common');
 const { AdifIbericoProject } = require('../../../Modules/Project/ADIF/adifIbericoProject');
 
@@ -29,14 +29,11 @@ test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
 test('ADIF Iberico @PROJECT-CREATE ', async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
-
   const common = new Common(page);
   const adifIberico = new AdifIbericoProject(page);
 
   await loginPage.goto();
-
   await common.clickNewProject();
-
   await common.generalInformation({
     name: 'ADIF Iberico',
     number: '123456789',
@@ -54,7 +51,6 @@ test('ADIF Iberico @PROJECT-CREATE ', async () => {
 
  
   await adifIberico.adifIbericoTemplateSelect('AdifIbRico1668Mm', 'A');
-
   await common.customerInformation({
     name: 'Company name 1',
     street: 'a',
