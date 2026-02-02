@@ -47,13 +47,12 @@ test('ADIF Metrico @PROJECT-CREATE', async () => {
     comment: 'comment',
   });
 
-  await common.selectDefaultRadio();
-
-  await common.templateSelection({
+  await common.fillLineAndTrack({
     lineSectionName: 'Line section 1',
     trackName: 'Track 1',
   });
 
+  // ADIF Metric template selection
   await adifMetric.selectMetricTemplate('AdifMTrico1000Mm');
   await adifMetric.openTemplateOptionAndPickDefault();
   await adifMetric.verifyMetricOptions();
@@ -69,16 +68,16 @@ test('ADIF Metrico @PROJECT-CREATE', async () => {
     email: 'example@gmail.com',
   });
 
-  await common.serviceProviderInformation({
+  // Service Provider - uses Common's current method (selects Austria inside method)
+  await common.fillServiceProviderInfo({
     name: 'Service Provider name',
     street: 'a',
     town: 'b',
     postalCode: '12345',
     region: 'c',
-    country: 'Albania',
     phone: '123456789',
     email: 'service.provider@gmai.com',
   });
 
-  await common.submitCreateProject();
+  await common.submitProject();
 });

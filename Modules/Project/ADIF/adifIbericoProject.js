@@ -6,75 +6,35 @@ export class AdifIbericoProject {
 
     this.configurationTemplateDropdown = page.getByRole('combobox', { name: 'Select configuration template' });
     this.templateOptionDropdown = page.getByRole('combobox', { name: 'Select Template Option' });
-    this.listbox = page.getByRole('listbox');
 
-    // Configuration template option
-    this.ibericoConfigOption = page.getByRole('option', { name: 'AdifIbRico1668Mm' });
-
-    // Template options in listbox
-    this.general = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Generales' });
-    this.lineA = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea A' });
-    this.lineB = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea B' });
-    this.lineC = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea C' });
-    this.lineD = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea D' });
-    this.lineE = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea E' });
+    this.ibericoGeneral = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Generales' });
+    this.ibericoA = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea A' });
+    this.ibericoB = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea B' });
+    this.ibericoC = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea C' });
+    this.ibericoD = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea D' });
+    this.ibericoE = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea E' });
   }
 
-  /**
-   * Select ADIF Ibérico configuration template: AdifIbRico1668Mm
-   */
-  async selectConfigurationTemplate() {
+  async adifIbericoTemplateSelect(configTemplateValue = 'AdifIbRico1668Mm', pick = 'A') {
     await this.configurationTemplateDropdown.click();
-    await this.ibericoConfigOption.click();
-  }
+    await this.page.getByRole('option', { name: configTemplateValue }).click();
 
-  /**
-   * Open Template Option dropdown and verify expected Ibérico options exist
-   */
-  async verifyTemplateOptions() {
     await this.templateOptionDropdown.click();
 
-    await expect(this.listbox).toContainText('ADIF Ibérico 1668 - Generales');
-    await expect(this.listbox).toContainText('ADIF Ibérico 1668 - Tipo de línea A');
-    await expect(this.listbox).toContainText('ADIF Ibérico 1668 - Tipo de línea B');
-    await expect(this.listbox).toContainText('ADIF Ibérico 1668 - Tipo de línea C');
-    await expect(this.listbox).toContainText('ADIF Ibérico 1668 - Tipo de línea D');
-    await expect(this.listbox).toContainText('ADIF Ibérico 1668 - Tipo de línea E');
-  }
+    await expect(this.ibericoGeneral).toBeVisible();
+    await expect(this.ibericoA).toBeVisible();
+    await expect(this.ibericoB).toBeVisible();
+    await expect(this.ibericoC).toBeVisible();
+    await expect(this.ibericoD).toBeVisible();
+    await expect(this.ibericoE).toBeVisible();
 
-  /**
-   * Pick a specific Ibérico template option.
-   * Allowed values: 'Generales', 'A', 'B', 'C', 'D', 'E'
-   */
-  async selectTemplateOption(option = 'A') {
-    const map = {
-      Generales: this.general,
-      A: this.lineA,
-      B: this.lineB,
-      C: this.lineC,
-      D: this.lineD,
-      E: this.lineE,
-    };
-
-    const locator = map[option];
-    if (!locator) {
-      throw new Error(`Invalid Ibérico template option: "${option}". Use Generales/A/B/C/D/E`);
-    }
-
-    // Ensure dropdown open; safe to call again
-    await this.templateOptionDropdown.click();
-    await locator.click();
-  }
-
-  /**
-   * Full flow convenience method:
-   * - select configuration template
-   * - verify options
-   * - select desired option
-   */
-  async applyIbericoTemplate({ pick = 'A' } = {}) {
-    await this.selectConfigurationTemplate();
-    await this.verifyTemplateOptions();
-    await this.selectTemplateOption(pick);
+    // pick which option to click
+    if (pick === 'Generales') await this.ibericoGeneral.click();
+    else if (pick === 'A') await this.ibericoA.click();
+    else if (pick === 'B') await this.ibericoB.click();
+    else if (pick === 'C') await this.ibericoC.click();
+    else if (pick === 'D') await this.ibericoD.click();
+    else if (pick === 'E') await this.ibericoE.click();
+    else throw new Error(`Invalid pick: "${pick}". Use Generales/A/B/C/D/E`);
   }
 }

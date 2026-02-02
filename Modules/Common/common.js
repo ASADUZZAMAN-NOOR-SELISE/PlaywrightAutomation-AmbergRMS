@@ -30,7 +30,7 @@ export class Common {
     this.serviceProviderTownInput = page.locator('input[name="ServiceProviderInfo.Town"]');
     this.serviceProviderPostalCodeInput = page.locator('input[name="ServiceProviderInfo.PostalCode"]');
     this.serviceProviderRegionInput = page.locator('input[name="ServiceProviderInfo.Region"]');
-    this.serviceCountryDropdown = getByLabel('', { exact: true });
+    this.serviceCountryDropdown = page.getByLabel('', { exact: true });
     this.serviceProviderPhoneInput = page.locator('input[name="ServiceProviderInfo.PhoneNumber"]');
     this.serviceProviderEmailInput = page.locator('input[name="ServiceProviderInfo.Email"]');
     //country menu
@@ -87,7 +87,7 @@ export class Common {
     // Your original test clicks an empty-label control then closes the menu via backdrop.
     // Keeping same behaviour.
     await this.serviceCountryDropdown.click();
-    await this.page.getByRole('option', { name: 'Austria' });
+    await this.page.getByRole('option', { name: 'Austria' }).click();
     //await this.serviceProviderCountryBackdrop.click();
     await this.serviceProviderPhoneInput.fill(data.phone);
     await this.serviceProviderEmailInput.fill(data.email);

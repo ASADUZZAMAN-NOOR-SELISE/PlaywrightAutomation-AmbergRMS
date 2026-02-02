@@ -44,46 +44,37 @@ test('ADIF Iberico @PROJECT-CREATE ', async () => {
     endPlace: 'b',
     stationingStart: '100',
     stationingEnd: '3000',
-    comment: '', // your original test did not fill comment here
+    comment: '',
   });
 
-  await common.templateSelection({
+  await common.fillLineAndTrack({
     lineSectionName: 'Line section 1',
     trackName: 'Track 1',
   });
 
-  // ✅ Extracted ADIF Ibérico logic
-  await adifIberico.applyIbericoTemplate({ pick: 'A' });
+  // ✅ ADIF Ibérico template selection (matches your new AdifIbericoProject structure)
+  await adifIberico.adifIbericoTemplateSelect('AdifIbRico1668Mm', 'A');
 
-  // Customer (same as your flow)
   await common.customerInformation({
     name: 'Company name 1',
     street: 'a',
     town: 'b',
     postalCode: '1234',
     region: 'c',
+    country: 'American Samoa',
     phone: '123456789',
     email: 'example@gmail.com',
   });
 
-  // Keep your same “double selection” behavior if needed
-  await page.locator('[id="mui-component-select-CustomerInfo.Country"]').click();
-  await page.getByRole('option', { name: 'Afghanistan' }).click();
-  await page.getByRole('combobox', { name: 'Afghanistan' }).click();
-  await page.getByRole('option', { name: 'American Samoa' }).click();
+  await common.fillServiceProviderInfo({
+    name: 'Service Provider name',
+    street: 'a',
+    town: 'b',
+    postalCode: '12345',
+    region: 'c',
+    phone: '123456789',
+    email: 'service@gmail.com',
+  });
 
-  // Service provider (kept same way as your script)
-  await page.locator('input[name="ServiceProviderInfo.Name"]').fill('Service Provider name');
-  await page.locator('input[name="ServiceProviderInfo.Street"]').fill('a');
-  await page.locator('input[name="ServiceProviderInfo.Town"]').fill('b');
-  await page.locator('input[name="ServiceProviderInfo.PostalCode"]').fill('12345');
-  await page.locator('input[name="ServiceProviderInfo.Region"]').fill('c');
-
-  await page.getByLabel('', { exact: true }).click();
-  await page.getByRole('option', { name: 'Albania' }).click();
-
-  await page.locator('input[name="ServiceProviderInfo.PhoneNumber"]').fill('123456789');
-  await page.locator('input[name="ServiceProviderInfo.Email"]').fill('service@gmail.com');
-
-  await common.submitCreateProject();
+  await common.submitProject();
 });
