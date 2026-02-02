@@ -1,7 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Home/homePage');
 const { Common } = require('../../../Modules/Common/common');
-const { AdifProject } = require('../../../Modules/Project/ADIF/adifProject');
 const {ProRail} = require("../../../Modules/Project/Prorail/proRail");
 
 let webContext;
@@ -51,7 +50,7 @@ test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
   await proRail.selectTrack('w1125L-s621, 621');
   await proRail.selectTemplate('ProRail');
 
-  //  Common Customer
+
   await common.customerInformation({
     name: 'Customer 1',
     street: 'a',
@@ -63,7 +62,7 @@ test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
     email: 'example@gmail.com',
   });
 
-  // Service provider (if your form requires it)
+
   await common.fillServiceProviderInfo({
     name: 'Service Provider',
     street: 'a',

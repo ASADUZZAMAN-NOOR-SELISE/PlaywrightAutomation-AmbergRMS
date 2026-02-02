@@ -69,7 +69,7 @@ test('ADIF Metrico @PROJECT-CREATE', async () => {
     email: 'example@gmail.com',
   });
 
-  // Service Provider - uses Common's current method (selects Austria inside method)
+
   await common.fillServiceProviderInfo({
     name: 'Service Provider name',
     street: 'a',

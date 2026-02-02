@@ -34,7 +34,7 @@ test('Create STN Project @PROJECT-CREATE', async () => {
   await loginPage.goto();
   await common.clickNewProject();
 
-  // 1) General Information (same style as EN-13848)
+
   await common.generalInformation({
     name: 'STN Project',
     number: '123456789',
@@ -45,20 +45,19 @@ test('Create STN Project @PROJECT-CREATE', async () => {
     comment: 'STN Default Project',
   });
 
-  // 2) Line & Track (same method as EN-13848)
   await common.fillLineAndTrack({
     lineSectionName: 'Line 1',
     trackName: 'Track1',
   });
 
-  // 3) STN Template + Template option validation
+
   await stn.selectSTNTemplate();
   await stn.submit();
   await stn.expectTemplateOptionRequiredError();
 
   await stn.selectTemplateOption();
 
-  // 4) Customer (same as EN-13848)
+
   await common.customerInformation({
     name: 'Customer name',
     street: 'a',
@@ -70,7 +69,7 @@ test('Create STN Project @PROJECT-CREATE', async () => {
     email: 'customer@gmail.com',
   });
 
-  // 5) Service Provider (same as EN-13848)
+
   await common.fillServiceProviderInfo({
     name: 'Service Provider',
     street: 'a',
@@ -81,7 +80,6 @@ test('Create STN Project @PROJECT-CREATE', async () => {
     email: 'service@gmail.com',
   });
 
-  // 6) Submit project (same as EN-13848)
   await common.submitProject();
   await common.newProjectButton.waitFor({ state: 'visible' });
 });
