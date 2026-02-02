@@ -52,7 +52,7 @@ test('ADIF Iberico @PROJECT-CREATE ', async () => {
     trackName: 'Track 1',
   });
 
-  // ✅ ADIF Ibérico template selection (matches your new AdifIbericoProject structure)
+ 
   await adifIberico.adifIbericoTemplateSelect('AdifIbRico1668Mm', 'A');
 
   await common.customerInformation({

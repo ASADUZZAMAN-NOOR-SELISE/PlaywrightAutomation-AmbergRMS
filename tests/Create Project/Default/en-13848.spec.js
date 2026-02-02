@@ -34,7 +34,7 @@ test('EN-13848 @PROJECT-CREATE', async () => {
 
   await common.clickNewProject();
 
-  await common.fillProjectGeneralInfo({
+  await common.generalInformation({
     name: 'EN-13848',
     number: '123456789',
     startPlace: 'a',
@@ -49,7 +49,7 @@ test('EN-13848 @PROJECT-CREATE', async () => {
     trackName: 'Track 1',
   });
 
-  await common.fillCustomerInfo({
+  await common.customerInformation({
     name: 'Customer name ',
     street: 'a',
     town: 'b',
@@ -72,5 +72,6 @@ test('EN-13848 @PROJECT-CREATE', async () => {
 
   await common.submitProject();
 
-  await common.searchAndExpectProject('EN-13848');
+  await page.getByRole('textbox', { name: 'Search by Project Name' }).fill('EN-13848');
+  await expect(page.getByLabel('EN-13848').first()).toBeVisible();
 });

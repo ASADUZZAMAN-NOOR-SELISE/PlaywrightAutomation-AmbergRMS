@@ -84,17 +84,19 @@ export class Common {
     await this.serviceProviderTownInput.fill(data.town);
     await this.serviceProviderPostalCodeInput.fill(data.postalCode);
     await this.serviceProviderRegionInput.fill(data.region);
-    // Your original test clicks an empty-label control then closes the menu via backdrop.
-    // Keeping same behaviour.
     await this.serviceCountryDropdown.click();
     await this.page.getByRole('option', { name: 'Austria' }).click();
-    //await this.serviceProviderCountryBackdrop.click();
     await this.serviceProviderPhoneInput.fill(data.phone);
     await this.serviceProviderEmailInput.fill(data.email);
   }
- // add comment 
   async submitProject() {
     await expect(this.submitButton).toBeEnabled();
     await this.submitButton.click();
   }
+  async searchAndExpectProject(projectName) {
+  await this.searchByProjectNameInput.click();
+  await this.searchByProjectNameInput.fill(projectName);
+  await expect(this.page.getByLabel(projectName).first()).toBeVisible();
+}
+
 }
