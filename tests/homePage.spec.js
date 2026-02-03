@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../Modules/Login/loginPage');
-const { Common } = require('../Modules/Common/common');
+const { Common } = require('../Utils/common');
 
 let webContext;
 
@@ -69,10 +69,9 @@ test('Cancel button action', async () => {
   await page.locator("button[aria-label='FormFooterCancelButton']").click();
   await page.reload();
   await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
-
 });
 
-test('BackArrowBackIcon function valdiaion', async () => {
+test('BackArrowBackIcon function', async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);

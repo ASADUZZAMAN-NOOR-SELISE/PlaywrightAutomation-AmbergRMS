@@ -36,6 +36,8 @@ export class Common {
     this.serviceProviderCountryBackdrop = page.locator('[id="menu-ServiceProviderInfo.Country"] > .MuiBackdrop-root');
     this.submitButton = page.locator("button[type='submit']")
     this.searchByProjectNameInput = page.getByRole('textbox', { name: 'Search by Project Name' });
+    // project Tree
+    this.deleteButton = page.locator("svg[data-testid='DeleteIcon']")
   }
 
   async clickNewProject() {
@@ -53,8 +55,8 @@ export class Common {
 
   async generalInformation(data) {
     await this.nameInput.click();
-    //await this.nameInput.fill('');
-    await this.nameInput.pressSequentially(" " +data.name, { delay: 500 });
+    await this.page.waitForTimeout(1000);
+    await this.nameInput.pressSequentially(" " + data.name, { delay: 300 });
     await this.numberInput.fill(data.number);
     await this.startPlaceInput.fill(data.startPlace);
     await this.endPlaceInput.fill(data.endPlace);
@@ -102,10 +104,23 @@ export class Common {
     await expect(this.submitButton).toBeEnabled();
     await this.submitButton.click();
   }
-  async searchAndExpectProject(projectName) {
+  //searcch project from searchh bar 
+  async searchProject(projectName) {
   await this.searchByProjectNameInput.click();
   await this.searchByProjectNameInput.fill(projectName);
+  await this.page.waitForTimeout(1000); 
   await expect(this.page.getByLabel(projectName).first()).toBeVisible();
-}
+  }
+  // click to enter into project > it takes project tree page
+  async enterIntoProject(projectName) {
+    await this.page.getByLabel(projectName).first().click();
+  }
+  // delete acction perfome 
+  async deleteInProjectTree() {
+    await expect(this.deleteButton).toBeVisible();
+    await this.deleteButton.click();
+    await expect(this.page.locator("button[type='submit']")).toBeVisible();
+    await this.page.locator("button[type='submit']").click();
+  }
 
 }

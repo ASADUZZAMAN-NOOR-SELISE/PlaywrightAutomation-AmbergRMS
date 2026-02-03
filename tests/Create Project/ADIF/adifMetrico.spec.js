@@ -1,6 +1,6 @@
 const { test } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Login/loginPage');
-import { Common } from '../../../Modules/Common/common';
+const { Common } = require('../../../Utils/common');
 import { AdifMetricProject } from '../../../Modules/Project/ADIF/adifMetricProject';
 
 let webContext;
@@ -78,5 +78,9 @@ test('ADIF Metrico @PROJECT-CREATE', async () => {
 
   await common.submitProject();
   await common.newProjectButton.waitFor({ state: 'visible' });
+  // Search and verify project creation
+  await common.searchProject('ADIF Metrico');
+  await common.enterIntoProject('ADIF Metrico');
+  await common.deleteInProjectTree();
   
 });

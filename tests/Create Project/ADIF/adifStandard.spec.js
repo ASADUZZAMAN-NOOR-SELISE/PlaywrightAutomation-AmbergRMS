@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Login/loginPage');
-const { Common } = require('../../../Modules/Common/common');
+const { Common } = require('../../../Utils/common');
 const { AdifProject } = require('../../../Modules/Project/ADIF/adifProject');
 
 let webContext;
@@ -9,7 +9,6 @@ test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
   const loginPage = new LoginPage(page);
-
   try {
     await loginPage.goto();
     await page.locator('.MuiGrid-root').nth(1).isVisible();
@@ -24,6 +23,30 @@ test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
   await context.storageState({ path: 'state.json' });
   webContext = await browser.newContext({ storageState: 'state.json' });
 });
+
+test("Template configuration validation", async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const adifProject = new AdifProject(page);
+
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.generalInformation({
+    name: 'ADIF Project Standard',
+    number: '123456789',
+    startPlace: 'A',
+    endPlace: 'B',
+    stationingStart: '100',
+    stationingEnd: '2000',
+    comment: 'General information about the project',
+  });
+  await adifProject.configurationTemplateDropdown.click();
+  await page.getByRole('option', { name: 'AdifEstNdar1435Mm' }).click();
+  await common.submitProject();
+  const errorText = await page.locator("p").textContent();
+  expect(errorText).toBe("Template option is required");
+})
 
 test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
   const page = await webContext.newPage();
@@ -43,9 +66,9 @@ test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
     comment: 'General information about the project',
   });
 
-
   await common.fillLineAndTrack({ lineSectionName: 'Line section 1', trackName: 'Track 1' });
   await adifProject.adifTemplateSelect('AdifEstNdar1435Mm');
+ 
   //  Common Customer
   await common.customerInformation({
     name: 'Customer 1',
@@ -58,7 +81,7 @@ test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
     email: 'example@gmail.com',
   });
 
-  // Service provider (if your form requires it)
+  // Service provider 
   await common.fillServiceProviderInfo({
     name: 'Service Provider',
     street: 'a',
@@ -71,6 +94,11 @@ test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
 
   await common.submitProject();
   await common.newProjectButton.waitFor({ state: 'visible' });
+  // Search and verify project creation
+  await common.searchProject('ADIF Project Standard');
+  await common.enterIntoProject('ADIF Project Standard');
+  await common.deleteInProjectTree();
   
 });
+
 

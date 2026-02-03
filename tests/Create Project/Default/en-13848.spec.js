@@ -1,6 +1,6 @@
 const { test } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Login/loginPage');
-const { Common } = require('../../../Modules/Common/common');
+const { Common } = require('../../../Utils/common');
 
 let webContext;
 
@@ -72,5 +72,9 @@ test('EN-13848 @PROJECT-CREATE', async () => {
 
   await common.submitProject();
   await common.newProjectButton.waitFor({ state: 'visible' });
+  // Search and verify project creation
+  await common.searchProject('EN-13848');
+  await common.enterIntoProject('EN-13848');
+  await common.deleteInProjectTree();
 
 });

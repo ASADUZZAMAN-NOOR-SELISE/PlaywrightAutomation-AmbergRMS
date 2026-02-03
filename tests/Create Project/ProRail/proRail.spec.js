@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Login/loginPage');
-const { Common } = require('../../../Modules/Common/common');
+const { Common } = require('../../../Utils/common');
 const {ProRail} = require("../../../Modules/Project/Prorail/proRail");
 
 let webContext;
@@ -75,6 +75,10 @@ test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
 
   await common.submitProject();
   await common.newProjectButton.waitFor({ state: 'visible' });
+  // Search and verify project creation
+  await common.searchProject('ProRail Automation Project');
+  await common.enterIntoProject('ProRail Automation Project');
+  await common.deleteInProjectTree();
   
 });
 

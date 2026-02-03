@@ -1,6 +1,6 @@
 const { test } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Login/loginPage');
-const { Common } = require('../../../Modules/Common/common');
+const { Common } = require('../../../Utils/common');
 const { STNProject } = require('../../../Modules/Project/STN/sTN');
 
 let webContext;
@@ -82,4 +82,8 @@ test('Create STN Project @PROJECT-CREATE', async () => {
 
   await common.submitProject();
   await common.newProjectButton.waitFor({ state: 'visible' });
+  // Search and verify project creation
+  await common.searchProject('STN Project');
+  await common.enterIntoProject('STN Project');
+  await common.deleteInProjectTree();
 });

@@ -1,6 +1,6 @@
 const { test } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Login/loginPage');
-const { Common } = require('../../../Modules/Common/common');
+const { Common } = require('../../../Utils/common');
 const { AdifIbericoProject } = require('../../../Modules/Project/ADIF/adifIbericoProject');
 
 let webContext;
@@ -49,7 +49,6 @@ test('ADIF Iberico @PROJECT-CREATE ', async () => {
     trackName: 'Track 1',
   });
 
- 
   await adifIberico.adifIbericoTemplateSelect('AdifIbRico1668Mm', 'A');
   await common.customerInformation({
     name: 'Company name 1',
@@ -74,5 +73,9 @@ test('ADIF Iberico @PROJECT-CREATE ', async () => {
 
   await common.submitProject();
   await common.newProjectButton.waitFor({ state: 'visible' });
+  // Search and verify project creation
+  await common.searchProject('ADIF Iberico');
+  await common.enterIntoProject('ADIF Iberico');
+  await common.deleteInProjectTree();
   
 });
