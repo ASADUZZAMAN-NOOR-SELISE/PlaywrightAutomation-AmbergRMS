@@ -9,8 +9,8 @@ export class Common {
     this.numberInput = page.getByRole('textbox', { name: 'Number' });
     this.startPlaceInput = page.getByRole('textbox', { name: 'Start Place' });
     this.endPlaceInput = page.getByRole('textbox', { name: 'End Place' });
-    this.stationingStartInput = page.getByRole('spinbutton', { name: 'Stationing Start TextField' });
-    this.stationingEndInput = page.getByRole('spinbutton', { name: 'Stationing End TextField' });
+    this.stationingStartInput = page.locator("input[name='MetaData.Start.Stationing']");
+    this.stationingEndInput = page.locator("input[name='MetaData.End.Stationing']");
     this.commentInput = page.getByRole('textbox', { name: 'Comment' });
     this.lineSectionNameInput = page.getByRole('textbox', { name: 'Name of Line Section' });
     this.trackNameInput = page.getByRole('textbox', { name: 'Name of Track' });
@@ -40,12 +40,14 @@ export class Common {
     this.deleteButton = page.locator("svg[data-testid='DeleteIcon']")
   }
 
+  // Click on "New Project" button and verify navigation to create project page
   async clickNewProject() {
     await expect(this.newProjectButton).toBeVisible();
     await this.newProjectButton.click();
     await expect(this.createProjectHeading).toBeVisible();
   }
 
+  // Error text validation for project name
   async getProjectNameErrorText() {
     const errorLocator = this.page.locator('p');
     await expect(errorLocator).toBeVisible();
@@ -55,7 +57,7 @@ export class Common {
 
   async generalInformation(data) {
     await this.nameInput.click();
-    await this.page.waitForTimeout(1000);
+    await this.page.waitForTimeout(1500);
     await this.nameInput.pressSequentially(" " + data.name, { delay: 300 });
     await this.numberInput.fill(data.number);
     await this.startPlaceInput.fill(data.startPlace);
@@ -70,6 +72,7 @@ export class Common {
     await this.trackNameInput.fill(trackName);
   }
 
+  // Customer information filling
   async customerInformation(data) {
     await this.customerNameInput.fill(data.name);
     await this.customerStreetInput.fill(data.street);
@@ -82,13 +85,15 @@ export class Common {
     await this.customerEmailInput.fill(data.email);
   }
 
-  async emailErrorValidation(expectedError) {
+  // Email error validation
+  async emailErrorValidation() {
     const errorLocator = this.page.locator('p');
     await expect(errorLocator).toBeVisible();
     const errorText = await errorLocator.textContent();
     return errorText;
   }
 
+  // Service provider information filling
   async fillServiceProviderInfo(data) {
     await this.serviceProviderNameInput.fill(data.name);
     await this.serviceProviderStreetInput.fill(data.street);
@@ -100,10 +105,13 @@ export class Common {
     await this.serviceProviderPhoneInput.fill(data.phone);
     await this.serviceProviderEmailInput.fill(data.email);
   }
+  
+  // submit button click and project creation
   async submitProject() {
     await expect(this.submitButton).toBeEnabled();
     await this.submitButton.click();
   }
+
   //searcch project from searchh bar 
   async searchProject(projectName) {
   await this.searchByProjectNameInput.click();
@@ -111,10 +119,12 @@ export class Common {
   await this.page.waitForTimeout(1000); 
   await expect(this.page.getByLabel(projectName).first()).toBeVisible();
   }
+
   // click to enter into project > it takes project tree page
   async enterIntoProject(projectName) {
     await this.page.getByLabel(projectName).first().click();
   }
+
   // delete acction perfome 
   async deleteInProjectTree() {
     await expect(this.deleteButton).toBeVisible();

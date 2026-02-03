@@ -39,7 +39,7 @@ test('Error text validation : Email', async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
-
+  
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
