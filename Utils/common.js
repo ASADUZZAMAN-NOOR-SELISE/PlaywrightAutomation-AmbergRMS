@@ -121,6 +121,7 @@ export class Common {
     await this.deleteButton.click();
     await expect(this.page.locator("button[type='submit']")).toBeVisible();
     await this.page.locator("button[type='submit']").click();
+    await expect(this.page.getByRole('alert').first()).toContainText('Project deleted successfully');
   }
 
 }
