@@ -26,4 +26,8 @@ test("Support", async ({ page }) => {
   await expect(
     dialog.getByRole("link", { name: /privacy policy/i }),
   ).toBeVisible();
+
+  //build number should be shown correctly
+  const buildRow = dialog.locator('span:text("Build Number")').locator("..");
+  await expect(buildRow).toContainText("20260204.1898");
 });
