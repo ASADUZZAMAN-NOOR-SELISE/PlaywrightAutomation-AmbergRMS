@@ -11,9 +11,19 @@ test("Support", async ({ page }) => {
   await expect(dialog).toBeVisible();
   console.log("Dialog is visible");
 
-  await expect(dialog.getByText("About Amberg Track Pro Office")).toBeVisible();
-  console.log("Heading is visible");
+  // Required labels
+  await expect(dialog.getByText("Version")).toBeVisible();
+  await expect(dialog.getByText("Build Number")).toBeVisible();
+  await expect(dialog.getByText("Release Date")).toBeVisible();
 
-  await expect(page.getByRole("img", { name: "amberg logo" })).toBeVisible();
-  console.log("Logo is visible");
+  //   Available licenses
+  await expect(dialog.getByLabel("PlusExpiryFeature")).toBeVisible();
+  await expect(
+    dialog.getByLabel("PlusExpiryFeatureProRailVersion"),
+  ).toBeVisible();
+
+  // Privacy policy
+  await expect(
+    dialog.getByRole("link", { name: /privacy policy/i }),
+  ).toBeVisible();
 });
