@@ -1,7 +1,8 @@
-const { test } = require('@playwright/test');
+const { test,expect } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Login/loginPage');
 const { Common } = require('../../../Utils/common');
 import { AdifMetricProject } from '../../../Modules/Project/ADIF/adifMetricProject';
+const { data } = require('../../../Utils/Data/Information');
 
 let webContext;
 
@@ -34,16 +35,15 @@ test('ADIF Metrico @PROJECT-CREATE', async () => {
 
   await loginPage.goto();
   await common.clickNewProject();
-  await common.generalInformation({
-    name: 'ADIF Metrico',
-    number: '123456789',
-    startPlace: 'a',
-    endPlace: 'b',
-    stationingStart: '100',
-    stationingEnd: '2000',
-    comment: 'comment',
+ await common.generalInformation({
+    name: data.templateName.adifMetrico,
+    number: data.project.number,
+    startPlace:data.project.startPlace,
+    endPlace: data.project.endPlace,
+    stationingStart: data.project.stationingStart,
+    stationingEnd: data.project.stationingEnd,
+    comment: data.project.comment,
   });
-
   await common.fillLineAndTrack({
     lineSectionName: 'Line section 1',
     trackName: 'Track 1',
@@ -55,32 +55,32 @@ test('ADIF Metrico @PROJECT-CREATE', async () => {
   // await adifMetric.verifyMetricOptions();
   await adifMetric.applyMetricTemplate();
   await common.customerInformation({
-    name: 'Company name 1',
-    street: 'a',
-    town: 'b',
-    postalCode: '12345',
-    region: 'c',
-    country: 'American Samoa',
-    phone: '123456789',
-    email: 'example@gmail.com',
+    name: data.customerData.name,
+    street: data.customerData.street,
+    town: data.customerData.town,
+    postalCode: data.customerData.postalCode,
+    region: data.customerData.region,
+    country: data.customerData.country,
+    phone: data.customerData.phone,
+    email: data.customerData.email,
   });
 
 
   await common.fillServiceProviderInfo({
-    name: 'Service Provider name',
-    street: 'a',
-    town: 'b',
-    postalCode: '12345',
-    region: 'c',
-    phone: '123456789',
-    email: 'service.provider@gmai.com',
+    name: data.serviceProviderData.name,
+    street: data.serviceProviderData.street,
+    town: data.serviceProviderData.town,
+    postalCode: data.serviceProviderData.postalCode,
+    region: data.serviceProviderData.region,
+    phone: data.serviceProviderData.phone,
+    email: data.serviceProviderData.email,
   });
 
   await common.submitProject();
   await common.newProjectButton.waitFor({ state: 'visible' });
   // Search and verify project creation
-  await common.searchProject('ADIF Metrico');
-  await common.enterIntoProject('ADIF Metrico');
+  await common.searchProject(data.templateName.adifMetrico);
+  await common.enterIntoProject(data.templateName.adifMetrico);
   await common.deleteInProjectTree();
   
 });

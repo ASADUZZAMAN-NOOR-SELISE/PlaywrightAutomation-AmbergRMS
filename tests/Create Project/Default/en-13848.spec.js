@@ -1,6 +1,7 @@
-const { test } = require('@playwright/test');
+const { test,expect } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Login/loginPage');
 const { Common } = require('../../../Utils/common');
+const { data } = require('../../../Utils/Data/Information');
 
 let webContext;
 
@@ -35,13 +36,13 @@ test('EN-13848 @PROJECT-CREATE', async () => {
   await common.clickNewProject();
 
   await common.generalInformation({
-    name: 'EN-13848',
-    number: '123456789',
-    startPlace: 'a',
-    endPlace: 'b',
-    stationingStart: '100',
-    stationingEnd: '2000',
-    comment: 'Default Project',
+    name: data.templateName.en13848,
+    number: data.project.number,
+    startPlace:data.project.startPlace,
+    endPlace: data.project.endPlace,
+    stationingStart: data.project.stationingStart,
+    stationingEnd: data.project.stationingEnd,
+    comment: data.project.comment,
   });
 
   await common.fillLineAndTrack({
@@ -50,31 +51,31 @@ test('EN-13848 @PROJECT-CREATE', async () => {
   });
 
   await common.customerInformation({
-    name: 'Customer name ',
-    street: 'a',
-    town: 'b',
-    postalCode: '12345',
-    region: 'c',
-    country: 'American Samoa',
-    phone: '123456789',
-    email: 'customer@gmail.com',
+    name: data.customerData.name,
+    street: data.customerData.street,
+    town: data.customerData.town,
+    postalCode: data.customerData.postalCode,
+    region: data.customerData.region,
+    country: data.customerData.country,
+    phone: data.customerData.phone,
+    email: data.customerData.email,
   });
 
   await common.fillServiceProviderInfo({
-    name: 'Service Provider',
-    street: 'a',
-    town: 'b',
-    postalCode: '12345',
-    region: 'c',
-    phone: '123456789',
-    email: 'service@gmail.com',
+    name: data.serviceProviderData.name,
+    street: data.serviceProviderData.street,
+    town: data.serviceProviderData.town,
+    postalCode: data.serviceProviderData.postalCode,
+    region: data.serviceProviderData.region,
+    phone: data.serviceProviderData.phone,
+    email: data.serviceProviderData.email,
   });
 
   await common.submitProject();
   await common.newProjectButton.waitFor({ state: 'visible' });
-  // Search and verify project creation
-  await common.searchProject('EN-13848');
-  await common.enterIntoProject('EN-13848');
+  await common.searchProject(data.templateName.en13848);
+  await expect(page.getByLabel(data.templateName.en13848).first()).toBeVisible();
+  await common.enterIntoProject(data.templateName.en13848);
   await common.deleteInProjectTree();
 
 });

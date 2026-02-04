@@ -2,6 +2,7 @@ const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Login/loginPage');
 const { Common } = require('../../../Utils/common');
 const { AdifProject } = require('../../../Modules/Project/ADIF/adifProject');
+const { data } = require('../../../Utils/Data/Information');
 
 let webContext;
 
@@ -33,13 +34,13 @@ test("Template configuration validation", async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: 'ADIF Project Standard',
-    number: '123456789',
-    startPlace: 'A',
-    endPlace: 'B',
-    stationingStart: '100',
-    stationingEnd: '2000',
-    comment: 'General information about the project',
+    name: data.templateName.adifStanderd,
+    number: data.project.number,
+    startPlace:data.project.startPlace,
+    endPlace: data.project.endPlace,
+    stationingStart: data.project.stationingStart,
+    stationingEnd: data.project.stationingEnd,
+    comment: data.project.comment,
   });
   await adifProject.configurationTemplateDropdown.click();
   await page.getByRole('option', { name: 'AdifEstNdar1435Mm' }).click();
@@ -57,13 +58,13 @@ test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: 'ADIF Project Standard',
-    number: '123456789',
-    startPlace: 'A',
-    endPlace: 'B',
-    stationingStart: '100',
-    stationingEnd: '2000',
-    comment: 'General information about the project',
+    name: data.templateName.adifStanderd,
+    number: data.project.number,
+    startPlace:data.project.startPlace,
+    endPlace: data.project.endPlace,
+    stationingStart: data.project.stationingStart,
+    stationingEnd: data.project.stationingEnd,
+    comment: data.project.comment,
   });
 
   await common.fillLineAndTrack({ lineSectionName: 'Line section 1', trackName: 'Track 1' });
@@ -71,33 +72,33 @@ test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
  
   //  Common Customer
   await common.customerInformation({
-    name: 'Customer 1',
-    street: 'a',
-    town: 'b',
-    postalCode: '1212',
-    region: 'a',
-    country: 'American Samoa',
-    phone: '123456789',
-    email: 'example@gmail.com',
+    name: data.customerData.name,
+    street: data.customerData.street,
+    town: data.customerData.town,
+    postalCode: data.customerData.postalCode,
+    region: data.customerData.region,
+    country: data.customerData.country,
+    phone: data.customerData.phone,
+    email: data.customerData.email,
   });
 
   // Service provider 
   await common.fillServiceProviderInfo({
-    name: 'Service Provider',
-    street: 'a',
-    town: 'b',
-    postalCode: '12345',
-    region: 'c',
-    phone: '123456789',
-    email: 'service@gmail.com',
+    name: data.serviceProviderData.name,
+    street: data.serviceProviderData.street,
+    town: data.serviceProviderData.town,
+    postalCode: data.serviceProviderData.postalCode,
+    region: data.serviceProviderData.region,
+    phone: data.serviceProviderData.phone,
+    email: data.serviceProviderData.email,
   });
 
   await common.submitProject();
   await common.newProjectButton.waitFor({ state: 'visible' });
-  // Search and verify project creation
-  await common.searchProject('ADIF Project Standard');
-  await common.enterIntoProject('ADIF Project Standard');
-  await common.deleteInProjectTree();
+  await common.searchProject(data.templateName.adifStanderd);
+  await expect(page.getByLabel(data.templateName.adifStanderd).first()).toBeVisible();
+  await common.enterIntoProject(data.templateName.adifStanderd);
+  //await common.deleteInProjectTree();
   
 });
 

@@ -42,7 +42,7 @@ export class Common {
 
   // Click on "New Project" button and verify navigation to create project page
   async clickNewProject() {
-    await expect(this.newProjectButton).toBeVisible();
+    await expect(this.newProjectButton).toBeEnabled();
     await this.newProjectButton.click();
     await expect(this.createProjectHeading).toBeVisible();
   }
@@ -57,8 +57,8 @@ export class Common {
 
   async generalInformation(data) {
     await this.nameInput.click();
-    await this.page.waitForTimeout(1500);
-    await this.nameInput.pressSequentially(" " + data.name, { delay: 300 });
+    await this.page.waitForTimeout(1000);
+    await this.nameInput.pressSequentially(" "+ data.name, { delay: 300 });
     await this.numberInput.fill(data.number);
     await this.startPlaceInput.fill(data.startPlace);
     await this.endPlaceInput.fill(data.endPlace);
@@ -116,14 +116,15 @@ export class Common {
   async searchProject(projectName) {
   await this.searchByProjectNameInput.click();
   await this.searchByProjectNameInput.fill(projectName);
-  await this.page.waitForTimeout(1000); 
-  await expect(this.page.getByLabel(projectName).first()).toBeVisible();
+  await this.page.waitForTimeout(200);
   }
 
   // click to enter into project > it takes project tree page
   async enterIntoProject(projectName) {
-    await this.page.getByLabel(projectName).first().click();
-  }
+  const row = this.page.getByLabel(projectName).first();
+  await row.isVisible();
+  await row.click();
+}
 
   // delete acction perfome 
   async deleteInProjectTree() {

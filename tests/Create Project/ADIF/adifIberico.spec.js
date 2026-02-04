@@ -1,7 +1,8 @@
-const { test } = require('@playwright/test');
+const { test,expect } = require('@playwright/test');
 const { LoginPage } = require('../../../Modules/Login/loginPage');
 const { Common } = require('../../../Utils/common');
 const { AdifIbericoProject } = require('../../../Modules/Project/ADIF/adifIbericoProject');
+const { data } = require('../../../Utils/Data/Information');
 
 let webContext;
 
@@ -35,14 +36,15 @@ test('ADIF Iberico @PROJECT-CREATE ', async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: 'ADIF Iberico',
-    number: '123456789',
-    startPlace: 'a',
-    endPlace: 'b',
-    stationingStart: '100',
-    stationingEnd: '3000',
-    comment: '',
+    name: data.templateName.adifIberico,
+    number: data.project.number,
+    startPlace:data.project.startPlace,
+    endPlace: data.project.endPlace,
+    stationingStart: data.project.stationingStart,
+    stationingEnd: data.project.stationingEnd,
+    comment: data.project.comment,
   });
+
 
   await common.fillLineAndTrack({
     lineSectionName: 'Line section 1',
@@ -74,8 +76,9 @@ test('ADIF Iberico @PROJECT-CREATE ', async () => {
   await common.submitProject();
   await common.newProjectButton.waitFor({ state: 'visible' });
   // Search and verify project creation
-  await common.searchProject('ADIF Iberico');
-  await common.enterIntoProject('ADIF Iberico');
+  await common.searchProject(data.templateName.adifIberico);
+  await expect(page.getByLabel(data.templateName.adifIberico).first()).toBeVisible();
+  await common.enterIntoProject(data.templateName.adifIberico);
   await common.deleteInProjectTree();
   
 });

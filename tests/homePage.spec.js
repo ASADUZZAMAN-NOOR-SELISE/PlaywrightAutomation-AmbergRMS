@@ -1,6 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../Modules/Login/loginPage');
 const { Common } = require('../Utils/common');
+const { data } = require('../Utils/Data/Information');
 
 let webContext;
 
@@ -43,14 +44,14 @@ test('Error text validation : Email', async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: 'Test Project',
-    number: '123456789',
-    startPlace: 'a',
-    endPlace: 'b',
-    stationingStart: '100',
-    stationingEnd: '2000',
-    comment: 'Test Project',
-  });
+      name: data.templateName.stn,
+      number: data.project.number,
+      startPlace:data.project.startPlace,
+      endPlace: data.project.endPlace,
+      stationingStart: data.project.stationingStart,
+      stationingEnd: data.project.stationingEnd,
+      comment: data.project.comment,
+    });
   await common.customerEmailInput.fill('example@gmailcom');
   await common.submitProject();
 
@@ -81,5 +82,15 @@ test('BackArrowBackIcon function', async () => {
   await page.locator("svg[data-testid='ArrowBackIcon']").click();
   await page.reload();
   await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
+
+});
+
+test("Wrong name project search", async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  await loginPage.goto();
+  await common.searchProject("Wrong Project Name");
+  await expect(page.getByText('No projects found')).toBeVisible();
 
 });
