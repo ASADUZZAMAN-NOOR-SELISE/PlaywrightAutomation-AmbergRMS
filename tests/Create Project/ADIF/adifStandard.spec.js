@@ -98,7 +98,7 @@ test('Create Project ADIF Standard @PROJECT-CREATE', async () => {
   await common.searchProject(data.templateName.adifStanderd);
   await expect(page.getByLabel(data.templateName.adifStanderd).first()).toBeVisible();
   await common.enterIntoProject(data.templateName.adifStanderd);
-  //await common.deleteInProjectTree();
+  await common.deleteInProjectTree();
   
 });
 

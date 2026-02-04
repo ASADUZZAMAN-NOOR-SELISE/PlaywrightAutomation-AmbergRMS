@@ -3,10 +3,8 @@ import { expect } from '@playwright/test';
 export class AdifIbericoProject {
   constructor(page) {
     this.page = page;
-
     this.configurationTemplateDropdown = page.getByRole('combobox', { name: 'Select configuration template' });
     this.templateOptionDropdown = page.getByRole('combobox', { name: 'Select Template Option' });
-
     this.ibericoGeneral = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Generales' });
     this.ibericoA = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea A' });
     this.ibericoB = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea B' });
@@ -18,9 +16,7 @@ export class AdifIbericoProject {
   async adifIbericoTemplateSelect(configTemplateValue = 'AdifIbRico1668Mm', pick = 'A') {
     await this.configurationTemplateDropdown.click();
     await this.page.getByRole('option', { name: configTemplateValue }).click();
-
     await this.templateOptionDropdown.click();
-
     await expect(this.ibericoGeneral).toBeVisible();
     await expect(this.ibericoA).toBeVisible();
     await expect(this.ibericoB).toBeVisible();

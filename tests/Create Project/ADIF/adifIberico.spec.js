@@ -53,24 +53,24 @@ test('ADIF Iberico @PROJECT-CREATE ', async () => {
 
   await adifIberico.adifIbericoTemplateSelect('AdifIbRico1668Mm', 'A');
   await common.customerInformation({
-    name: 'Company name 1',
-    street: 'a',
-    town: 'b',
-    postalCode: '1234',
-    region: 'c',
-    country: 'American Samoa',
-    phone: '123456789',
-    email: 'example@gmail.com',
+    name: data.customerData.name,
+    street: data.customerData.street,
+    town: data.customerData.town,
+    postalCode: data.customerData.postalCode,
+    region: data.customerData.region,
+    country: data.customerData.country,
+    phone: data.customerData.phone,
+    email: data.customerData.email,
   });
 
   await common.fillServiceProviderInfo({
-    name: 'Service Provider name',
-    street: 'a',
-    town: 'b',
-    postalCode: '12345',
-    region: 'c',
-    phone: '123456789',
-    email: 'service@gmail.com',
+    name: data.serviceProviderData.name,
+    street: data.serviceProviderData.street,
+    town: data.serviceProviderData.town,
+    postalCode: data.serviceProviderData.postalCode,
+    region: data.serviceProviderData.region,
+    phone: data.serviceProviderData.phone ,
+    email: data.serviceProviderData.email,
   });
 
   await common.submitProject();

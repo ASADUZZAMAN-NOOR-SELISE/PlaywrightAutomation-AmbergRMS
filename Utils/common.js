@@ -57,7 +57,7 @@ export class Common {
 
   async generalInformation(data) {
     await this.nameInput.click();
-    await this.page.waitForTimeout(1000);
+    await this.page.waitForTimeout(1500);
     await this.nameInput.pressSequentially(" "+ data.name, { delay: 300 });
     await this.numberInput.fill(data.number);
     await this.startPlaceInput.fill(data.startPlace);
