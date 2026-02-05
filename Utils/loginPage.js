@@ -1,6 +1,6 @@
-import { locator } from '../../Utils/Locators/homeLocators';
-import { assertions } from '../../Utils/Assertions/assertion';
-import { getUrl } from '../../Utils/Urls/urls';
+import { locator } from './Locators/homeLocators';
+import { assertions } from './Assertions/assertion';
+import { getUrl } from './Urls/urls';
 const { expect } = require('@playwright/test');
 
 export class LoginPage{

@@ -1,7 +1,7 @@
 const { test , expect} = require('@playwright/test');
-const { LoginPage } = require('../../../Modules/Login/loginPage');
+const { LoginPage } = require('../../../Utils/loginPage');
 const { Common } = require('../../../Utils/common');
-const { STNProject } = require('../../../Modules/Project/STN/sTN');
+const { STNProject } = require('../STN/sTN');
 const { data } = require('../../../Utils/Data/Information');
 
 let webContext;
@@ -12,7 +12,7 @@ test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
   const loginPage = new LoginPage(page);
   try {
     await loginPage.goto();
-    await page.locator('.MuiGrid-root').nth(1).isVisible();
+    //await page.locator('.MuiGrid-root').nth(1).isVisible();
     await loginPage.verifyInitialState();
     await loginPage.login();
     await loginPage.logoutVisible();
