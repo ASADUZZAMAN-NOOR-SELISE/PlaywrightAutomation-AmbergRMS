@@ -56,12 +56,16 @@ class AboutUsPage {
 
   async verifyBuildNumber(expectedBuild) {
     const buildRow = this.buildNumberLabel().locator("..");
-    await expect(buildRow).toContainText(expectedBuild);
+    const actualText = await buildRow.textContent();
+    const actualBuild = actualText?.replace("Build Number", "").trim();
+    expect(actualBuild).toEqual(expectedBuild);
   }
 
   async verifyVersion(expectedVersion) {
     const versionRow = this.versionLabel().locator("..");
-    await expect(versionRow).toContainText(expectedVersion);
+    const actualText = await versionRow.textContent();
+    const actualVersion = actualText?.replace("Version", "").trim();
+    expect(actualVersion).toEqual(expectedVersion);
   }
 
   async openPrivacyPolicy() {
