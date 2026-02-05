@@ -51,6 +51,9 @@ test("Support about us modal validation", async () => {
   await supportAbout.verifyVersion("1.7");
   console.log("Version number is correct");
 
+  await supportAbout.privacyPolicyLink().isVisible();
+  console.log("Privacy Policy link is visible");
+
   const privacyPage = await supportAbout.openPrivacyPolicy();
 
   await privacyPage.getByRole("button", { name: "Accept all" }).click();
