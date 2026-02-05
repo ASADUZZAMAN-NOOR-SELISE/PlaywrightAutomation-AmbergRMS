@@ -91,6 +91,6 @@ test("Wrong name project search", async () => {
   const common = new Common(page);
   await loginPage.goto();
   await common.searchProject("Wrong Project Name");
-  await expect(page.getByText('No projects found')).toBeVisible();
+  await expect(page.locator('p:has-text("No projects found")')).toHaveText("No projects found");
 
 });
