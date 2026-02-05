@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../../../Modules/Login/loginPage";
+import { LoginPage } from "../../../Utils/loginPage";
 import { AboutUsPage } from "./aboutUs.page";
 
 let webContext;
