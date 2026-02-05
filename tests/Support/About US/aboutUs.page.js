@@ -15,11 +15,11 @@ class AboutUsPage {
     await this.aboutMenuItem.click();
   }
 
-  versionLabel() {
+  version() {
     return this.dialog.getByText("Version", { exact: true });
   }
 
-  buildNumberLabel() {
+  buildNumber() {
     return this.dialog.getByText("Build Number", { exact: true });
   }
 
@@ -44,8 +44,8 @@ class AboutUsPage {
   }
 
   async verifyRequiredLabels() {
-    await expect(this.versionLabel()).toHaveText("Version");
-    await expect(this.buildNumberLabel()).toHaveText("Build Number");
+    await expect(this.version()).toHaveText("Version");
+    await expect(this.buildNumber()).toHaveText("Build Number");
     await expect(this.releaseDateLabel()).toHaveText("Release Date");
   }
 
