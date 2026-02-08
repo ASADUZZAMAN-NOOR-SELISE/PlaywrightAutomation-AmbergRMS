@@ -69,9 +69,9 @@ class AboutUsPage {
   }
 
   async openPrivacyPolicy() {
-    const popupPromise = this.page.waitForEvent("popup");
+    const page1 = this.page.waitForEvent("popup");
     await this.privacyPolicyLink().click();
-    return popupPromise;
+    return page1;
   }
 }
 
