@@ -35,8 +35,10 @@ class AboutUsPage {
     return this.dialog.getByLabel("PlusExpiryFeatureProRailVersion");
   }
 
-  privacyPolicyLink() {
-    return this.dialog.getByRole("link", { name: /privacy policy/i });
+  async privacyPolicyLink() {
+    const link = this.dialog.getByRole("link", { name: /privacy policy/i });
+    await expect(link).toContainText(/privacy policy/i);
+    return link;
   }
 
   async verifyDialogIsVisible() {
@@ -70,7 +72,8 @@ class AboutUsPage {
 
   async openPrivacyPolicy() {
     const page1 = this.page.waitForEvent("popup");
-    await this.privacyPolicyLink().click();
+    const link = await this.privacyPolicyLink();
+    await link.click();
     return page1;
   }
 }
