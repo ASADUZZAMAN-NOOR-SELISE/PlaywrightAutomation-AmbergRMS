@@ -4,7 +4,7 @@ import { AboutUsPage } from "./aboutUs.page";
 
 let webContext;
 
-test.beforeAll("Homepage to dashboard", async ({ browser }) => {
+test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
   const loginPage = new LoginPage(page);
@@ -32,27 +32,20 @@ test("Support about us modal validation", async () => {
   const supportAbout = new AboutUsPage(page);
 
   await loginPage.goto();
-  console.log("Navigated to dashboard");
 
   await supportAbout.openAboutDialog();
 
   await supportAbout.verifyDialogIsVisible();
-  console.log("About dialog is visible");
 
   await supportAbout.verifyRequiredLabels();
-  console.log("Required labels are present");
 
   await supportAbout.verifyLicenseRows();
-  console.log("License rows are visible");
 
   await supportAbout.verifyBuildNumber("20260204.1898");
-  console.log("Build number is correct");
 
   await supportAbout.verifyVersion("1.7");
-  console.log("Version number is correct");
 
   await supportAbout.privacyPolicyLink().isVisible();
-  console.log("Privacy Policy link is visible");
 
   const privacyPage = await supportAbout.openPrivacyPolicy();
 
@@ -62,5 +55,5 @@ test("Support about us modal validation", async () => {
     "https://ambergtechnologies.com/downloads/company",
   );
 
-  console.log("Privacy Policy link navigates correctly");
+  console.log("About Us modal tests passed successfully.");
 });
