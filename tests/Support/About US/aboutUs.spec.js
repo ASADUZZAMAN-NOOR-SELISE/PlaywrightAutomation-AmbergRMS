@@ -25,7 +25,7 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   webContext = await browser.newContext({ storageState: "state.json" });
 });
 
-test("Support about us modal validation", async () => {
+test("About us modal validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
@@ -45,7 +45,8 @@ test("Support about us modal validation", async () => {
 
   await supportAbout.verifyVersion("1.7");
 
-  await supportAbout.privacyPolicyLink().isVisible();
+  const link = await supportAbout.privacyPolicyLink();
+  await expect(link).toBeVisible();
 
   const privacyPage = await supportAbout.openPrivacyPolicy();
 
