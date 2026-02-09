@@ -161,5 +161,6 @@ test('Project Delete when no subnode @SANITY ', async () => {
   await page.getByRole('button', { name: 'confirm' }).isVisible();
   await page.getByRole('button', { name: 'confirm' }).click();
   await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
+  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
 
 });
