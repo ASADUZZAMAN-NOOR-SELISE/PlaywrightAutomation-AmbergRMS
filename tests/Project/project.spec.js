@@ -2,6 +2,8 @@ const { test,expect } = require('@playwright/test');
 const { LoginPage } = require('../../Utils/loginPage');
 const { Common } = require('../../Utils/common');
 const { data } = require('../../Utils/Data/Information');
+const {Project} = require('../Project/project.page');
+const { projectData } = require('./project.data');
 let webContext;
 
 test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
@@ -24,7 +26,7 @@ test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
   webContext = await browser.newContext({ storageState: 'state.json' });
 });
 
-test.only('Project info  ', async () => {
+test('Project info  @SANITY ', async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -41,4 +43,30 @@ test.only('Project info  ', async () => {
   if(projectInfoPage) {
     console.log('Project Info visible - Test Passed');
   }
+  await common.deleteInProjectTree();
 });
+
+test.only('Project Edit info  @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectData.project.name);
+  await common.submitProject();
+  await common.searchProject(projectData.project.name);
+  await expect(page.getByLabel(projectData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projectData.project.name);
+  await expect(page.getByRole('heading', { name: projectData.project.name })).toBeVisible();
+  await page.locator("svg[data-testid='EditIcon']").click();
+  await project.fillProjectInfo(projectData.project);
+  await project.fillRange(projectData.project);
+  await project.fillCustomerInfo(projectData.customerData);
+  await project.submit();
+  await project.expectSuccess();
+});
+
+
