@@ -165,7 +165,7 @@ test('Project Delete when no subnode @SANITY ', async () => {
 
 });
 
-test.only('Project Delete toast message visibility @SANITY ', async () => {
+test('Project Delete toast message visibility @SANITY ', async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
