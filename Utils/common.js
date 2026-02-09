@@ -55,6 +55,12 @@ export class Common {
     return errorText;
   }
 
+  async setProjectName(name) {
+    await this.nameInput.click();
+    await this.page.waitForTimeout(1500);
+    await this.nameInput.pressSequentially(" "+ name, { delay: 300 });
+  }
+
   async generalInformation(data) {
     await this.nameInput.click();
     await this.page.waitForTimeout(1500);

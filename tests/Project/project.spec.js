@@ -2,6 +2,8 @@ const { test,expect } = require('@playwright/test');
 const { LoginPage } = require('../../Utils/loginPage');
 const { Common } = require('../../Utils/common');
 const { data } = require('../../Utils/Data/Information');
+const {Project} = require('../Project/project.page');
+const { projectData } = require('./project.data');
 let webContext;
 
 test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
@@ -24,13 +26,236 @@ test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
   webContext = await browser.newContext({ storageState: 'state.json' });
 });
 
-test('Project info  ', async () => {
+test('Project info  @SANITY ', async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
 
   await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(data.templateName.en13848);
+  await common.submitProject();
+  await common.searchProject(data.templateName.en13848);
+  await expect(page.getByLabel(data.templateName.en13848).first()).toBeVisible();
+  await common.enterIntoProject(data.templateName.en13848);
+  await expect(page.getByRole('heading', { name: data.templateName.en13848 })).toBeVisible();
+  const projectInfoPage = await expect(page.locator('button:has-text("PROJECT CONFIGURATION")')).toBeVisible();
+  if(projectInfoPage) {
+    console.log('Project Info visible - Test Passed');
+  }
+  await common.deleteInProjectTree();
+});
+
+test('Project Edit info  @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
   
 
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectData.project.name);
+  await common.submitProject();
+  await common.searchProject(projectData.project.name);
+  await expect(page.getByLabel(projectData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projectData.project.name);
+  await expect(page.getByRole('heading', { name: projectData.project.name })).toBeVisible();
+  await page.locator("svg[data-testid='EditIcon']").click();
+  await project.fillProjectInfo(projectData.project);
+  await project.fillRange(projectData.project);
+  await project.fillCustomerInfo(projectData.customerData);
+  await project.submit();
+  await project.expectSuccess();
+});
+
+test('Project Edit and cancel @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectData.project.name);
+  await common.submitProject();
+  await common.searchProject(projectData.project.name);
+  await expect(page.getByLabel(projectData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projectData.project.name);
+  await expect(page.getByRole('heading', { name: projectData.project.name })).toBeVisible();
+  await page.locator("svg[data-testid='EditIcon']").click();
+  await project.fillProjectInfo(projectData.project);
+  await project.fillRange(projectData.project);
+  await project.fillCustomerInfo(projectData.customerData);
+  await page.getByRole('button', { name: 'Cancel' }).click();
+  await page.getByRole('button', { name: /confirm/i }).isVisible();
+  await page.getByRole('button', { name: /confirm/i }).click();
+});
+
+test('Project Drawer Visibility @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+
+  await loginPage.goto();
+  await page.locator("tbody tr").first().isVisible();
+  await page.locator("tbody tr").first().click();
+  await expect(page.locator('div.MuiBox-root.css-llfbr7')).toBeVisible();
+});
+
+
+test('Delete Confirm modal open @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+  await loginPage.goto();
+  await page.locator("tbody tr").first().isVisible();
+  await page.locator("tbody tr").first().click();
+  await expect(page.locator('div.MuiBox-root.css-llfbr7')).toBeVisible();
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
 
 });
+
+test('Delete Modal Cancel button click @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+  await loginPage.goto();
+  await page.locator("tbody tr").first().isVisible();
+  await page.locator("tbody tr").first().click();
+  await expect(page.locator('div.MuiBox-root.css-llfbr7')).toBeVisible();
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
+  await page.locator("//button[normalize-space()='No, keep project'] | //button[normalize-space()='Cancel']").isVisible();
+  await page.locator("//button[normalize-space()='No, keep project'] | //button[normalize-space()='Cancel']").click();
+  await expect(page.locator("div[role='dialog']")).not.toBeVisible();
+});
+
+test('Project Delete when no subnode @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectData.project.name);
+  await common.submitProject();
+  await common.searchProject(projectData.project.name);
+  await expect(page.getByLabel(projectData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projectData.project.name);
+  await expect(page.getByRole('heading', { name: projectData.project.name })).toBeVisible();
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
+  await page.getByRole('button', { name: 'confirm' }).isVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
+  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
+
+});
+
+test('Project Delete toast message visibility @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectData.project.name);
+  await common.submitProject();
+  await common.searchProject(projectData.project.name);
+  await expect(page.getByLabel(projectData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projectData.project.name);
+  await expect(page.getByRole('heading', { name: projectData.project.name })).toBeVisible();
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
+  await page.getByRole('button', { name: 'confirm' }).isVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  const toast = page.getByText('Project deleted successfully');
+  await expect(toast).toBeVisible();
+  await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
+  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
+
+});
+
+test('Project Delete verification @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectData.project.name);
+  await common.submitProject();
+  await common.searchProject(projectData.project.name);
+  await expect(page.getByLabel(projectData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projectData.project.name);
+  await expect(page.getByRole('heading', { name: projectData.project.name })).toBeVisible();
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
+  await page.getByRole('button', { name: 'confirm' }).isVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  const toast = page.getByText('Project deleted successfully');
+  await expect(toast).toBeVisible();
+  await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
+  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
+  await common.searchProject(projectData.project.name);
+  const projectNotFound = await page.getByText('No projects found', { exact: true });
+  await expect(projectNotFound).toBeVisible();
+
+  await page.reload();
+  await common.searchProject(projectData.project.name);
+  await expect(projectNotFound).toContainText('No projects found');
+
+});
+
+test('Project Delete verification without Search @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectData.project.name);
+  await common.submitProject();
+  await common.searchProject(projectData.project.name);
+  await expect(page.getByLabel(projectData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projectData.project.name);
+  await expect(page.getByRole('heading', { name: projectData.project.name })).toBeVisible();
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
+  await page.getByRole('button', { name: 'confirm' }).isVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  const toast = page.getByText('Project deleted successfully');
+  await expect(toast).toBeVisible();
+  await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
+  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
+
+  await page.reload();
+  const projectNames = page.locator('tbody tr td:first-child span');
+  const count = await projectNames.count();
+  for (let i = 0; i < count; i++) {
+    console.log(await projectNames.nth(i).innerText());
+    if ((await projectNames.nth(i).innerText()) === projectData.project.name) {
+      throw new Error('Project still exists after deletion');
+    }
+  }
+});
+
