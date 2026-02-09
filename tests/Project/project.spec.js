@@ -24,13 +24,21 @@ test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
   webContext = await browser.newContext({ storageState: 'state.json' });
 });
 
-test('Project info  ', async () => {
+test.only('Project info  ', async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
 
   await loginPage.goto();
-  
-
-
+  await common.clickNewProject();
+  await common.setProjectName(data.templateName.en13848);
+  await common.submitProject();
+  await common.searchProject(data.templateName.en13848);
+  await expect(page.getByLabel(data.templateName.en13848).first()).toBeVisible();
+  await common.enterIntoProject(data.templateName.en13848);
+  await expect(page.getByRole('heading', { name: data.templateName.en13848 })).toBeVisible();
+  const projectInfoPage = await expect(page.locator('button:has-text("PROJECT CONFIGURATION")')).toBeVisible();
+  if(projectInfoPage) {
+    console.log('Project Info visible - Test Passed');
+  }
 });
