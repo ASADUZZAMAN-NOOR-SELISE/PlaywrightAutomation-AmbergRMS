@@ -46,7 +46,7 @@ test('Project info  @SANITY ', async () => {
   await common.deleteInProjectTree();
 });
 
-test.only('Project Edit info  @SANITY ', async () => {
+test('Project Edit info  @SANITY ', async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -67,6 +67,30 @@ test.only('Project Edit info  @SANITY ', async () => {
   await project.fillCustomerInfo(projectData.customerData);
   await project.submit();
   await project.expectSuccess();
+});
+
+test('Project Edit and cancel @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectData.project.name);
+  await common.submitProject();
+  await common.searchProject(projectData.project.name);
+  await expect(page.getByLabel(projectData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projectData.project.name);
+  await expect(page.getByRole('heading', { name: projectData.project.name })).toBeVisible();
+  await page.locator("svg[data-testid='EditIcon']").click();
+  await project.fillProjectInfo(projectData.project);
+  await project.fillRange(projectData.project);
+  await project.fillCustomerInfo(projectData.customerData);
+  await page.getByRole('button', { name: 'Cancel' }).click();
+  await page.getByRole('button', { name: /confirm/i }).isVisible();
+  await page.getByRole('button', { name: /confirm/i }).click();
 });
 
 
