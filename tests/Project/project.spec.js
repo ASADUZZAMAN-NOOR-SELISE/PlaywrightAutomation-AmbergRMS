@@ -106,18 +106,19 @@ test('Project Drawer Visibility @SANITY ', async () => {
   await expect(page.locator('div.MuiBox-root.css-llfbr7')).toBeVisible();
 });
 
-//working on it still
+
 test('Delete Confirm modal open @SANITY ', async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const project = new Project(page);
   
-
   await loginPage.goto();
   await page.locator("tbody tr").first().isVisible();
   await page.locator("tbody tr").first().click();
   await expect(page.locator('div.MuiBox-root.css-llfbr7')).toBeVisible();
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
+
 });
-
-
