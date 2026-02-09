@@ -190,3 +190,32 @@ test('Project Delete toast message visibility @SANITY ', async () => {
   await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
 
 });
+
+test('Project Delete verification @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectData.project.name);
+  await common.submitProject();
+  await common.searchProject(projectData.project.name);
+  await expect(page.getByLabel(projectData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projectData.project.name);
+  await expect(page.getByRole('heading', { name: projectData.project.name })).toBeVisible();
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
+  await page.getByRole('button', { name: 'confirm' }).isVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  const toast = page.getByText('Project deleted successfully');
+  await expect(toast).toBeVisible();
+  await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
+  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
+  await common.searchProject(projectData.project.name);
+  const projectNotFound = await page.getByText('No projects found', { exact: true });
+  await expect(projectNotFound).toBeVisible();
+});
+

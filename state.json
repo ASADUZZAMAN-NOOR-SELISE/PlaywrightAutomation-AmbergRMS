@@ -2,17 +2,17 @@
   "cookies": [
     {
       "name": "dev-amberg.seliselocal.com",
-      "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5hbnRfaWQiOiJCRTBEMjI0NS0wNTQ2LTRCMDktOEM1My1DRTE2MjQ3N0FDMzMiLCJzdWIiOiI3NmJkZmNjNC1jOGU5LTQyZTktYTM0Yi00MjliMWU2MDZiYTUiLCJzaXRlX2lkIjoiRDUxRjVFQTAtMzhENC00RjlELUEzODItMkJCRTA3NjE4Qzc2Iiwib3JpZ2luIjoiZGV2LWFtYmVyZy5zZWxpc2Vsb2NhbC5jb20iLCJzZXNzaW9uX2lkIjoic2VsaXNlYmxvY2tzLTYyM2JmMWM1LTE4OWMtNDQwYy1iMzQwLWQ3ODY0NTI0YmQwZCIsInVzZXJfaWQiOiI3NmJkZmNjNC1jOGU5LTQyZTktYTM0Yi00MjliMWU2MDZiYTUiLCJkaXNwbGF5X25hbWUiOiJFY2FwIFVzZXIiLCJzaXRlX25hbWUiOiJBcmMgVGVhbSIsInVzZXJfbmFtZSI6Imluc3BlY3RvciIsImVtYWlsIjoiZWNhcEBzZWxpc2UuY2giLCJwaG9uZV9udW1iZXIiOiIrNDE3MTM0NTY0NTYiLCJsYW5ndWFnZSI6ImVuLVVTIiwidXNlcl9sb2dnZWRpbiI6IlRydWUiLCJuYW1lIjoiNzZiZGZjYzQtYzhlOS00MmU5LWEzNGItNDI5YjFlNjA2YmE1IiwidXNlcl9hdXRvX2V4cGlyZSI6IkZhbHNlIiwidXNlcl9leHBpcmVfb24iOiIxLzEvMDAwMSAxMjowMDowMCBBTSIsImlhdCI6MTc3MDY2NjMxMiwicm9sZSI6WyJhZG1pbiIsImFub255bW91cyIsImFwcHVzZXIiXSwibmJmIjoxNzcwNjY2MzEyLCJleHAiOjE3NzA2NjY3MzIsImlzcyI6IkNOPUVudGVycHJpc2UgQ2xvdWQgQXBwbGljYXRpb24gUGxhdGZvcm0iLCJhdWQiOiIqIn0.VWl-wMWZdw8kyiILvFt-fbEtNm-fENjS9Mn7dfxtnLUd-RLhNAIQE5e2pnIGDIXTgQNaT8xmrknODUvuGTOUXdW8pl8Wm2ApdD2yp4Gm5jU3axyW2ymT_OFVSCGMAx6_0_ZEud7R6WuKkr9h-yDyblQhhbKwqAhuTaY1_i40apBjKaOTo1JhPrEfwa70JZgwXKePjiVXwOn4NWgJ4Ug1yxrNrVuBJXPwd9yON9yBOQDXj1eOgI4mWnNt4I-kriXy5DunpMa0lQYeYFocs5b1mC4ZbtqqhFVcOfee2d2cy3DXGSWndXyYR9Xln3xK9yuYorVhuYe-40GJu37okjTSQA",
+      "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5hbnRfaWQiOiJCRTBEMjI0NS0wNTQ2LTRCMDktOEM1My1DRTE2MjQ3N0FDMzMiLCJzdWIiOiI3NmJkZmNjNC1jOGU5LTQyZTktYTM0Yi00MjliMWU2MDZiYTUiLCJzaXRlX2lkIjoiRDUxRjVFQTAtMzhENC00RjlELUEzODItMkJCRTA3NjE4Qzc2Iiwib3JpZ2luIjoiZGV2LWFtYmVyZy5zZWxpc2Vsb2NhbC5jb20iLCJzZXNzaW9uX2lkIjoic2VsaXNlYmxvY2tzLWFjOWE3NDU3LWIzZTItNGNlZi05Nzg0LWY1YTVjMWFjNzMxMiIsInVzZXJfaWQiOiI3NmJkZmNjNC1jOGU5LTQyZTktYTM0Yi00MjliMWU2MDZiYTUiLCJkaXNwbGF5X25hbWUiOiJFY2FwIFVzZXIiLCJzaXRlX25hbWUiOiJBcmMgVGVhbSIsInVzZXJfbmFtZSI6Imluc3BlY3RvciIsImVtYWlsIjoiZWNhcEBzZWxpc2UuY2giLCJwaG9uZV9udW1iZXIiOiIrNDE3MTM0NTY0NTYiLCJsYW5ndWFnZSI6ImVuLVVTIiwidXNlcl9sb2dnZWRpbiI6IlRydWUiLCJuYW1lIjoiNzZiZGZjYzQtYzhlOS00MmU5LWEzNGItNDI5YjFlNjA2YmE1IiwidXNlcl9hdXRvX2V4cGlyZSI6IkZhbHNlIiwidXNlcl9leHBpcmVfb24iOiIxLzEvMDAwMSAxMjowMDowMCBBTSIsImlhdCI6MTc3MDY2NjYzNiwicm9sZSI6WyJhZG1pbiIsImFub255bW91cyIsImFwcHVzZXIiXSwibmJmIjoxNzcwNjY2NjM2LCJleHAiOjE3NzA2NjcwNTYsImlzcyI6IkNOPUVudGVycHJpc2UgQ2xvdWQgQXBwbGljYXRpb24gUGxhdGZvcm0iLCJhdWQiOiIqIn0.f5p5mQy2fw5REJLI2TThKsNZSIZKwYTsoIC0z5u0fIZYZWZzPHHd_kJE10EJB58OP6kD7af_RD0W4-a7O3IlQNezrwn2NBdm7H-P0H72MgX2p3IeeW4RRwekoBhiq8bWk4kEecNFbxUmtvEibK6z-i9dW_2-Vfd9114ustSIdjLRa08aZ73epQRjjTcvgl1irnRbxab0slZEHZiRMovPl_Oof1KcDbxKxNaVJ8knOJ6clpcJyxLDP2UGqogQnuy45jrsojAOi9qDUUDRg-HYLlSHM2vFR6Unfa4cn8R8m6w8kqjzr-tjD4WLSh8EZVjuLlk-ePN_CdBqi1AK4fNm_w",
       "domain": ".seliselocal.com",
       "path": "/",
-      "expires": 1773258313.184001,
+      "expires": 1773258637.188795,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "REFRESH_TOKEN",
-      "value": "509e1877692e45b6b83030e9e8b52075",
+      "value": "aa9e8daf0d314cc3879de763fc013f45",
       "domain": "dev-amberg.seliselocal.com",
       "path": "/",
       "expires": -1,
@@ -31,7 +31,7 @@
         },
         {
           "name": "tokenGenerationTime",
-          "value": "1770666309252"
+          "value": "1770666632902"
         },
         {
           "name": "hasUnreadNotifications",
