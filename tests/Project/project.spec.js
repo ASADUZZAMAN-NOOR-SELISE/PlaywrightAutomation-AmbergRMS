@@ -93,4 +93,30 @@ test('Project Edit and cancel @SANITY ', async () => {
   await page.getByRole('button', { name: /confirm/i }).click();
 });
 
+test('Project Drawer Visibility @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+
+  await loginPage.goto();
+  await page.locator("tbody tr").first().isVisible();
+  await page.locator("tbody tr").first().click();
+  await expect(page.locator('div.MuiBox-root.css-llfbr7')).toBeVisible();
+});
+
+test('Delete Confirm modal open @SANITY ', async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const project = new Project(page);
+  
+
+  await loginPage.goto();
+  await page.locator("tbody tr").first().isVisible();
+  await page.locator("tbody tr").first().click();
+  await expect(page.locator('div.MuiBox-root.css-llfbr7')).toBeVisible();
+});
+
 
