@@ -69,7 +69,7 @@ export class Project {
   }
 
   async submit() {
-    await expect(this.submitBtn).toBeVisible();
+    await this.submitBtn.isVisible();
     await this.submitBtn.click();
   }
 
