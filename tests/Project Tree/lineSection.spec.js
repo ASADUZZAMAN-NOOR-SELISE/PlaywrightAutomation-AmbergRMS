@@ -26,7 +26,7 @@ test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
   webContext = await browser.newContext({ storageState: 'state.json' });
 });
 
-test('Line section modal open @SANITY ', async () => {
+test('Line section modal open @SANITY ', async ({})  => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -68,8 +68,7 @@ test('Line section modal open @SANITY ', async () => {
 });
 
 
-
-test('Line section Add @SANITY ', async () => {
+test('Line section Add @SANITY ', async ({})  => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -109,7 +108,7 @@ test('Line section Add @SANITY ', async () => {
   }
 });
 
-test('Line Section Cancel function @SANITY ', async () => {
+test('Line Section Cancel function @SANITY ', async ({})  => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -150,5 +149,299 @@ test('Line Section Cancel function @SANITY ', async () => {
     }
   }
 });
+
+test('Line section Edit modal open @SANITY ', async ({})  => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const tree = new ProjectTreePage(page);
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projecTreetData.project.name);
+  await common.submitProject();
+  await common.searchProject(projecTreetData.project.name);
+  await expect(page.getByLabel(projecTreetData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projecTreetData.project.name);
+  await expect(page.getByRole('heading', { name: projecTreetData.project.name })).toBeVisible();
+  await tree.addLine();
+  await tree.submitLineSectionBtn.isVisible();
+  await tree.submitLineSectionBtn.click();
+  await page.getByRole('img', { name: 'Footer Logo' }).click();
+
+  await common.searchProject(projecTreetData.project.name);
+  await expect(page.getByLabel(projecTreetData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projecTreetData.project.name);
+  await expect(page.getByRole('heading', { name: projecTreetData.project.name })).toBeVisible();
+  await tree.editIcon.click();
+  await expect(tree.lineSectionModal).toBeVisible();
+
+  //////
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
+  await page.getByRole('button', { name: 'confirm' }).isVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  const toast = page.getByText('Project deleted successfully');
+  await expect(toast).toBeVisible();
+  await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
+  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
+
+  await page.reload();
+  const projectNames = page.locator('tbody tr td:first-child span');
+  const count = await projectNames.count();
+  for (let i = 0; i < count; i++) {
+    console.log(await projectNames.nth(i).innerText());
+    if ((await projectNames.nth(i).innerText()) === projecTreetData.project.name) {
+      throw new Error('Project still exists after deletion');
+    }
+  }
+});
+
+
+test('Line section Drawer open @SANITY ', async ({})  => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const tree = new ProjectTreePage(page);
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projecTreetData.project.name);
+  await common.submitProject();
+  await common.searchProject(projecTreetData.project.name);
+  await expect(page.getByLabel(projecTreetData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projecTreetData.project.name);
+  await expect(page.getByRole('heading', { name: projecTreetData.project.name })).toBeVisible();
+  await tree.addLine();
+  await tree.submitLineSectionBtn.isVisible();
+  await tree.submitLineSectionBtn.click();
+  await page.getByRole('img', { name: 'Footer Logo' }).click();
+
+  await common.searchProject(projecTreetData.project.name);
+  await expect(page.getByLabel(projecTreetData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projecTreetData.project.name);
+  await expect(page.getByRole('heading', { name: projecTreetData.project.name })).toBeVisible();
+  await page.locator(".css-g7taw0").first().click();
+  await expect(tree.sectionProperty).toBeVisible();
+
+  //////
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
+  await page.getByRole('button', { name: 'confirm' }).isVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  const toast = page.getByText('Project deleted successfully');
+  await expect(toast).toBeVisible();
+  await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
+  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
+
+  await page.reload();
+  const projectNames = page.locator('tbody tr td:first-child span');
+  const count = await projectNames.count();
+  for (let i = 0; i < count; i++) {
+    console.log(await projectNames.nth(i).innerText());
+    if ((await projectNames.nth(i).innerText()) === projecTreetData.project.name) {
+      throw new Error('Project still exists after deletion');
+    }
+  }
+});
+
+test('Line section edit all and save @SANITY ', async ({}) => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const tree = new ProjectTreePage(page);
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projecTreetData.project.name);
+  await common.submitProject();
+  await common.searchProject(projecTreetData.project.name);
+  await expect(page.getByLabel(projecTreetData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projecTreetData.project.name);
+  await expect(page.getByRole('heading', { name: projecTreetData.project.name })).toBeVisible();
+  await tree.addLine();
+  await tree.submitLineSectionBtn.isVisible();
+  await tree.submitLineSectionBtn.click();
+  await page.getByRole('img', { name: 'Footer Logo' }).click();
+
+  await common.searchProject(projecTreetData.project.name);
+  await expect(page.getByLabel(projecTreetData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projecTreetData.project.name);
+  await expect(page.getByRole('heading', { name: projecTreetData.project.name })).toBeVisible();
+  await page.reload();
+  
+  const treeToggle = page.locator('.MuiTreeItem-iconContainer').first();
+  await treeToggle.waitFor({ state: 'visible' });
+  await treeToggle.click();
+  await expect(tree.sectionProperty).toBeVisible();
+  await expect(page.getByText('Line Section', { exact: true })).toBeVisible();
+  await expect(page.getByText('Line Section', { exact: true })).toHaveText('Line Section');
+  await tree.editIcon.click();
+  await tree.editLine();
+  await tree.submitLineSectionBtn.click();
+  await expect(page.getByRole('alert').first()).toContainText('edited successfully');
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await page.locator("div[role='dialog']").isVisible();
+  await page.getByRole('button', { name: 'confirm' }).isVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  await expect(page.getByRole('alert').first()).toContainText(' deleted successfully');
+  await page.reload();
+
+  //////
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
+  await page.getByRole('button', { name: 'confirm' }).isVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  const toast = page.getByText('Project deleted successfully');
+  await expect(toast).toBeVisible();
+  await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
+  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
+
+  await page.reload();
+  const projectNames = page.locator('tbody tr td:first-child span');
+  const count = await projectNames.count();
+  for (let i = 0; i < count; i++) {
+    console.log(await projectNames.nth(i).innerText());
+    if ((await projectNames.nth(i).innerText()) === projecTreetData.project.name) {
+      throw new Error('Project still exists after deletion');
+    }
+  }
+});
+
+test('Line section edit all and cancel @SANITY ', async ({}) => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const tree = new ProjectTreePage(page);
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projecTreetData.project.name);
+  await common.submitProject();
+  await common.searchProject(projecTreetData.project.name);
+  await expect(page.getByLabel(projecTreetData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projecTreetData.project.name);
+  await expect(page.getByRole('heading', { name: projecTreetData.project.name })).toBeVisible();
+  await tree.addLine();
+  await tree.submitLineSectionBtn.isVisible();
+  await tree.submitLineSectionBtn.click();
+  await page.getByRole('img', { name: 'Footer Logo' }).click();
+
+  await common.searchProject(projecTreetData.project.name);
+  await expect(page.getByLabel(projecTreetData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projecTreetData.project.name);
+  await expect(page.getByRole('heading', { name: projecTreetData.project.name })).toBeVisible();
+  await page.reload();
+  
+  const treeToggle = page.locator('.MuiTreeItem-iconContainer').first();
+  await treeToggle.waitFor({ state: 'visible' });
+  await treeToggle.click();
+  await expect(tree.sectionProperty).toBeVisible();
+  await expect(page.getByText('Line Section', { exact: true })).toBeVisible();
+  await expect(page.getByText('Line Section', { exact: true })).toHaveText('Line Section');
+  await tree.editIcon.click();
+  await tree.editLine();
+  await tree.cancelBtn.click();
+  await expect(tree.cancelModal).toBeVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  await page.reload();
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await page.locator("div[role='dialog']").isVisible();
+  await page.getByRole('button', { name: 'confirm' }).isVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  await expect(page.getByRole('alert').first()).toContainText(' deleted successfully');
+  await page.reload();
+
+  //////
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
+  await page.getByRole('button', { name: 'confirm' }).isVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  const toast = page.getByText('Project deleted successfully');
+  await expect(toast).toBeVisible();
+  await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
+  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
+
+  await page.reload();
+  const projectNames = page.locator('tbody tr td:first-child span');
+  const count = await projectNames.count();
+  for (let i = 0; i < count; i++) {
+    console.log(await projectNames.nth(i).innerText());
+    if ((await projectNames.nth(i).innerText()) === projecTreetData.project.name) {
+      throw new Error('Project still exists after deletion');
+    }
+  }
+});
+
+
+test('Delete : Line section  @SANITY ', async ({}) => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const tree = new ProjectTreePage(page);
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projecTreetData.project.name);
+  await common.submitProject();
+  await common.searchProject(projecTreetData.project.name);
+  await expect(page.getByLabel(projecTreetData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projecTreetData.project.name);
+  await expect(page.getByRole('heading', { name: projecTreetData.project.name })).toBeVisible();
+  await tree.addLine();
+  await tree.submitLineSectionBtn.isVisible();
+  await tree.submitLineSectionBtn.click();
+  await page.getByRole('img', { name: 'Footer Logo' }).click();
+  await common.searchProject(projecTreetData.project.name);
+  await expect(page.getByLabel(projecTreetData.project.name).first()).toBeVisible();
+  await common.enterIntoProject(projecTreetData.project.name);
+  await expect(page.getByRole('heading', { name: projecTreetData.project.name })).toBeVisible();
+  await page.reload();
+  
+  const treeToggle = page.locator('.MuiTreeItem-iconContainer').first();
+  await treeToggle.waitFor({ state: 'visible' });
+  await treeToggle.click();
+  await expect(tree.sectionProperty).toBeVisible();
+  await expect(page.getByText('Line Section', { exact: true })).toBeVisible();
+  await expect(page.getByText('Line Section', { exact: true })).toHaveText('Line Section');
+
+  await tree.deleteIcon.click();
+  await expect(tree.deleteModal).toBeVisible();
+  await tree.cancelBtn.click();
+  await tree.deleteIcon.click();
+  await expect(tree.deleteModal).toBeVisible();
+  await tree.modalConfirmBtn.isVisible();
+  await tree.modalConfirmBtn.click();
+  await expect(page.getByRole('alert').first()).toContainText(' deleted successfully');
+  await expect(page.locator('.MuiTreeItem-iconContainer').first()).not.toBeVisible();
+  await page.reload();
+
+  await common.deleteButton.isVisible();
+  await common.deleteButton.click();
+  await expect(page.locator("div[role='dialog']")).toBeVisible();
+  await page.getByRole('button', { name: 'confirm' }).isVisible();
+  await page.getByRole('button', { name: 'confirm' }).click();
+  const toast = page.getByText('Project deleted successfully');
+  await expect(toast).toBeVisible();
+  await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
+  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
+
+  await page.reload();
+  const projectNames = page.locator('tbody tr td:first-child span');
+  const count = await projectNames.count();
+  for (let i = 0; i < count; i++) {
+    console.log(await projectNames.nth(i).innerText());
+    if ((await projectNames.nth(i).innerText()) === projecTreetData.project.name) {
+      throw new Error('Project still exists after deletion');
+    }
+  }
+});
+
 
 
