@@ -30,6 +30,25 @@ export class ProjectTreePage {
 
     // Actions
     this.submitBtn = page.getByRole('button', { name: 'Custom Submit Button' });
+
+    //line section
+    this.lineSectionTab = page.locator("button[aria-label='Add Line Section']");
+    this.lineSectionModal = page.locator("div form[aria-label='form']");
+    this.lineSectionRadioBtn = page.locator("form [role='radiogroup'] label");
+    this.nameField = page.getByRole('textbox', { name: 'NameInput' });
+    this.numberField = page.getByRole('textbox', { name: 'Number' });
+    this.startPlaceName = page.getByRole('textbox', { name: 'Start Place' });
+    this.endPlaceName = page.getByRole('textbox', { name: 'End Place' });
+    this.commentField = page.locator("div textarea[name='Comment']");
+    this.startLocalization = page.locator('[name="Start.Stationing"]');
+    this.endLocalization = page.locator('[name="End.Stationing"]');
+    this.cancelBtn = page.locator('button:has-text("CANCEL")');
+    this.submitLineSectionBtn = page.locator("button[type='submit']");
+    this.clearIcon = page.locator("button[type='button']");
+    this.cancelModal = page.locator("div[role='dialog']");
+    this.modalConfirmBtn = page.locator("button[aria-label='confirm']");
+
+    //Track under line section
     
   }
 
@@ -74,5 +93,35 @@ export class ProjectTreePage {
 
   async expectSuccess() {
     await expect(this.editAlert).toContainText('Project edited successfully');
+  }
+
+  async addLine(){
+    await this.lineSectionTab.click();
+    await this.lineSectionModal.isVisible();
+    await this.lineSectionRadioBtn.nth(0).click();
+    await this.nameField.fill('Line section 1');
+    await this.numberField.fill('123456789');
+    await this.startPlaceName.fill('a');
+    await this.endPlaceName.fill('b');
+    await this.commentField.fill('General information about the line section');
+    await this.startLocalization.fill('100');
+    await this.endLocalization.fill('3000');
+    await this.submitLineSectionBtn.isVisible();
+    
+  }
+
+  async clearLine(){
+    await this.lineSectionTab.click();
+    await this.lineSectionModal.isVisible();
+    await this.lineSectionRadioBtn.nth(0).click();
+    await this.nameField.fill('Line section 1');
+    await this.numberField.fill('123456789');
+    await this.startPlaceName.fill('a');
+    await this.endPlaceName.fill('b');
+    await this.commentField.fill('General information about the line section');
+    await this.startLocalization.fill('100');
+    await this.endLocalization.fill('3000');
+    await this.clearIcon.click();
+
   }
 }
