@@ -47,6 +47,10 @@ export class ProjectTreePage {
     this.clearIcon = page.locator("button[type='button']");
     this.cancelModal = page.locator("div[role='dialog']");
     this.modalConfirmBtn = page.locator("button[aria-label='confirm']");
+    this.editIcon = page.getByTestId('EditIcon',{force:true});
+    this.deleteIcon = page.locator("button[aria-label='Property Window Delete Button']", {force:true});
+    this.sectionProperty = page.locator('div.MuiGrid-root.MuiGrid-container.MuiGrid-direction-xs-column.css-7axa8t');
+    this.deleteModal = page.locator('div.MuiGrid-root.MuiGrid-container.MuiGrid-direction-xs-column.css-hsbgum');
 
     //Track under line section
     
@@ -124,4 +128,17 @@ export class ProjectTreePage {
     await this.clearIcon.click();
 
   }
+
+  async editLine(){
+    await this.nameField.fill('Edited Line');
+    await this.numberField.fill('01521000001');
+    await this.startPlaceName.fill('edited start place');
+    await this.endPlaceName.fill('edited end place');
+    await this.commentField.fill('edited comment');
+    await this.startLocalization.fill('1000');
+    await this.endLocalization.fill('5000');
+    await this.submitLineSectionBtn.isVisible();
+    
+  }
+
 }
