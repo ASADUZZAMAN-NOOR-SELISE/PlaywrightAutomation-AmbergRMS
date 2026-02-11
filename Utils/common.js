@@ -84,7 +84,7 @@ export class Common {
     await this.customerStreetInput.fill(data.street);
     await this.customerTownInput.fill(data.town);
     await this.customerPostalCodeInput.fill(data.postalCode);
-    await this.customerRegionInput.fill(data.region);
+    await this.customerRegionInput.first().fill(data.region);
     await this.customerCountryDropdown.click();
     await this.page.getByRole('option', { name: data.country }).click();
     await this.customerPhoneInput.fill(data.phone);
@@ -106,7 +106,7 @@ export class Common {
     await this.serviceProviderTownInput.fill(data.town);
     await this.serviceProviderPostalCodeInput.fill(data.postalCode);
     await this.serviceProviderRegionInput.fill(data.region);
-    await this.serviceCountryDropdown.click();
+    await this.serviceCountryDropdown.last().click();
     await this.page.getByRole('option', { name: 'Austria' }).click();
     await this.serviceProviderPhoneInput.fill(data.phone);
     await this.serviceProviderEmailInput.fill(data.email);
