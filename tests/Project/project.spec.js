@@ -220,7 +220,8 @@ test('Project Delete verification @SANITY', async () => {
   await page.getByRole('button', { name: 'confirm' }).click();
   await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
   // -------- Verify Project Removed --------
-   await page.reload();
+  await common.searchProject(projectName);
+  await page.reload();
   await common.searchProject(projectName);
   await expect(page.getByText('No projects found', { exact: true })).toBeVisible();
 });
