@@ -138,7 +138,7 @@ test('Line section edit all and save @SANITY', async ({}) => {
   await expect(page.getByLabel(projectName).first()).toBeVisible();
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
-  const lineSection1 = page.locator("div[aria-label='Generic Tree']  ul li div svg[aria-hidden='true']").first();
+  const lineSection1 = page.locator("div[aria-label='Generic Tree'] ul li").filter({ hasText: 'Line section 1' });
   await expect(lineSection1).toBeVisible();
   await lineSection1.click();
   await expect(tree.sectionProperty).toBeVisible();
@@ -162,8 +162,8 @@ test('Line section edit all and cancel @SANITY ', async ({}) => {
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
   await page.reload();
-  const lineSection1 = page.locator("div[aria-label='Generic Tree']  ul li div svg[aria-hidden='true']").first();
-  await expect(lineSection1).toBeVisible();
+  const lineSection1 = page.locator("div[aria-label='Generic Tree'] ul li").filter({ hasText: 'Line section 1' });
+  await lineSection1.isVisible();
   await lineSection1.click();
   await expect(tree.editIcon).toBeVisible();
   await tree.editIcon.click();
@@ -188,7 +188,7 @@ test('Delete : Line section modal > cancel @SANITY @one', async ({}) => {
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
   await page.reload();
-  const lineSection1 = page.locator("div[aria-label='Generic Tree']  ul li div svg[aria-hidden='true']").first();
+  const lineSection1 = page.locator("div[aria-label='Generic Tree'] ul li").filter({ hasText: 'Line section 1' });
   await lineSection1.isVisible();
   await lineSection1.click();
   await tree.deleteIcon.isVisible();
@@ -212,15 +212,18 @@ test("Delete : Line section modal > confirm @SANITY ", async ({}) => {
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
   await page.reload();
-  const lineSection1 = page.locator("div[aria-label='Generic Tree']  ul li div svg[aria-hidden='true']").first();
+  const lineSection1 = page.locator("div[aria-label='Generic Tree'] ul li").filter({ hasText: 'Line section 1' });
   await lineSection1.isVisible();
   await lineSection1.click();
   await tree.deleteIcon.isVisible();
   await tree.deleteIcon.click();
   await expect(tree.deleteModal).toBeVisible();
+  await tree.deleteIcon.click();
+  await expect(tree.deleteModal).toBeVisible();
   await tree.modalConfirmBtn.isVisible();
   await tree.modalConfirmBtn.click();
   await expect(page.getByRole('alert').first()).toContainText(' deleted successfully');
+  await expect(page.locator('.MuiTreeItem-iconContainer').first()).not.toBeVisible();
   await page.reload();
 
   await common.deleteButton.isVisible();
