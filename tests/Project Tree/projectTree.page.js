@@ -99,11 +99,11 @@ export class ProjectTreePage {
     await expect(this.editAlert).toContainText('Project edited successfully');
   }
 
-  async addLine(){
+  async addLine(lineSectionName){
     await this.lineSectionTab.click();
     await this.lineSectionModal.isVisible();
-    await this.lineSectionRadioBtn.nth(0).click();
-    await this.nameField.fill('Line section 1');
+    await this.lineSectionRadioBtn.first().check();
+    await this.nameField.fill(lineSectionName);
     await this.numberField.fill('123456789');
     await this.startPlaceName.fill('a');
     await this.endPlaceName.fill('b');
