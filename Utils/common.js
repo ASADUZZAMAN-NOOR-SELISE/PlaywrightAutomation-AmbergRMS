@@ -58,13 +58,13 @@ export class Common {
   async setProjectName(name) {
     await this.nameInput.click();
     await this.page.waitForTimeout(1500);
-    await this.nameInput.pressSequentially(" "+ name, { delay: 300 });
+    await this.nameInput.pressSequentially(" "+ name, { delay: 500 });
   }
 
   async generalInformation(data) {
     await this.nameInput.click();
     await this.page.waitForTimeout(1500);
-    await this.nameInput.pressSequentially(" "+ data.name, { delay: 300 });
+    await this.nameInput.pressSequentially(" "+ data.name, { delay: 500 });
     await this.numberInput.fill(data.number);
     await this.startPlaceInput.fill(data.startPlace);
     await this.endPlaceInput.fill(data.endPlace);
@@ -84,7 +84,7 @@ export class Common {
     await this.customerStreetInput.fill(data.street);
     await this.customerTownInput.fill(data.town);
     await this.customerPostalCodeInput.fill(data.postalCode);
-    await this.customerRegionInput.fill(data.region);
+    await this.customerRegionInput.first().fill(data.region);
     await this.customerCountryDropdown.click();
     await this.page.getByRole('option', { name: data.country }).click();
     await this.customerPhoneInput.fill(data.phone);
@@ -106,7 +106,7 @@ export class Common {
     await this.serviceProviderTownInput.fill(data.town);
     await this.serviceProviderPostalCodeInput.fill(data.postalCode);
     await this.serviceProviderRegionInput.fill(data.region);
-    await this.serviceCountryDropdown.click();
+    await this.serviceCountryDropdown.last().click();
     await this.page.getByRole('option', { name: 'Austria' }).click();
     await this.serviceProviderPhoneInput.fill(data.phone);
     await this.serviceProviderEmailInput.fill(data.email);
@@ -121,8 +121,7 @@ export class Common {
   //searcch project from searchh bar 
   async searchProject(projectName) {
   await this.searchByProjectNameInput.click();
-  await this.searchByProjectNameInput.fill(projectName);
-  await this.page.waitForTimeout(200);
+  await this.searchByProjectNameInput.pressSequentially(projectName, { delay: 300 });
   }
 
   // click to enter into project > it takes project tree page

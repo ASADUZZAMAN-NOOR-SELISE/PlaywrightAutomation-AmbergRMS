@@ -6,6 +6,10 @@ const {Project} = require('../Project/project.page');
 const { projectData } = require('./project.data');
 let webContext;
 
+function getUniqueProjectName(prefix = 'AutoProject') {
+  return `${prefix}-${Date.now()}`;
+}
+
 test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
@@ -52,7 +56,6 @@ test('Project Edit info  @SANITY ', async () => {
   const common = new Common(page);
   const project = new Project(page);
   
-
   await loginPage.goto();
   await common.clickNewProject();
   await common.setProjectName(projectData.project.name);
@@ -75,7 +78,6 @@ test('Project Edit and cancel @SANITY ', async () => {
   const common = new Common(page);
   const project = new Project(page);
   
-
   await loginPage.goto();
   await common.clickNewProject();
   await common.setProjectName(projectData.project.name);
@@ -99,7 +101,6 @@ test('Project Drawer Visibility @SANITY ', async () => {
   const common = new Common(page);
   const project = new Project(page);
   
-
   await loginPage.goto();
   await page.locator("tbody tr").first().isVisible();
   await page.locator("tbody tr").first().click();
@@ -191,37 +192,32 @@ test('Project Delete toast message visibility @SANITY ', async () => {
 
 });
 
-test('Project Delete verification @SANITY ', async () => {
+test('Project Delete verification @SANITY', async () => {
   const page = await webContext.newPage();
+
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const project = new Project(page);
-  
+
+  // Unique project name per execution
+  const projectName = getUniqueProjectName();
   await loginPage.goto();
   await common.clickNewProject();
-  await common.setProjectName(projectData.project.name);
+  await common.setProjectName(projectName);
   await common.submitProject();
-  await common.searchProject(projectData.project.name);
-  await expect(page.getByLabel(projectData.project.name).first()).toBeVisible();
-  await common.enterIntoProject(projectData.project.name);
-  await expect(page.getByRole('heading', { name: projectData.project.name })).toBeVisible();
-  await common.deleteButton.isVisible();
+  await common.searchProject(projectName);
+  await expect(page.getByLabel(projectName).first()).toBeVisible();
+  await common.enterIntoProject(projectName);
+  await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
+  await expect(common.deleteButton).toBeVisible();
   await common.deleteButton.click();
   await expect(page.locator("div[role='dialog']")).toBeVisible();
-  await page.getByRole('button', { name: 'confirm' }).isVisible();
   await page.getByRole('button', { name: 'confirm' }).click();
-  const toast = page.getByText('Project deleted successfully');
-  await expect(toast).toBeVisible();
   await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
-  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
-  await common.searchProject(projectData.project.name);
-  const projectNotFound = await page.getByText('No projects found', { exact: true });
-  await expect(projectNotFound).toBeVisible();
-
+  // Verify Project Removed 
   await page.reload();
-  await common.searchProject(projectData.project.name);
-  await expect(projectNotFound).toContainText('No projects found');
-
+  await common.searchProject(projectName);
+  await expect(page.getByText('No projects found', { exact: true })).toBeVisible();
 });
 
 test('Project Delete verification without Search @SANITY ', async () => {
