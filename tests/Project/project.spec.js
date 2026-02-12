@@ -56,7 +56,6 @@ test('Project Edit info  @SANITY ', async () => {
   const common = new Common(page);
   const project = new Project(page);
   
-
   await loginPage.goto();
   await common.clickNewProject();
   await common.setProjectName(projectData.project.name);
@@ -79,7 +78,6 @@ test('Project Edit and cancel @SANITY ', async () => {
   const common = new Common(page);
   const project = new Project(page);
   
-
   await loginPage.goto();
   await common.clickNewProject();
   await common.setProjectName(projectData.project.name);
@@ -103,7 +101,6 @@ test('Project Drawer Visibility @SANITY ', async () => {
   const common = new Common(page);
   const project = new Project(page);
   
-
   await loginPage.goto();
   await page.locator("tbody tr").first().isVisible();
   await page.locator("tbody tr").first().click();
@@ -204,8 +201,6 @@ test('Project Delete verification @SANITY', async () => {
 
   // Unique project name per execution
   const projectName = getUniqueProjectName();
-
-
   await loginPage.goto();
   await common.clickNewProject();
   await common.setProjectName(projectName);
@@ -219,7 +214,7 @@ test('Project Delete verification @SANITY', async () => {
   await expect(page.locator("div[role='dialog']")).toBeVisible();
   await page.getByRole('button', { name: 'confirm' }).click();
   await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
-  // -------- Verify Project Removed --------
+  // Verify Project Removed 
   await page.reload();
   await common.searchProject(projectName);
   await expect(page.getByText('No projects found', { exact: true })).toBeVisible();

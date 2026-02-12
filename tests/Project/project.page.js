@@ -27,7 +27,7 @@ export class Project {
     this.email = page.getByRole('textbox', { name: 'Email' });
     this.website = page.getByRole('textbox', { name: 'Website' });
     this.editAlert = page.getByRole('alert').first();
-
+    
     // Actions
     this.submitBtn = page.getByRole('button', { name: 'Custom Submit Button' });
     
@@ -53,16 +53,13 @@ export class Project {
 
   async fillCustomerInfo() {
     
-
     await this.company.fill(projectData.customerData.name);
     await this.street.fill(projectData.customerData.street);
     await this.town.fill(projectData.customerData.town);
     await this.region.fill(projectData.customerData.region);
     await this.postalCode.fill(projectData.customerData.postalCode);
-
     await this.countryDropdown.click();
     await this.page.getByRole('option', { name: projectData.customerData.country }).click();
-
     await this.telephone.fill(projectData.customerData.phone);
     await this.email.fill(projectData.customerData.email);
     await this.website.fill(projectData.customerData.website);
