@@ -121,8 +121,7 @@ export class Common {
   //searcch project from searchh bar 
   async searchProject(projectName) {
   await this.searchByProjectNameInput.click();
-  await this.searchByProjectNameInput.fill(projectName);
-  await this.page.waitForTimeout(200);
+  await this.searchByProjectNameInput.pressSequentially(projectName, { delay: 300 });
   }
 
   // click to enter into project > it takes project tree page
