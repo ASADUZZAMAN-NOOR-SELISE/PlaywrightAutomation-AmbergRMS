@@ -33,7 +33,7 @@ export class ProjectTreePage {
 
     //line section
     this.lineSectionTab = page.locator("button[aria-label='Add Line Section']");
-    this.lineSectionModal = page.locator("div form[aria-label='form']");
+    this.lineSectionModal = page.locator(".MuiGrid-root.css-nmw51g");
     this.lineSectionRadioBtn = page.locator("form [role='radiogroup'] label");
     this.nameField = page.getByRole('textbox', { name: 'NameInput' });
     this.numberField = page.getByRole('textbox', { name: 'Number' });
