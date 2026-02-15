@@ -8,11 +8,17 @@ class AboutUsPage {
     this.aboutMenuItem = page.getByRole("menuitem", { name: "About" });
 
     this.dialog = page.getByRole("dialog");
+
+    this.closeButton = this.dialog.locator("button[aria-label='Close']");
   }
 
   async openAboutDialog() {
     await this.supportButton.click();
     await this.aboutMenuItem.click();
+  }
+
+  async closeAboutDialog() {
+    await this.closeButton.click();
   }
 
   version() {
@@ -68,6 +74,10 @@ class AboutUsPage {
     const link = await this.privacyPolicyLink();
     await link.click();
     return page1;
+  }
+
+  async verifyDialogIsNotVisible() {
+    await expect(this.dialog).not.toBeVisible();
   }
 }
 

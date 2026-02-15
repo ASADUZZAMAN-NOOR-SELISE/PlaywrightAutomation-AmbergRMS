@@ -56,5 +56,13 @@ test("About us modal validation", async () => {
     "https://ambergtechnologies.com/downloads/company",
   );
 
+  await privacyPage.close();
+
+  await page.bringToFront();
+
+  await supportAbout.verifyDialogIsVisible();
+  await supportAbout.closeAboutDialog();
+  await supportAbout.verifyDialogIsNotVisible();
+
   console.log("About Us modal tests passed successfully.");
 });
