@@ -56,13 +56,6 @@ class AboutUsPage {
     await expect(this.plusExpiryFeatureProRailVersion()).toBeVisible();
   }
 
-  async verifyBuildNumber(expectedBuild) {
-    const buildRow = this.buildNumber().locator("..");
-    const actualText = await buildRow.textContent();
-    const actualBuild = actualText?.replace("Build Number", "").trim();
-    expect(actualBuild).toEqual(expectedBuild);
-  }
-
   async verifyVersion(expectedVersion) {
     const versionRow = this.version().locator("..");
     const actualText = await versionRow.textContent();

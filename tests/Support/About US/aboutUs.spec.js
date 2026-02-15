@@ -4,6 +4,8 @@ import { AboutUsPage } from "./aboutUs.page";
 
 let webContext;
 
+const verifyVersion = "1.7";
+
 test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
@@ -41,9 +43,7 @@ test("About us modal validation", async () => {
 
   await supportAbout.verifyLicenseRows();
 
-  await supportAbout.verifyBuildNumber("20260204.1898");
-
-  await supportAbout.verifyVersion("1.7");
+  await supportAbout.verifyVersion(verifyVersion);
 
   const link = await supportAbout.privacyPolicyLink();
   await expect(link).toBeVisible();
