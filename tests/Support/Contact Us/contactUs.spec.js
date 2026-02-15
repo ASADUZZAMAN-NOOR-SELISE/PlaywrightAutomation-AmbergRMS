@@ -32,7 +32,6 @@ test("Contact us modal validation", async () => {
   const loginPage = new LoginPage(page);
   const supportContact = new ContactUsPage(page);
   await loginPage.goto();
-
   await supportContact.openContactUsDialog();
   await supportContact.verifyDialogIsVisible();
   await supportContact.logoVisible();
