@@ -10,3 +10,4 @@ node_modules/
 # Allure
 allure-results/
 allure-report/
+state.json/
