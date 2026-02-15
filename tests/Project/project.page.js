@@ -1,5 +1,5 @@
-import { expect } from '@playwright/test';
-const {projectData} = require('./project.data');
+const { expect } = require('@playwright/test');
+import { projectData } from './project.data';
 
 export class Project {
   constructor(page) {

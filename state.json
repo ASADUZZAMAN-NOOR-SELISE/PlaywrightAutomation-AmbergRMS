@@ -1,22 +1,22 @@
 {
   "cookies": [
     {
-      "name": "dev-amberg.seliselocal.com",
-      "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5hbnRfaWQiOiJCRTBEMjI0NS0wNTQ2LTRCMDktOEM1My1DRTE2MjQ3N0FDMzMiLCJzdWIiOiI3NmJkZmNjNC1jOGU5LTQyZTktYTM0Yi00MjliMWU2MDZiYTUiLCJzaXRlX2lkIjoiRDUxRjVFQTAtMzhENC00RjlELUEzODItMkJCRTA3NjE4Qzc2Iiwib3JpZ2luIjoiZGV2LWFtYmVyZy5zZWxpc2Vsb2NhbC5jb20iLCJzZXNzaW9uX2lkIjoic2VsaXNlYmxvY2tzLWUxOWMxZWE1LWYxNjUtNGRmMi1hZDhlLTI2ZDIxNTU5OTA4OSIsInVzZXJfaWQiOiI3NmJkZmNjNC1jOGU5LTQyZTktYTM0Yi00MjliMWU2MDZiYTUiLCJkaXNwbGF5X25hbWUiOiJFY2FwIFVzZXIiLCJzaXRlX25hbWUiOiJBcmMgVGVhbSIsInVzZXJfbmFtZSI6Imluc3BlY3RvciIsImVtYWlsIjoiZWNhcEBzZWxpc2UuY2giLCJwaG9uZV9udW1iZXIiOiIrNDE3MTM0NTY0NTYiLCJsYW5ndWFnZSI6ImVuLVVTIiwidXNlcl9sb2dnZWRpbiI6IlRydWUiLCJuYW1lIjoiNzZiZGZjYzQtYzhlOS00MmU5LWEzNGItNDI5YjFlNjA2YmE1IiwidXNlcl9hdXRvX2V4cGlyZSI6IkZhbHNlIiwidXNlcl9leHBpcmVfb24iOiIxLzEvMDAwMSAxMjowMDowMCBBTSIsImlhdCI6MTc3MTEwMDQ5MSwicm9sZSI6WyJhZG1pbiIsImFub255bW91cyIsImFwcHVzZXIiXSwibmJmIjoxNzcxMTAwNDkxLCJleHAiOjE3NzExMDA5MTEsImlzcyI6IkNOPUVudGVycHJpc2UgQ2xvdWQgQXBwbGljYXRpb24gUGxhdGZvcm0iLCJhdWQiOiIqIn0.I-C7OLsgxQLeGw50ic1An9_-M0y0BSJmVzhTX8CAT7kWSw8xVLh7PQ7Mg8kEjlzzX_rQe80rpZytylu986YKLAjUliamA8FTH5TzKxQ0Egjw0zpDPhKXQsirNgr_ySnAMCG1c6Y4ejQ2vRkCgDUaRYRcYIjBbCd1cjGYb9eCvrHKTwlOocEfKf2mlICM5uFJXwY2xzvgHd_gNpAADzuxN6Q0ViloiKZ9L-tqSAAlDrWie96RoFGTS9TR7ypjIkoUtTgcVdxemCdCZhHYOx16f7de-FujCGFxG4ZS7LmRtb7auCwzJqQoIu_qulLDjO3wpPF-lPQXcQehDHXfCx18ww",
-      "domain": ".seliselocal.com",
-      "path": "/",
-      "expires": 1773692491.509642,
-      "httpOnly": true,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
       "name": "REFRESH_TOKEN",
-      "value": "a0ddfdf5f2504288b9082e0581c5c0ba",
+      "value": "742f550498304941984bca65d3808e57",
       "domain": "dev-amberg.seliselocal.com",
       "path": "/",
       "expires": -1,
       "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "dev-amberg.seliselocal.com",
+      "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5hbnRfaWQiOiJCRTBEMjI0NS0wNTQ2LTRCMDktOEM1My1DRTE2MjQ3N0FDMzMiLCJzdWIiOiI3NmJkZmNjNC1jOGU5LTQyZTktYTM0Yi00MjliMWU2MDZiYTUiLCJzaXRlX2lkIjoiRDUxRjVFQTAtMzhENC00RjlELUEzODItMkJCRTA3NjE4Qzc2Iiwib3JpZ2luIjoiZGV2LWFtYmVyZy5zZWxpc2Vsb2NhbC5jb20iLCJzZXNzaW9uX2lkIjoic2VsaXNlYmxvY2tzLWZhY2ZkZjY4LTYyZGEtNDU4MC1hZDc1LTQ4N2QzNTE3YTdjYSIsInVzZXJfaWQiOiI3NmJkZmNjNC1jOGU5LTQyZTktYTM0Yi00MjliMWU2MDZiYTUiLCJkaXNwbGF5X25hbWUiOiJFY2FwIFVzZXIiLCJzaXRlX25hbWUiOiJBcmMgVGVhbSIsInVzZXJfbmFtZSI6Imluc3BlY3RvciIsImVtYWlsIjoiZWNhcEBzZWxpc2UuY2giLCJwaG9uZV9udW1iZXIiOiIrNDE3MTM0NTY0NTYiLCJsYW5ndWFnZSI6ImVuLVVTIiwidXNlcl9sb2dnZWRpbiI6IlRydWUiLCJuYW1lIjoiNzZiZGZjYzQtYzhlOS00MmU5LWEzNGItNDI5YjFlNjA2YmE1IiwidXNlcl9hdXRvX2V4cGlyZSI6IkZhbHNlIiwidXNlcl9leHBpcmVfb24iOiIxLzEvMDAwMSAxMjowMDowMCBBTSIsImlhdCI6MTc3MTE3MDYxMCwicm9sZSI6WyJhZG1pbiIsImFub255bW91cyIsImFwcHVzZXIiXSwibmJmIjoxNzcxMTcwNjEwLCJleHAiOjE3NzExNzEwMzAsImlzcyI6IkNOPUVudGVycHJpc2UgQ2xvdWQgQXBwbGljYXRpb24gUGxhdGZvcm0iLCJhdWQiOiIqIn0.AKSdf5_8bWQPKlZ3VEedJRVS2Y1w6fIs9Zk4Kz_G1PSuX0yCXwU0qLnvsnOPApSjKZc4B9IoGbFtb7xfVnOJaRv9I6uVM9I7NW9e8CVqzetBIu-w2vsJBEskjmF6HeQchgLGekDF_vC1YnvcBoQCQzewwHqHbfqatqo2Wa9S6g6MMpa37kNo7WuPAEP-wGLotDoGNwAwVgOe3-xuoO4PEe10_nzpzOY0NPPVamebg92EBDfDOlXNuB56jG09hKYRtgEzbo3AfF_27d78l6XGIY9CYxULZY2_saSNlt_PFYar4kKpaUY9tNBtABS1K-3IP-FFimEuFnt0ctWSB2ifEg",
+      "domain": ".seliselocal.com",
+      "path": "/",
+      "expires": 1773762611.331962,
+      "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
     }
@@ -30,16 +30,12 @@
           "value": "true"
         },
         {
-          "name": "tokenGenerationTime",
-          "value": "1771100489161"
-        },
-        {
-          "name": "hasUnreadNotifications",
-          "value": "false"
-        },
-        {
           "name": "version",
           "value": "1.7.0"
+        },
+        {
+          "name": "tokenGenerationTime",
+          "value": "1771170607213"
         }
       ]
     }

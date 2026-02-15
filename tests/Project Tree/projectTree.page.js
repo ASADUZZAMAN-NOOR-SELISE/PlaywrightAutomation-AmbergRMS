@@ -1,5 +1,5 @@
-const{test, expect} = require('@playwright/test');
-const{projecTreetData} = require('./projectTree.data');
+const { test, expect } = require('@playwright/test');
+import { projecTreetData } from './projectTree.data';
 
 export class ProjectTreePage {
   constructor(page) {
