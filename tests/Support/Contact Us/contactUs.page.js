@@ -44,14 +44,15 @@ class ContactUsPage {
     await expect(this.website).toHaveText("www.ambergrail.com");
   }
 
-  // async emailRedirected() {
-  //   const [request] = await Promise.all([
-  //     this.page.waitForEvent("request"),
-  //     this.email.click(),
-  //   ]);
+  async emailRedirected() {
+    await this.page.evaluate(() => {
+      document
+        .querySelector('a[href^="mailto:"]')
+        ?.addEventListener("click", (e) => e.preventDefault());
+    });
 
-  //   expect(request.url()).toContain("support.rail@amberg.ch");
-  // }
+    await this.email.click();
+  }
 }
 
 export { ContactUsPage };
