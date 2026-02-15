@@ -15,8 +15,8 @@
       "value": "026624a1a34c42df92f477cd2f16d1f6",
       "domain": "dev-amberg.seliselocal.com",
       "path": "/",
-      "expires": -1,
-      "httpOnly": false,
+      "expires": 1773762611.331962,
+      "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
     }
@@ -40,6 +40,10 @@
         {
           "name": "version",
           "value": "1.7.0"
+        },
+        {
+          "name": "tokenGenerationTime",
+          "value": "1771170607213"
         }
       ]
     }
