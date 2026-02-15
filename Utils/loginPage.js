@@ -33,6 +33,7 @@ export class LoginPage{
     await this.loginButton.click();
   }
   async logoutVisible(){
+    await this.page.reload();
     await expect(this.page).toHaveURL(getUrl.urls.loginUrl)
     await expect(this.logoutButton).toBeVisible()
   }
