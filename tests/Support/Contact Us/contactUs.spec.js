@@ -1,10 +1,8 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../../Utils/loginPage";
-import { AboutUsPage } from "./aboutUs.page";
+import { ContactUsPage } from "./contactUs.page";
 
 let webContext;
-
-const verifyVersion = "1.7";
 
 test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   const context = await browser.newContext();
@@ -28,34 +26,19 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   webContext = await browser.newContext({ storageState: "state.json" });
 });
 
-test("About us modal validation", async () => {
+test("Contact us modal validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
-  const supportAbout = new AboutUsPage(page);
-
+  const supportContact = new ContactUsPage(page);
   await loginPage.goto();
 
-  await supportAbout.openAboutDialog();
-  await supportAbout.verifyDialogIsVisible();
-  await supportAbout.verifyRequiredLabels();
-  await supportAbout.verifyLicenseRows();
-  await supportAbout.verifyVersion(verifyVersion);
+  await supportContact.openContactUsDialog();
+  await supportContact.verifyDialogIsVisible();
+  await supportContact.logoVisible();
+  await supportContact.verifyContactDetails();
 
-  const link = await supportAbout.privacyPolicyLink();
-  await expect(link).toBeVisible();
+  await supportContact.emailRedirected();
 
-  const privacyPage = await supportAbout.openPrivacyPolicy();
-  await privacyPage.getByRole("button", { name: "Accept all" }).click();
-  await expect(privacyPage).toHaveURL(
-    "https://ambergtechnologies.com/downloads/company",
-  );
-
-  await privacyPage.close();
-  await page.bringToFront();
-  await supportAbout.verifyDialogIsVisible();
-  await supportAbout.closeAboutDialog();
-  await supportAbout.verifyDialogIsNotVisible();
-
-  console.log("About Us modal tests passed successfully.");
+  console.log("Contact Us modal tests passed successfully.");
 });
