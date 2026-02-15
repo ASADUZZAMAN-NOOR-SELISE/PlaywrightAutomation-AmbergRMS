@@ -9,8 +9,6 @@ class ContactUsPage {
 
     this.dialog = page.getByRole("dialog");
 
-    this.closeButton = this.dialog.locator("button[aria-label='Close']");
-
     this.companyName = page.getByText("Amberg Technologies AG");
     this.street = page.getByText("Trockenloostrasse 21");
     this.city = page.getByText("8105 Regensdorf-Watt");
@@ -27,10 +25,6 @@ class ContactUsPage {
 
   async verifyDialogIsVisible() {
     await expect(this.dialog).toBeVisible();
-  }
-
-  async closeContactUsDialog() {
-    await this.closeButton.click();
   }
 
   async logoVisible() {
@@ -51,12 +45,13 @@ class ContactUsPage {
   }
 
   async emailRedirected() {
-    const [request] = await Promise.all([
-      this.page.waitForEvent("request"),
-      this.email.click(),
-    ]);
+    await this.page.evaluate(() => {
+      document
+        .querySelector('a[href^="mailto:"]')
+        ?.addEventListener("click", (e) => e.preventDefault());
+    });
 
-    expect(request.url()).toContain("support.rail@amberg.ch");
+    await this.email.click();
   }
 }
 

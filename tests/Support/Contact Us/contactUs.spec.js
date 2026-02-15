@@ -37,7 +37,6 @@ test("Contact us modal validation", async () => {
   await supportContact.verifyDialogIsVisible();
   await supportContact.logoVisible();
   await supportContact.verifyContactDetails();
-
   await supportContact.emailRedirected();
 
   console.log("Contact Us modal tests passed successfully.");
