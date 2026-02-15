@@ -25,10 +25,6 @@ class AboutUsPage {
     return this.dialog.getByText("Version", { exact: true });
   }
 
-  buildNumber() {
-    return this.dialog.getByText("Build Number", { exact: true });
-  }
-
   releaseDateLabel() {
     return this.dialog.getByText("Release Date", { exact: true });
   }
