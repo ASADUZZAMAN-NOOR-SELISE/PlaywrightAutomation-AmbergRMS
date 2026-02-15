@@ -6,9 +6,7 @@ class AboutUsPage {
 
     this.supportButton = page.locator("button[aria-label='Support']");
     this.aboutMenuItem = page.getByRole("menuitem", { name: "About" });
-
     this.dialog = page.getByRole("dialog");
-
     this.closeButton = this.dialog.locator("button[aria-label='Close']");
   }
 
@@ -23,6 +21,10 @@ class AboutUsPage {
 
   version() {
     return this.dialog.getByText("Version", { exact: true });
+  }
+
+  buildNumber() {
+    return this.dialog.getByText("Build Number", { exact: true });
   }
 
   releaseDateLabel() {
