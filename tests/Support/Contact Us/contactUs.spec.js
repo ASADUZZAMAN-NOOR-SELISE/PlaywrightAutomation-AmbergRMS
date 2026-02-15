@@ -14,7 +14,6 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
     await page.locator(".MuiGrid-root").nth(1).isVisible();
     await loginPage.verifyInitialState();
     await loginPage.login();
-    await page.reload(); // Ensure the page is fully loaded after login
     await loginPage.logoutVisible();
   } catch (error) {
     await page.screenshot({ path: "login-failure.png", fullPage: true });
@@ -32,7 +31,6 @@ test("Contact us modal validation", async () => {
   const loginPage = new LoginPage(page);
   const supportContact = new ContactUsPage(page);
   await loginPage.goto();
-
   await supportContact.openContactUsDialog();
   await supportContact.verifyDialogIsVisible();
   await supportContact.logoVisible();
