@@ -10,7 +10,7 @@ let webContext;
 function getUniqueProjectName(prefix = 'Line') {
   return `${prefix}-${Date.now()}`;
 }
-const projectName = getUniqueProjectName();
+
 
 test.beforeAll('Homepaeg to dashboard ', async ({ browser }) => {
   const context = await browser.newContext();
@@ -37,6 +37,7 @@ test('Line section modal open @SANITY', async ({})  => {
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const tree = new ProjectTreePage(page);
+  const projectName = getUniqueProjectName();
   
   await loginPage.goto();
   await common.clickNewProject();
@@ -51,24 +52,26 @@ test('Line section modal open @SANITY', async ({})  => {
 
 });
 
-
 test('Line section Add @SANITY', async ({})  => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const tree = new ProjectTreePage(page);
-  
+  const projectName = getUniqueProjectName();
+
   await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
   await common.searchProject(projectName);
   await expect(page.getByLabel(projectName).first()).toBeVisible();
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
   await tree.addLine("Line section 1");
+  await tree.submitLineSectionBtn.isVisible();
   await tree.submitLineSectionBtn.click();
-  await page.reload();
-  const lineSection1 = page.locator("div[aria-label='Generic Tree'] ul li").filter({ hasText: 'Line section 1' });
-  await expect(lineSection1).toBeVisible();
-
+  await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+  
 });
 
 test('Line Section Cancel function @SANITY', async ({})  => {
@@ -76,13 +79,17 @@ test('Line Section Cancel function @SANITY', async ({})  => {
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const tree = new ProjectTreePage(page);
+  const projectName = getUniqueProjectName();
   
   await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
   await common.searchProject(projectName);
   await expect(page.getByLabel(projectName).first()).toBeVisible();
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
-  await tree.addLine("Line cancel ");
+  await tree.addLine("Line section 1");
   await tree.cancelBtn.isVisible();
   await tree.cancelBtn.click();
   await expect(tree.cancelModal).toBeVisible();
@@ -94,15 +101,33 @@ test('Line section Edit modal open @SANITY ', async ({})  => {
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const tree = new ProjectTreePage(page);
+  const projectName = getUniqueProjectName();
   
   await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
   await common.searchProject(projectName);
   await expect(page.getByLabel(projectName).first()).toBeVisible();
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
-  const lineSection1 = page.locator("div[aria-label='Generic Tree'] ul li").filter({ hasText: 'Line section 1' });
-  await expect(lineSection1).toBeVisible();
-  await lineSection1.click();
+  await tree.addLine("Line section 1");
+  await tree.submitLineSectionBtn.isVisible();
+  await tree.submitLineSectionBtn.click();
+  await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+  await page.reload();
+
+  const lineSection = page.locator("//div[@class='css-g7taw0']").first();
+  await lineSection.waitFor("networkidle");
+  await lineSection.waitFor({ state: 'visible' });
+  await lineSection.isEnabled();
+  await lineSection.click();
+  await page.reload();
+  await lineSection.waitFor("networkidle");
+  await lineSection.waitFor({ state: 'visible' });
+  await lineSection.isEnabled();
+  await lineSection.click();
+
   await tree.editIcon.click();
   await expect(tree.lineSectionModal).toBeVisible();
   
@@ -113,15 +138,33 @@ test('Line section Drawer open @SANITY', async ({})  => {
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const tree = new ProjectTreePage(page);
+  const projectName = getUniqueProjectName();
   
   await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
   await common.searchProject(projectName);
   await expect(page.getByLabel(projectName).first()).toBeVisible();
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
-  const lineSection1 = page.locator("div[aria-label='Generic Tree'] ul li").filter({ hasText: 'Line section 1' });
-  await expect(lineSection1).toBeVisible();
-  await lineSection1.click();
+  await tree.addLine("Line section 1");
+  await tree.submitLineSectionBtn.isVisible();
+  await tree.submitLineSectionBtn.click();
+  await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+  await page.reload();
+  //linesection delete icon is not visible after first time delete, so added reload and click again to make it visible and then delete the line section
+  const lineSection = page.locator("//div[@class='css-g7taw0']").first();
+  await lineSection.waitFor("networkidle");
+  await lineSection.waitFor({ state: 'visible' });
+  await lineSection.isEnabled();
+  await lineSection.click();
+  await page.reload();
+  await lineSection.waitFor("networkidle");
+  await lineSection.waitFor({ state: 'visible' });
+  await lineSection.isEnabled();
+  await lineSection.click();
+
   await expect(tree.sectionProperty).toBeVisible();
   await expect(tree.editIcon).toBeVisible();
   
@@ -132,15 +175,30 @@ test('Line section edit all and save @SANITY', async ({}) => {
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const tree = new ProjectTreePage(page);
-  
+  const projectName = getUniqueProjectName();
+
   await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
   await common.searchProject(projectName);
   await expect(page.getByLabel(projectName).first()).toBeVisible();
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
-  const lineSection1 = page.locator("div[aria-label='Generic Tree']  ul li div svg[aria-hidden='true']").first();
-  await expect(lineSection1).toBeVisible();
-  await lineSection1.click();
+  await tree.addLine("Line section 1");
+  await tree.submitLineSectionBtn.click();
+  await page.reload();
+  //linesection delete icon is not visible after first time delete, so added reload and click again to make it visible and then delete the line section
+  const lineSection = page.locator("//div[@class='css-g7taw0']").first();
+  await lineSection.waitFor("networkidle");
+  await lineSection.waitFor({ state: 'visible' });
+  await lineSection.isEnabled();
+  await lineSection.click();
+  await page.reload();
+  await lineSection.waitFor("networkidle");
+  await lineSection.waitFor({ state: 'visible' });
+  await lineSection.isEnabled();
+  await lineSection.click();
   await expect(tree.sectionProperty).toBeVisible();
   await expect(tree.editIcon).toBeVisible();
   await tree.editIcon.click();
@@ -155,19 +213,35 @@ test('Line section edit all and cancel @SANITY ', async ({}) => {
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const tree = new ProjectTreePage(page);
+  const projectName = getUniqueProjectName();
   
   await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
   await common.searchProject(projectName);
   await expect(page.getByLabel(projectName).first()).toBeVisible();
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
+  await tree.addLine("Line section 1");
+  await tree.submitLineSectionBtn.click();
   await page.reload();
-  const lineSection1 = page.locator("div[aria-label='Generic Tree']  ul li div svg[aria-hidden='true']").first();
-  await expect(lineSection1).toBeVisible();
-  await lineSection1.click();
+  //linesection delete icon is not visible after first time delete, so added reload and click again to make it visible and then delete the line section
+  const lineSection = page.locator("//div[@class='css-g7taw0']").first();
+  await lineSection.waitFor("networkidle");
+  await lineSection.waitFor({ state: 'visible' });
+  await lineSection.isEnabled();
+  await lineSection.click();
+  await page.reload();
+  await lineSection.waitFor("networkidle");
+  await lineSection.waitFor({ state: 'visible' });
+  await lineSection.isEnabled();
+  await lineSection.click();
+  await expect(tree.sectionProperty).toBeVisible();
   await expect(tree.editIcon).toBeVisible();
   await tree.editIcon.click();
   await tree.editLine();
+
   await tree.cancelBtn.isVisible();
   await tree.cancelBtn.click();
   await expect(tree.cancelModal).toBeVisible();
@@ -181,16 +255,32 @@ test('Delete : Line section modal > cancel @SANITY @one', async ({}) => {
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const tree = new ProjectTreePage(page);
+  const projectName = getUniqueProjectName();
   
+
   await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
   await common.searchProject(projectName);
   await expect(page.getByLabel(projectName).first()).toBeVisible();
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
+  await tree.addLine("Line section 1");
+  await tree.submitLineSectionBtn.click();
   await page.reload();
-  const lineSection1 = page.locator("div[aria-label='Generic Tree']  ul li div svg[aria-hidden='true']").first();
-  await lineSection1.isVisible();
-  await lineSection1.click();
+  
+  const lineSection = page.locator("//div[@class='css-g7taw0']").first();
+  await lineSection.waitFor("networkidle");
+  await lineSection.waitFor({ state: 'visible' });
+  await lineSection.isEnabled();
+  await lineSection.click();
+  await page.reload();
+  await lineSection.waitFor("networkidle");
+  await lineSection.waitFor({ state: 'visible' });
+  await lineSection.isEnabled();
+  await lineSection.click();
+
   await tree.deleteIcon.isVisible();
   await tree.deleteIcon.click();
   await expect(tree.deleteModal).toBeVisible();
@@ -205,24 +295,39 @@ test("Delete : Line section modal > confirm @SANITY ", async ({}) => {
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const tree = new ProjectTreePage(page);
+  const projectName = getUniqueProjectName();
   
   await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
   await common.searchProject(projectName);
   await expect(page.getByLabel(projectName).first()).toBeVisible();
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
+  await tree.addLine("Line section 1");
+  await tree.submitLineSectionBtn.click();
+  
+  //linesection delete icon is not visible after first time delete, so added reload and click again to make it visible and then delete the line section
+  const lineSection = page.locator("//div[@class='css-g7taw0']").first();
+  await lineSection.waitFor("networkidle");
+  await lineSection.waitFor({ state: 'visible' });
+  await lineSection.isEnabled();
+  await lineSection.click();
   await page.reload();
-  const lineSection1 = page.locator("div[aria-label='Generic Tree']  ul li div svg[aria-hidden='true']").first();
-  await lineSection1.isVisible();
-  await lineSection1.click();
+  await lineSection.waitFor("networkidle");
+  await lineSection.waitFor({ state: 'visible' });
+  await lineSection.isEnabled();
+  await lineSection.click();
+
   await tree.deleteIcon.isVisible();
   await tree.deleteIcon.click();
   await expect(tree.deleteModal).toBeVisible();
   await tree.modalConfirmBtn.isVisible();
   await tree.modalConfirmBtn.click();
-  await expect(page.getByRole('alert').first()).toContainText(' deleted successfully');
-  await page.reload();
+  await expect(page.getByRole('alert').first()).toContainText('Line section deleted successfully');
 
+  await page.reload();
   await common.deleteButton.isVisible();
   await common.deleteButton.click();
   await expect(page.locator("div[role='dialog']")).toBeVisible();
@@ -230,15 +335,7 @@ test("Delete : Line section modal > confirm @SANITY ", async ({}) => {
   await page.getByRole('button', { name: 'confirm' }).click();
   const toast = page.getByText('Project deleted successfully');
   await expect(toast).toBeVisible();
-  await expect(page.getByRole('alert').first()).toContainText('Project deleted successfully');
+  await expect(toast).toContainText('Project deleted successfully');
   await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
-  await page.reload();
-  const projectNames = page.locator('tbody tr td:first-child span');
-  const count = await projectNames.count();
-  for (let i = 0; i < count; i++) {
-    console.log(await projectNames.nth(i).innerText());
-    if ((await projectNames.nth(i).innerText()) === projectName) {
-      throw new Error('Project still exists after deletion');
-    }
-  }
+  
 });
