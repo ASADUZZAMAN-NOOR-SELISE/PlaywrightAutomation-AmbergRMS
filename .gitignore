@@ -6,8 +6,9 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+state.json
 
 # Allure
 allure-results/
 allure-report/
-state.json/
+
