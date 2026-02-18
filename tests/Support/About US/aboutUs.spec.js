@@ -1,6 +1,6 @@
-const { test, expect } = require('@playwright/test');
-import { LoginPage } from '../../../Utils/loginPage';
-import { AboutUsPage } from './aboutUs.page';
+const { test, expect } = require("@playwright/test");
+import { LoginPage } from "../../../Utils/loginPage";
+import { AboutUsPage } from "./aboutUs.page";
 
 let webContext;
 
@@ -16,8 +16,8 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
     await page.locator(".MuiGrid-root").nth(1).isVisible();
     await loginPage.verifyInitialState();
     await loginPage.login();
-    await page.reload(); // Ensure the page is fully loaded after login
     await loginPage.logoutVisible();
+    console.log("Login successful, proceeding with tests.");
   } catch (error) {
     await page.screenshot({ path: "login-failure.png", fullPage: true });
     console.error("Login test failed:", error.message);

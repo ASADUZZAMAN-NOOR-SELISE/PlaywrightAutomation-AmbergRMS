@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../../Utils/loginPage";
-import { CTMPage } from "./ctm.page";
+import { LanguagePage } from "./language.page";
 
 let webContext;
 
@@ -26,14 +26,13 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   webContext = await browser.newContext({ storageState: "state.json" });
 });
 
-test("Configuration Template Manager validation", async () => {
+test("Language Settings Validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
-  const ctmMenuItem = new CTMPage(page);
+  const languageSettings = new LanguagePage(page);
 
   await loginPage.goto();
-  await ctmMenuItem.navigateCTM();
-
-  console.log("Configuration Template Manager tests passed successfully.");
+  await languageSettings.navigateLanguageSettings();
+  await languageSettings.verifyHeading();
 });
