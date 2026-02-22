@@ -28,11 +28,9 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
 
 test("Language Settings Validation", async () => {
   const page = await webContext.newPage();
-
   const loginPage = new LoginPage(page);
   const languageSettings = new LanguagePage(page);
 
   await loginPage.goto();
-  await languageSettings.navigateLanguageSettings();
-  await languageSettings.verifyHeading();
+  await languageSettings.changeLanguage();
 });
