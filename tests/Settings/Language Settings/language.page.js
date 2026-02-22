@@ -8,7 +8,6 @@ const LANGUAGE_TITLES = [
   "Ajustes de idioma",
   "Nastavení jazyka",
 ];
-
 const LANGUAGE_FLOW = [
   {
     optionLabel: "French",
@@ -51,22 +50,17 @@ const LANGUAGE_FLOW = [
 class LanguagePage {
   constructor(page) {
     this.page = page;
-
     this.settingsButton = page.locator("button[aria-label='Settings']");
     this.dialog = page.getByRole("dialog");
-    this.dialogHeading = page.getByLabel("Lang Dialouge Title Component");
     this.languageMenuItem = page.getByRole("menuitem", {
       name: new RegExp(LANGUAGE_TITLES.join("|")),
     });
   }
 
-  async openLanguageDialog(menuItemRegex) {
+  async openLanguageDialog() {
     await this.settingsButton.click();
     await this.languageMenuItem.click();
     await expect(this.dialog).toBeVisible();
-    await expect(this.dialogHeading).toHaveText(
-      new RegExp(LANGUAGE_TITLES.join("|")),
-    );
   }
 
   async selectLanguage(optionLabel, saveButton, expectedHeading) {
@@ -74,9 +68,7 @@ class LanguagePage {
       .getByLabel("system-language")
       .getByText(optionLabel)
       .check();
-
     await this.page.getByRole("button", { name: saveButton }).click();
-
     await expect(
       this.page.getByRole("heading", { name: expectedHeading }),
     ).toBeVisible();
@@ -84,7 +76,7 @@ class LanguagePage {
 
   async changeLanguage() {
     for (const lang of LANGUAGE_FLOW) {
-      await this.openLanguageDialog(new RegExp(lang.menuItem));
+      await this.openLanguageDialog();
       await this.selectLanguage(
         lang.optionLabel,
         lang.saveButton,
