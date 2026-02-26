@@ -30,10 +30,11 @@ test("Configuration Template Manager validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
-  const ctmMenuItem = new CTMPage(page);
+  const ctmPage = new CTMPage(page);
 
   await loginPage.goto();
-  await ctmMenuItem.navigateCTM();
+  await ctmPage.navigateCTM();
+  await ctmPage.newTemplate();
 
   console.log("Configuration Template Manager tests passed successfully.");
 });
