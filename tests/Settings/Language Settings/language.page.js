@@ -71,7 +71,7 @@ class LanguagePage {
     await this.page.getByRole("button", { name: saveButton }).click();
     await expect(
       this.page.getByRole("heading", { name: expectedHeading }),
-    ).toBeVisible();
+    ).toHaveText(expectedHeading);
   }
 
   async changeLanguage() {
