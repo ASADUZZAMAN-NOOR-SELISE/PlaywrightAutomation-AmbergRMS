@@ -35,6 +35,7 @@ test("Configuration Template Manager validation", async () => {
   await loginPage.goto();
   await ctmPage.navigateCTM();
   await ctmPage.newTemplate();
+  await ctmPage.verifyTemplateList();
 
   console.log("Configuration Template Manager tests passed successfully.");
 });
