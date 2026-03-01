@@ -1,6 +1,6 @@
-const { test, expect } = require('@playwright/test');
-import { LoginPage } from '../../../Utils/loginPage';
-import { AboutUsPage } from './aboutUs.page';
+const { test, expect } = require("@playwright/test");
+import { LoginPage } from "../../../Utils/loginPage";
+import { AboutUsPage } from "./aboutUs.page";
 
 let webContext;
 
