@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 import { LoginPage } from '../../Utils/loginPage';
 import { Common } from '../../Utils/common';
-import { data } from '../../Utils/Data/Information';
+import { data } from '../../Utils/Data/information';
 import { projecTreetData } from './projectTree.data';
 import { ProjectTreePage } from './projectTree.page';
 
@@ -12,7 +12,7 @@ function getUniqueProjectName(prefix = 'Line') {
 }
 
 
-test.beforeAll("Navigated to dashboard", async ({ browser }) => {
+test.beforeAll("Navigated to dashboard 1", async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
   const loginPage = new LoginPage(page);
@@ -27,7 +27,7 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   webContext = await browser.newContext({ storageState: "state.json" });
 });
 
-test('Line section modal open @SANITY', async ({})  => {
+test('Line section modal open 2 @SANITY', async ({})  => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -47,7 +47,7 @@ test('Line section modal open @SANITY', async ({})  => {
 
 });
 
-test('Line section Add @SANITY', async ({})  => {
+test('Line section Add 3 @SANITY', async ({})  => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -69,7 +69,7 @@ test('Line section Add @SANITY', async ({})  => {
   
 });
 
-test('Line Section Cancel function @SANITY', async ({})  => {
+test('Line Section Cancel function 4 @SANITY', async ({})  => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -91,7 +91,7 @@ test('Line Section Cancel function @SANITY', async ({})  => {
   await page.getByRole('button', { name: 'confirm' }).click();
 });
 
-test('Line section Edit modal open @SANITY ', async ({})  => {
+test('Line section Edit modal open 5 @SANITY ', async ({})  => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -128,7 +128,7 @@ test('Line section Edit modal open @SANITY ', async ({})  => {
   
 });
 
-test('Line section Drawer open @SANITY', async ({})  => {
+test('Line section Drawer open 6 @SANITY', async ({})  => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -165,7 +165,7 @@ test('Line section Drawer open @SANITY', async ({})  => {
   
 });
 
-test('Line section edit all and save @SANITY', async ({}) => {
+test('Line section edit all and save 7 @SANITY', async ({}) => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -203,7 +203,7 @@ test('Line section edit all and save @SANITY', async ({}) => {
 
 });
 
-test('Line section edit all and cancel @SANITY ', async ({}) => {
+test('Line section edit all and cancel 8 @SANITY ', async ({}) => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -245,7 +245,7 @@ test('Line section edit all and cancel @SANITY ', async ({}) => {
 });
 
 
-test('Delete : Line section modal > cancel @SANITY @one', async ({}) => {
+test('Delete : Line section modal > cancel 9 @SANITY @one', async ({}) => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -284,7 +284,7 @@ test('Delete : Line section modal > cancel @SANITY @one', async ({}) => {
 
 });
 
-test("Delete : Line section modal > confirm @SANITY ", async ({}) => {
+test("Delete : Line section modal > confirm 10 @SANITY ", async ({}) => {
 
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
