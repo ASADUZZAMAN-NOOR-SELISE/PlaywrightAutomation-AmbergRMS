@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 
-const templateName = "test17 template";
+const templateName = `template-${Math.floor(100 + Math.random() * 900)}`;
 const defaultName1 = "EN-13848";
 const defaultName2 = "ProRail";
 class CTMPage {
