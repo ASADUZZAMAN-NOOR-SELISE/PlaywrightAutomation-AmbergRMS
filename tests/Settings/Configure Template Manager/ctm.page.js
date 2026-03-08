@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 
-const templateName = "test8 template";
+const templateName = "test17 template";
 const defaultName1 = "EN-13848";
 const defaultName2 = "ProRail";
 class CTMPage {
@@ -25,7 +25,7 @@ class CTMPage {
     this.dialogInput2 = page.getByRole("combobox", { name: "Select Template" });
 
     this.dialogInputOption = page.getByRole("option", {
-      name: "EN-13848",
+      name: defaultName1,
       exact: true,
     });
     this.dialogConfirmButton = page.getByRole("button", {
@@ -33,8 +33,15 @@ class CTMPage {
     });
     this.alert = page.getByRole("alert");
     this.newTemplateName = page.getByLabel(templateName);
-    this.defaultTemplateName1 = page.getByRole("cell", { name: defaultName1 });
-    this.defaultTemplateName2 = page.getByRole("cell", { name: defaultName2 });
+
+    this.defaultTemplateName2 = page
+      .locator("span")
+      .filter({ hasText: defaultName1 })
+      .first();
+    this.defaultTemplateName1 = page
+      .locator("span")
+      .filter({ hasText: defaultName2 })
+      .first();
   }
 
   async navigateCTM() {
@@ -66,8 +73,8 @@ class CTMPage {
 
   async verifyTemplateList() {
     await expect(this.newTemplateName).toHaveText(templateName);
-    // await expect(this.defaultTemplateName1).toHaveText(defaultName1);
-    // await expect(this.defaultTemplateName2).toHaveText(defaultName2);
+    await expect(this.defaultTemplateName2).toHaveText(defaultName1);
+    await expect(this.defaultTemplateName1).toHaveText(defaultName2);
   }
 }
 
