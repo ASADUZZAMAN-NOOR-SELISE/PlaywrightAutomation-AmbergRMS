@@ -35,13 +35,13 @@ export class ProjectTreePage {
     this.lineSectionTab = page.locator("button[aria-label='Add Line Section']");
     this.lineSectionModal = page.locator(".MuiGrid-root.css-nmw51g");
     this.lineSectionRadioBtn = page.locator("form [role='radiogroup'] label");
-    this.nameField = page.getByRole('textbox', { name: 'NameInput' });
+    this.nameField = page.getByRole('textbox', { name: /Name/i });
     this.numberField = page.getByRole('textbox', { name: 'Number' });
     this.startPlaceName = page.getByRole('textbox', { name: 'Start Place' });
     this.endPlaceName = page.getByRole('textbox', { name: 'End Place' });
-    this.commentField = page.locator("div textarea[name='Comment']");
-    this.startLocalization = page.locator('[name="Start.Stationing"]');
-    this.endLocalization = page.locator('[name="End.Stationing"]');
+    this.commentField = page.getByRole('textbox', { name: 'Comment' });
+    this.startLocalization = page.getByLabel("Start Localization [m]");
+    this.endLocalization = page.getByLabel("End Localization [m]");
     this.cancelBtn = page.locator('button:has-text("CANCEL")');
     this.submitLineSectionBtn = page.locator("button[type='submit']");
     this.clearIcon = page.locator("button[type='button']");

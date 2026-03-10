@@ -229,7 +229,7 @@ test('Line section Drawer open @SANITY', async ({})  => {
   
 });
 
-test('Line section edit all and save @SANITY', async ({}) => {
+test.only('Line section edit all and save @SANITY', async ({}) => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -266,20 +266,37 @@ test('Line section edit all and save @SANITY', async ({}) => {
   await tree.submitLineSectionBtn.click();
   await expect(page.getByRole('alert').first()).toContainText('edited successfully');
 
-  //line delete  
-  await page.getByTestId("DeleteIcon").isEnabled();
-  await page.getByTestId("DeleteIcon").click();
-  await page.getByRole("button", {name : "Confirm"}).isEnabled();
-  await page.getByRole("button", {name : "Confirm"}).click();
+  
   //await expect(page.getByRole("alert").first()).toContainText("Line section deleted successfully")
 
   //project delete
   await page.reload();
-  await page.getByTestId("DeleteIcon").isEnabled();
-  await page.getByTestId("DeleteIcon").click();
-  await page.getByRole("button", {name : "Confirm"}).isEnabled();
-  await page.getByRole("button", {name : "Confirm"}).click();
-  await expect(page.getByRole("alert").first()).toContainText("Project deleted successfully");
+  const projectLocator = page.getByText('Project', { exact: true });
+  if(projectLocator){
+    await page.getByRole('heading').click();
+    await page.getByTestId("DeleteIcon").isEnabled();
+    await page.getByTestId("DeleteIcon").click({timeout:1000});
+    await page.getByRole("button", {name : "Confirm"}).isEnabled();
+    await page.getByRole("button", {name : "Confirm"}).click();
+    await expect(page.getByRole("alert").first()).toContainText("Project deleted successfully");
+  }
+  else{
+    //line delete  
+    await page.getByTestId("DeleteIcon").isEnabled();
+    await page.getByTestId("DeleteIcon").click({timeout:1000});
+    await page.getByRole("button", {name : "Confirm"}).isEnabled();
+    await page.getByRole("button", {name : "Confirm"}).click();
+
+    //project delete
+    await page.reload();
+    await page.getByRole('heading').click();
+    await page.getByTestId("DeleteIcon").isEnabled();
+    await page.getByTestId("DeleteIcon").click({timeout:1000});
+    await page.getByRole("button", {name : "Confirm"}).isEnabled();
+    await page.getByRole("button", {name : "Confirm"}).click();
+    await expect(page.getByRole("alert").first()).toContainText("Project deleted successfully");
+  }
+ 
 
 });
 
