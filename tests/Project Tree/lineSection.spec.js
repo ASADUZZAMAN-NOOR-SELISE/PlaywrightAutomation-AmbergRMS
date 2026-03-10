@@ -468,21 +468,15 @@ test("Delete : Line section modal > confirm @SANITY ", async ({}) => {
   await lineSection.waitFor("networkidle");
   await lineSection.waitFor({ state: 'visible' });
   await lineSection.isEnabled();
-  await lineSection.click();
-
+  await lineSection.click({ force: true });
+  await page.getByText('Line Section', { exact: true }).isVisible();
   await tree.deleteIcon.isVisible();
   await tree.deleteIcon.click();
   await expect(tree.deleteModal).toBeVisible();
   await tree.modalConfirmBtn.isVisible();
   await tree.modalConfirmBtn.click();
-  //line delete  
-  // await page.getByTestId("DeleteIcon").isEnabled();
-  // await page.getByTestId("DeleteIcon").click();
-  // await page.getByRole("button", {name : "Confirm"}).isEnabled();
-  // await page.getByRole("button", {name : "Confirm"}).click();
- // await expect(page.getByRole("alert").first()).toContainText("Line section deleted successfully")
-
-  //project delete
+  await expect(page.getByRole("alert").first()).toHaveText("Line section deleted successfully");
+  // project delete
   await page.reload();
   await page.getByRole('heading').click();
   await page.getByTestId("DeleteIcon").isEnabled();
