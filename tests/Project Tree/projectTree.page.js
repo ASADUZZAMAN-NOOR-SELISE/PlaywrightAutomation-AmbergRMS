@@ -176,6 +176,5 @@ export class ProjectTreePage {
     await expect(this.page.getByRole('button', { name: 'confirm' })).toBeVisible();
     await this.page.getByRole('button', { name: 'confirm' }).click();
     await expect(this.cancelModal).not.toBeVisible();
-
   }
 }
