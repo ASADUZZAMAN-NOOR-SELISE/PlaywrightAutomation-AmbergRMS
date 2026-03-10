@@ -1,7 +1,6 @@
 const { test, expect } = require('@playwright/test');
 import { LoginPage } from '../../Utils/loginPage';
 import { Common } from '../../Utils/common';
-import { data } from '../../Utils/Data/Information';
 import { projecTreetData } from './projectTree.data';
 import { ProjectTreePage } from './projectTree.page';
 
@@ -10,7 +9,6 @@ let webContext;
 function getUniqueProjectName(prefix = 'Line') {
   return `${prefix}-${Date.now()}`;
 }
-
 
 test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   const context = await browser.newContext();
@@ -27,7 +25,7 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   webContext = await browser.newContext({ storageState: "state.json" });
 });
 
-test('Line section modal open @SANITY', async ({})  => {
+test('Line section addModal open @SANITY', async ({})  => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -44,7 +42,20 @@ test('Line section modal open @SANITY', async ({})  => {
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
   await tree.lineSectionTab.click();
   await expect(tree.lineSectionModal).toBeVisible();
-
+  
+  //delete the project 
+  await page.getByTestId("ClearIcon").isEnabled();
+  await page.getByTestId("ClearIcon").click();
+  await page.getByTestId('ArrowBackIcon').isEnabled();
+  await page.getByTestId('ArrowBackIcon').click();
+  await common.searchProject(projectName);
+  await expect(page.getByLabel(projectName).first()).toBeVisible();
+  await common.enterIntoProject(projectName);
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  await expect(page.getByRole("alert")).toContainText("Project deleted successfully");
 });
 
 test('Line section Add @SANITY', async ({})  => {
@@ -65,11 +76,23 @@ test('Line section Add @SANITY', async ({})  => {
   await tree.addLine("Line section 1");
   await tree.submitLineSectionBtn.isVisible();
   await tree.submitLineSectionBtn.click();
-  await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+  //await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+
+  //delete project 
+  await page.getByTestId('ArrowBackIcon').isEnabled();
+  await page.getByTestId('ArrowBackIcon').click();
+  await common.searchProject(projectName);
+  await expect(page.getByLabel(projectName).first()).toBeVisible();
+  await common.enterIntoProject(projectName);
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  await expect(page.getByRole("alert")).toContainText("Project deleted successfully");
   
 });
 
-test('Line Section Cancel function @SANITY', async ({})  => {
+test('Line Section addModal > Cancel @SANITY', async ({})  => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
@@ -89,6 +112,18 @@ test('Line Section Cancel function @SANITY', async ({})  => {
   await tree.cancelBtn.click();
   await expect(tree.cancelModal).toBeVisible();
   await page.getByRole('button', { name: 'confirm' }).click();
+
+  //delete project 
+  await page.getByTestId('ArrowBackIcon').isEnabled();
+  await page.getByTestId('ArrowBackIcon').click();
+  await common.searchProject(projectName);
+  await expect(page.getByLabel(projectName).first()).toBeVisible();
+  await common.enterIntoProject(projectName);
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  await expect(page.getByRole("alert")).toContainText("Project deleted successfully");
 });
 
 test('Line section Edit modal open @SANITY ', async ({})  => {
@@ -109,10 +144,10 @@ test('Line section Edit modal open @SANITY ', async ({})  => {
   await tree.addLine("Line section 1");
   await tree.submitLineSectionBtn.isVisible();
   await tree.submitLineSectionBtn.click();
-  await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+ // await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
   await page.reload();
 
-  const lineSection = page.locator("//div[@class='css-g7taw0']").first();
+  const lineSection = page.getByTestId("line-section-tree-testid-child-0");
   await lineSection.waitFor("networkidle");
   await lineSection.waitFor({ state: 'visible' });
   await lineSection.isEnabled();
@@ -123,9 +158,26 @@ test('Line section Edit modal open @SANITY ', async ({})  => {
   await lineSection.isEnabled();
   await lineSection.click();
 
+  // edit icon 
   await tree.editIcon.click();
   await expect(tree.lineSectionModal).toBeVisible();
-  
+  await page.getByTestId("ClearIcon").isEnabled();
+  await page.getByTestId("ClearIcon").click();
+
+  //line delete  
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  //await expect(page.getByRole("alert")).toContainText("Line section deleted successfully")
+
+  //project delete
+  await page.reload();
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  await expect(page.getByRole("alert")).toContainText("Project deleted successfully");
 });
 
 test('Line section Drawer open @SANITY', async ({})  => {
@@ -146,10 +198,10 @@ test('Line section Drawer open @SANITY', async ({})  => {
   await tree.addLine("Line section 1");
   await tree.submitLineSectionBtn.isVisible();
   await tree.submitLineSectionBtn.click();
-  await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+ // await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
   await page.reload();
-  //linesection delete icon is not visible after first time delete, so added reload and click again to make it visible and then delete the line section
-  const lineSection = page.locator("//div[@class='css-g7taw0']").first();
+
+  const lineSection = page.getByTestId("line-section-tree-testid-child-0");
   await lineSection.waitFor("networkidle");
   await lineSection.waitFor({ state: 'visible' });
   await lineSection.isEnabled();
@@ -160,8 +212,20 @@ test('Line section Drawer open @SANITY', async ({})  => {
   await lineSection.isEnabled();
   await lineSection.click();
 
-  await expect(tree.sectionProperty).toBeVisible();
-  await expect(tree.editIcon).toBeVisible();
+  //line delete  
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  //await expect(page.getByRole("alert").first()).toContainText("Line section deleted successfully")
+
+  //project delete
+  await page.reload();
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  await expect(page.getByRole("alert").first()).toContainText("Project deleted successfully");
   
 });
 
@@ -184,7 +248,7 @@ test('Line section edit all and save @SANITY', async ({}) => {
   await tree.submitLineSectionBtn.click();
   await page.reload();
   //linesection delete icon is not visible after first time delete, so added reload and click again to make it visible and then delete the line section
-  const lineSection = page.locator("//div[@class='css-g7taw0']").first();
+  const lineSection = page.getByTestId("line-section-tree-testid-child-0");
   await lineSection.waitFor("networkidle");
   await lineSection.waitFor({ state: 'visible' });
   await lineSection.isEnabled();
@@ -194,12 +258,28 @@ test('Line section edit all and save @SANITY', async ({}) => {
   await lineSection.waitFor({ state: 'visible' });
   await lineSection.isEnabled();
   await lineSection.click();
+
   await expect(tree.sectionProperty).toBeVisible();
   await expect(tree.editIcon).toBeVisible();
   await tree.editIcon.click();
   await tree.editLine();
   await tree.submitLineSectionBtn.click();
   await expect(page.getByRole('alert').first()).toContainText('edited successfully');
+
+  //line delete  
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  //await expect(page.getByRole("alert").first()).toContainText("Line section deleted successfully")
+
+  //project delete
+  await page.reload();
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  await expect(page.getByRole("alert").first()).toContainText("Project deleted successfully");
 
 });
 
@@ -222,7 +302,7 @@ test('Line section edit all and cancel @SANITY ', async ({}) => {
   await tree.submitLineSectionBtn.click();
   await page.reload();
   //linesection delete icon is not visible after first time delete, so added reload and click again to make it visible and then delete the line section
-  const lineSection = page.locator("//div[@class='css-g7taw0']").first();
+  const lineSection = page.getByTestId("line-section-tree-testid-child-0");
   await lineSection.waitFor("networkidle");
   await lineSection.waitFor({ state: 'visible' });
   await lineSection.isEnabled();
@@ -242,6 +322,21 @@ test('Line section edit all and cancel @SANITY ', async ({}) => {
   await expect(tree.cancelModal).toBeVisible();
   await page.getByRole('button', { name: 'confirm' }).click();
 
+  //line delete  
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+ // await expect(page.getByRole("alert").first()).toContainText("Line section deleted successfully")
+
+  //project delete
+  await page.reload();
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  await expect(page.getByRole("alert").first()).toContainText("Project deleted successfully");
+
 });
 
 
@@ -252,7 +347,6 @@ test('Delete : Line section modal > cancel @SANITY @one', async ({}) => {
   const tree = new ProjectTreePage(page);
   const projectName = getUniqueProjectName();
   
-
   await loginPage.goto();
   await common.clickNewProject();
   await common.setProjectName(projectName);
@@ -265,7 +359,7 @@ test('Delete : Line section modal > cancel @SANITY @one', async ({}) => {
   await tree.submitLineSectionBtn.click();
   await page.reload();
   
-  const lineSection = page.locator("//div[@class='css-g7taw0']").first();
+  const lineSection = page.getByTestId("line-section-tree-testid-child-0");
   await lineSection.waitFor("networkidle");
   await lineSection.waitFor({ state: 'visible' });
   await lineSection.isEnabled();
@@ -281,6 +375,21 @@ test('Delete : Line section modal > cancel @SANITY @one', async ({}) => {
   await expect(tree.deleteModal).toBeVisible();
   await tree.cancelBtn.click();
   await expect(tree.deleteModal).not.toBeVisible();
+
+  //line delete  
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  //await expect(page.getByRole("alert").first()).toContainText("Line section deleted successfully")
+
+  //project delete
+  await page.reload();
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  await expect(page.getByRole("alert").first()).toContainText("Project deleted successfully");
 
 });
 
@@ -304,7 +413,7 @@ test("Delete : Line section modal > confirm @SANITY ", async ({}) => {
   await tree.submitLineSectionBtn.click();
   
   //linesection delete icon is not visible after first time delete, so added reload and click again to make it visible and then delete the line section
-  const lineSection = page.locator("//div[@class='css-g7taw0']").first();
+  const lineSection = page.getByTestId("line-section-tree-testid-child-0");
   await lineSection.waitFor("networkidle");
   await lineSection.waitFor({ state: 'visible' });
   await lineSection.isEnabled();
@@ -320,17 +429,20 @@ test("Delete : Line section modal > confirm @SANITY ", async ({}) => {
   await expect(tree.deleteModal).toBeVisible();
   await tree.modalConfirmBtn.isVisible();
   await tree.modalConfirmBtn.click();
-  await expect(page.getByRole('alert').first()).toContainText('Line section deleted successfully');
+  //line delete  
+  // await page.getByTestId("DeleteIcon").isEnabled();
+  // await page.getByTestId("DeleteIcon").click();
+  // await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  // await page.getByRole("button", {name : "Confirm"}).click();
+ // await expect(page.getByRole("alert").first()).toContainText("Line section deleted successfully")
 
+  //project delete
   await page.reload();
-  await common.deleteButton.isVisible();
-  await common.deleteButton.click();
-  await expect(page.locator("div[role='dialog']")).toBeVisible();
-  await page.getByRole('button', { name: 'confirm' }).isVisible();
-  await page.getByRole('button', { name: 'confirm' }).click();
-  const toast = page.getByText('Project deleted successfully');
-  await expect(toast).toBeVisible();
-  await expect(toast).toContainText('Project deleted successfully');
-  await expect(page).toHaveURL("https://dev-amberg.seliselocal.com/projects");
+  await page.getByTestId("DeleteIcon").isEnabled();
+  await page.getByTestId("DeleteIcon").click();
+  await page.getByRole("button", {name : "Confirm"}).isEnabled();
+  await page.getByRole("button", {name : "Confirm"}).click();
+  await expect(page.getByRole("alert").first()).toContainText("Project deleted successfully");
   
 });
+

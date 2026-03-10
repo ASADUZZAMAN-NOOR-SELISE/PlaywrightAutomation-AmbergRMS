@@ -53,6 +53,7 @@ export class ProjectTreePage {
     this.deleteModal = page.locator('div.MuiGrid-root.MuiGrid-container.MuiGrid-direction-xs-column.css-hsbgum');
 
     //Track under line section
+    this.addTrack = page.getByRole('button', { name: 'AddTrackButton' });
     
   }
 
