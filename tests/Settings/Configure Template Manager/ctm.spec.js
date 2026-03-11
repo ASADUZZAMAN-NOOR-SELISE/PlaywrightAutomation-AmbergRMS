@@ -37,6 +37,7 @@ test("Configuration Template Manager validation", async () => {
   await ctmPage.newTemplate();
   await ctmPage.verifyTemplateList();
   await ctmPage.verifyTemplateColumns();
+  await ctmPage.deleteEditButtons();
 
   console.log("Configuration Template Manager tests passed successfully.");
 });

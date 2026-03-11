@@ -35,16 +35,20 @@ class CTMPage {
     this.alert = page.getByRole("alert");
     this.newTemplateName = page.getByLabel(templateName);
 
-    this.defaultTemplateName2 = page
+    this.defaultTemplateName1 = page
       .locator("span")
       .filter({ hasText: defaultName1 })
       .first();
-    this.defaultTemplateName1 = page
+    this.defaultTemplateName2 = page
       .locator("span")
       .filter({ hasText: defaultName2 })
       .first();
 
     this.templateHeaders = templateHeaders;
+
+    this.deleteButton = this.page.getByLabel("DeleteConfiguration");
+    this.editButton = this.page.getByLabel("EditConfiguration");
+    this.backButton = this.page.getByLabel("BackButton");
   }
 
   async navigateCTM() {
@@ -80,8 +84,8 @@ class CTMPage {
   }
 
   async verifyTemplateList() {
-    await expect(this.defaultTemplateName2).toHaveText(defaultName1);
-    await expect(this.defaultTemplateName1).toHaveText(defaultName2);
+    await expect(this.defaultTemplateName1).toHaveText(defaultName1);
+    await expect(this.defaultTemplateName2).toHaveText(defaultName2);
   }
 
   async verifyTemplateColumns() {
@@ -89,6 +93,16 @@ class CTMPage {
       const templateList = this.page.getByText(header, { exact: true });
       await expect(templateList).toHaveText(header);
     }
+  }
+
+  async deleteEditButtons() {
+    await this.defaultTemplateName2.click();
+    await expect(this.deleteButton).toBeDisabled();
+    await expect(this.editButton).toBeDisabled();
+    await this.backButton.click();
+    await this.newTemplateName.click();
+    await expect(this.deleteButton).toBeEnabled();
+    await expect(this.editButton).toBeEnabled();
   }
 }
 
