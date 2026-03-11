@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../../../Utils/loginPage";
-import { CTMPage } from "./ctm.page";
+import { LoginPage } from "../../../../Utils/loginPage";
+import { STNTemplatePage } from "./stnTemplate.page";
 
 let webContext;
 
@@ -26,18 +26,14 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   webContext = await browser.newContext({ storageState: "state.json" });
 });
 
-test("Configuration Template Manager validation", async () => {
+test("STN Template validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
-  const ctmPage = new CTMPage(page);
+  const stnPage = new STNTemplatePage(page);
 
   await loginPage.goto();
-  await ctmPage.navigateCTM();
-  await ctmPage.newTemplate();
-  await ctmPage.verifyTemplateList();
-  await ctmPage.verifyTemplateColumns();
-  await ctmPage.deleteEditButtons();
-
-  console.log("Configuration Template Manager tests passed successfully.");
+  await stnPage.navigateCTM();
+  await stnPage.stnTemplate();
+  console.log("STN Template tests passed successfully.");
 });
