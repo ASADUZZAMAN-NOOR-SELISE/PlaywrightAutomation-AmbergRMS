@@ -35,16 +35,18 @@ export class ProjectTreePage {
     this.lineSectionTab = page.locator("button[aria-label='Add Line Section']");
     this.lineSectionModal = page.locator(".MuiGrid-root.css-nmw51g");
     this.lineSectionRadioBtn = page.locator("form [role='radiogroup'] label");
-    this.nameField = page.getByRole('textbox', { name: 'NameInput' });
+    this.nameField = page.getByRole('textbox', { name: /Name/i });
     this.numberField = page.getByRole('textbox', { name: 'Number' });
     this.startPlaceName = page.getByRole('textbox', { name: 'Start Place' });
     this.endPlaceName = page.getByRole('textbox', { name: 'End Place' });
-    this.commentField = page.locator("div textarea[name='Comment']");
-    this.startLocalization = page.locator('[name="Start.Stationing"]');
-    this.endLocalization = page.locator('[name="End.Stationing"]');
+    this.commentField = page.getByRole('textbox', { name: 'Comment' });
+    this.startLocalization = page.getByLabel("Start Localization [m]");
+    this.endLocalization = page.getByLabel("End Localization [m]");
     this.cancelBtn = page.locator('button:has-text("CANCEL")');
     this.submitLineSectionBtn = page.locator("button[type='submit']");
-    this.clearIcon = page.locator("button[type='button']");
+    // this.clearIcon = page.locator("button[type='button']");
+    this.clearIcon = page.getByTestId("ClearIcon", {force: true});
+    
     this.cancelModal = page.locator("div[role='dialog']");
     this.modalConfirmBtn = page.locator("button[aria-label='confirm']");
     this.editIcon = page.getByTestId('EditIcon',{force:true});
@@ -53,6 +55,7 @@ export class ProjectTreePage {
     this.deleteModal = page.locator('div.MuiGrid-root.MuiGrid-container.MuiGrid-direction-xs-column.css-hsbgum');
 
     //Track under line section
+    this.addTrack = page.getByRole('button', { name: 'AddTrackButton' });
     
   }
 
@@ -138,7 +141,40 @@ export class ProjectTreePage {
     await this.startLocalization.fill('1000');
     await this.endLocalization.fill('5000');
     await this.submitLineSectionBtn.isVisible();
-    
   }
 
+  async exploreLineTest(){
+    await this.lineSectionTab.click();
+    //cross icon without data
+    await this.clearIcon.click();
+    await expect(this.lineSectionModal).not.toBeVisible();
+
+    await this.lineSectionTab.click();
+    //cancel without data
+    await this.cancelBtn.click();
+    await expect(this.lineSectionModal).not.toBeVisible();
+
+    await this.lineSectionTab.click();
+    // add line without data  error text validation
+    await this.submitLineSectionBtn.click();
+    await expect(this.page.locator("p")).toHaveText("Name is required");
+
+    //check cancel with data
+    await this.page.getByRole('textbox', { name: 'NameInput' }).fill('ab');
+    await this.page.getByRole('button', { name: 'Cancel' }).click();
+    await expect(this.cancelModal).toBeVisible();
+    await expect(this.page.getByRole('button', { name: 'Close' })).toBeVisible();
+    await this.page.getByRole('button', { name: 'Close' }).click();
+    await expect(this.cancelModal).not.toBeVisible();
+
+    await this.page.getByRole('button', { name: 'Cancel' }).click();
+    await expect(this.page.getByRole('button', { name: 'Cancel' })).toBeVisible();
+    await this.page.getByRole('button', { name: 'Cancel' }).click();
+    await expect(this.cancelModal).not.toBeVisible();
+
+    await this.page.getByRole('button', { name: 'Cancel' }).click();
+    await expect(this.page.getByRole('button', { name: 'confirm' })).toBeVisible();
+    await this.page.getByRole('button', { name: 'confirm' }).click();
+    await expect(this.cancelModal).not.toBeVisible();
+  }
 }
