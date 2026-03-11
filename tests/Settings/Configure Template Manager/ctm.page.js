@@ -1,4 +1,5 @@
 import { expect } from "@playwright/test";
+import { templateHeaders } from "./templateHeader";
 
 const templateName = `template-${Math.floor(100 + Math.random() * 900)}`;
 const defaultName1 = "EN-13848";
@@ -42,6 +43,8 @@ class CTMPage {
       .locator("span")
       .filter({ hasText: defaultName2 })
       .first();
+
+    this.templateHeaders = templateHeaders;
   }
 
   async navigateCTM() {
@@ -79,6 +82,13 @@ class CTMPage {
   async verifyTemplateList() {
     await expect(this.defaultTemplateName2).toHaveText(defaultName1);
     await expect(this.defaultTemplateName1).toHaveText(defaultName2);
+  }
+
+  async verifyTemplateColumns() {
+    for (const header of this.templateHeaders) {
+      const templateList = this.page.getByText(header, { exact: true });
+      await expect(templateList).toHaveText(header);
+    }
   }
 }
 
