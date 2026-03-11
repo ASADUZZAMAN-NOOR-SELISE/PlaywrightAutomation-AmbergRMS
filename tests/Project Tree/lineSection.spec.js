@@ -16,7 +16,7 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   const loginPage = new LoginPage(page);
 
   await loginPage.goto();
-  await page.locator(".MuiGrid-root").nth(1).isVisible();
+  //await page.locator(".MuiGrid-root").nth(1).isVisible();
   await loginPage.verifyInitialState();
   await loginPage.login();
   await loginPage.logoutVisible();
@@ -469,7 +469,7 @@ test("Delete : Line section modal > confirm @SANITY ", async ({}) => {
   await lineSection.waitFor({ state: 'visible' });
   await lineSection.isEnabled();
   await lineSection.click({ force: true });
-  await page.getByText('Line Section', { exact: true }).isVisible();
+  await expect(page.getByText('Line Section', { exact: true })).toBeVisible();
   await tree.deleteIcon.isVisible();
   await tree.deleteIcon.click();
   await expect(tree.deleteModal).toBeVisible();
