@@ -21,6 +21,15 @@ class CustomerInformationPage {
     this.alert = page.getByRole("alert");
 
     this.customerSection = page.locator("#customer_info");
+    this.customerLogo = this.page.getByRole("img", {
+      name: "logo",
+      exact: true,
+    });
+    this.customerLogoInput = this.customerSection.getByText("Company Logo", {
+      exact: true,
+    });
+    this.customerLogoUpload =
+      this.customerSection.locator("input[type='file']");
   }
 
   getInputField(label) {
@@ -75,7 +84,7 @@ class CustomerInformationPage {
     }
   }
 
-  async editCustomerInformation(updatedData) {
+  async editCustomerInformation(updatedData, filePath) {
     await this.editConfigBtn.click();
 
     const fields = [
@@ -94,6 +103,11 @@ class CustomerInformationPage {
 
     await this.getCountryDropdown().click();
     await this.getOption(updatedData.country).click();
+
+    await expect(this.customerLogo).not.toBeVisible();
+    await expect(this.customerLogoInput).toBeVisible();
+    // await this.customerLogoUpload.setInputFiles(filePath);
+    // await expect(this.customerLogo).toBeVisible();
 
     await this.submitBtn.click();
 

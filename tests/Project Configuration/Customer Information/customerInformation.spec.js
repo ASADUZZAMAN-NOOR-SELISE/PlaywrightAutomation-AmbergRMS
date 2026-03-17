@@ -1,7 +1,9 @@
 import { test, expect } from "@playwright/test";
+import path from "path";
 import { LoginPage } from "../../../Utils/loginPage";
 import CustomerInformationPage from "./customerInformation.page";
-import { data } from "../../../Utils/Data/information";
+import { data } from "../../../Utils/Data/Information";
+const filePath = path.join(__dirname, "./Data/Images/human-resource.png");
 
 let webContext;
 
@@ -31,6 +33,7 @@ test("Customer Information validation", async () => {
   await customerInformationPage.verifyCustomerInformation(data.customerData);
   await customerInformationPage.editCustomerInformation(
     data.updatedCustomerData,
+    filePath,
   );
   await customerInformationPage.verifyUpdatedCustomerInformation(
     data.updatedCustomerData,
