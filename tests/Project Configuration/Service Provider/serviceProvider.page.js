@@ -6,6 +6,7 @@ class ServiceProviderPage {
 
     this.projectsHeading = page.getByRole("heading", { name: "Projects" });
     this.projectName = page.getByLabel("dummy");
+    this.projectLogo = page.getByRole("img", { name: "dummy" });
     this.projectConfig = page.getByText("Project Configuration");
     this.serviceProviderInfoBtn = page.getByRole("button", {
       name: "Service Provider",
@@ -59,8 +60,9 @@ class ServiceProviderPage {
 
   async navigateToServiceProviderInfo() {
     await this.projectsHeading.click();
+    await expect(this.projectLogo).toBeVisible();
     await this.projectName.click();
-    await this.projectConfig.click();
+    await await this.projectConfig.click();
     await this.serviceProviderInfoBtn.click();
   }
 
