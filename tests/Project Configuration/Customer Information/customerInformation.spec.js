@@ -29,6 +29,12 @@ test("Customer Information validation", async () => {
   await loginPage.goto();
   await customerInformationPage.navigateToCustomerInfo();
   await customerInformationPage.verifyCustomerInformation(data.customerData);
+  await customerInformationPage.editCustomerInformation(
+    data.updatedCustomerData,
+  );
+  await customerInformationPage.verifyUpdatedCustomerInformation(
+    data.updatedCustomerData,
+  );
 
   console.log("Customer Information tests passed successfully.");
 });

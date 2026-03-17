@@ -38,7 +38,6 @@ class ADIFTemplatePage {
     this.dialogConfirmButton = page.getByRole("button", {
       name: "ConfirmButton",
     });
-    this.alert = page.getByRole("alert");
     this.newTemplateName = page.getByLabel(templateName);
   }
 

@@ -11,7 +11,38 @@ class CustomerInformationPage {
       name: "Customer Information",
     });
 
+    this.editConfigBtn = page.getByRole("button", {
+      name: "Edit Configuration",
+    });
+    this.submitBtn = page.getByRole("button", {
+      name: "Custom Submit Button",
+    });
+
+    this.alert = page.getByRole("alert");
+
     this.customerSection = page.locator("#customer_info");
+  }
+
+  getInputField(label) {
+    return this.page.getByRole("textbox", { name: label });
+  }
+
+  getCustomerField(label) {
+    return this.customerSection.getByLabel(label, { exact: true });
+  }
+
+  getText(value) {
+    return this.page.getByText(value, { exact: true });
+  }
+
+  getCountryDropdown() {
+    return this.page.locator(
+      '[id="mui-component-select-CustomerInfo.Country"]',
+    );
+  }
+
+  getOption(value) {
+    return this.page.getByRole("option", { name: value });
   }
 
   async navigateToCustomerInfo() {
@@ -37,12 +68,53 @@ class CustomerInformationPage {
       const inputField = this.customerSection.getByLabel(field.label, {
         exact: true,
       });
-
       await expect(inputField).toBeVisible();
-
       await expect(
         this.customerSection.getByText(field.value, { exact: true }),
       ).toHaveText(field.value);
+    }
+  }
+
+  async editCustomerInformation(updatedData) {
+    await this.editConfigBtn.click();
+
+    const fields = [
+      { name: "Company Name", value: updatedData.name },
+      { name: "Street", value: updatedData.street },
+      { name: "Town", value: updatedData.town },
+      { name: "Postal Code", value: updatedData.postalCode },
+      { name: "Region", value: updatedData.region },
+      { name: "Telephone", value: updatedData.phone },
+      { name: "Email", value: updatedData.email },
+    ];
+
+    for (const field of fields) {
+      await this.getInputField(field.name).fill(field.value);
+    }
+
+    await this.getCountryDropdown().click();
+    await this.getOption(updatedData.country).click();
+
+    await this.submitBtn.click();
+
+    await expect(this.alert).toBeVisible();
+    await expect(this.alert).toHaveText("Configuration updated successfully");
+  }
+
+  async verifyUpdatedCustomerInformation(updatedData) {
+    const updatedDataValues = [
+      updatedData.name,
+      updatedData.street,
+      updatedData.town,
+      updatedData.region,
+      updatedData.postalCode,
+      updatedData.phone,
+      updatedData.country,
+      updatedData.email,
+    ];
+
+    for (const value of updatedDataValues) {
+      await expect(this.getText(value)).toHaveText(value);
     }
   }
 }
