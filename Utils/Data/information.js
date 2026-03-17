@@ -52,4 +52,15 @@ export const data = {
     country: "Afghanistan",
     email: "dummy@gmail.com",
   },
+
+  updatedServiceProviderData: {
+    name: "Updated Service Provider name",
+    street: "ab",
+    town: "bc",
+    postalCode: "1235",
+    region: "cd",
+    country: "Afghanistan",
+    phone: "12345679",
+    email: "service.updated@gmail.com",
+  },
 };
