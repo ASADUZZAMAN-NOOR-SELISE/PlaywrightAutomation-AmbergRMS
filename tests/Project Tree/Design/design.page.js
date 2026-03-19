@@ -5,6 +5,7 @@ export class DesignPage {
     this.page = page;
     this.addDesignBtn = page.locator(".project-tree-design").getByText("Add Design");
     this.designDrawer = page.getByTestId("add-design-section-drawer-test-id");
+    this.design = page.getByTestId('design-tree-testid');
     
     this.nameInput = page.getByRole("textbox", { name: "name" });
     this.commentInput = page.getByRole("textbox", { name: "Comment" });
@@ -25,7 +26,13 @@ export class DesignPage {
     this.modalConfirmBtn = page.getByRole('button', { name: /confirm/i });
     this.modalCancelBtn = page.getByRole('button', { name: 'Cancel' });
 
-    
+    //speed locator
+    this.speed = page.getByTestId('design-tree-testid-child-0');
+    this.speedDrawer = page.getByTestId("edit-speed-section-drawer-test-id");
+
+    //bar edit icon
+    this.barEditIcon = page.getByTestId("custom-side-bar").getByTestId("EditIcon");
+
   }
 
   async clickAddDesign() {
@@ -75,5 +82,21 @@ export class DesignPage {
     await expect(sidebar.getByText(name, { exact: true })).toBeVisible();
     await expect(sidebar.getByText(comment, { exact: true })).toBeVisible();
     await expect(sidebar.getByText(date, { exact: true })).toBeVisible();
+  }
+  
+  async designClick(name){
+    await this.design.getByText(name).click();
+  }
+
+  async speedClick(){
+    await this.speed.waitFor({ state: 'visible' });
+    await expect(this.speed).toBeEnabled();
+    await this.speed.getByText("Speed").click();
+  }
+
+  async clickEditIcon(){
+    await this.barEditIcon.waitFor({ state: 'visible' });
+    await expect(this.barEditIcon).toBeEnabled();
+    await this.barEditIcon.click({force: true});
   }
 }
