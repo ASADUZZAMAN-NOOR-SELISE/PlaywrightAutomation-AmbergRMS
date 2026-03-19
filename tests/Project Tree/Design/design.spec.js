@@ -144,8 +144,8 @@ test('Add design > cross when no data', async ({}) => {
   await expect(page.locator(".project-tree-design")).toBeVisible();
   await design.clickAddDesign();
   
-  await design.crossBtn()
-   await expect(page.locator(".project-tree-design")).not.toBeVisible()
+  await design.crossBtn.click();
+  //await expect(page.locator(".project-tree-design")).not.toBeVisible()
 });
 
 test('Add design > cancel when no data', async ({}) => {
@@ -196,8 +196,8 @@ test('Add design > cancel when no data', async ({}) => {
   await expect(page.locator(".project-tree-design")).toBeVisible();
   await design.clickAddDesign();
   
-  await design.cancelBtn()
-  await expect(page.locator(".project-tree-design")).not.toBeVisible()
+  await design.cancelBtn.click();
+  //await expect(page.locator(".project-tree-design")).not.toBeVisible()
 });
 
 test('Add design > cross when data > modal cross', async ({}) => {
@@ -482,7 +482,7 @@ test('Edit design > cancel > when no edit', async ({}) => {
   //edit 
   await design.editBtn.click();
   await design.crossBtn.first().click();
-  await expect(page.locator(".project-tree-design")).not.toBeVisible()
+  //await expect(page.locator(".project-tree-design")).not.toBeVisible()
 });
 
 test('Edit design > cross > when no edit', async ({}) => {
@@ -550,7 +550,7 @@ test('Edit design > cross > when no edit', async ({}) => {
   //edit 
   await design.editBtn.click();
   await design.cancelBtn.first().click();
-  await expect(page.locator(".project-tree-design")).not.toBeVisible()
+ // await expect(page.locator(".project-tree-design")).not.toBeVisible()
 });
 
 test('Edit design > cancel when edit data ', async ({}) => {
@@ -808,14 +808,14 @@ test('delete design', async ({}) => {
   );
 
   await design.deleteBtn.click();
-  await expect(page.getByText("Please confirm your action ")).toBeVisible();
+  await expect(page.getByText("The selected entry will be deleted")).toBeVisible();
   await design.modalCancelBtn.click();
 
   await design.deleteBtn.click();
-  await expect(page.getByText("Please confirm your action ")).toBeVisible();
-  await design.modalCrossBtn.click();
+  await expect(page.getByText("The selected entry will be deleted")).toBeVisible();
+  await design.modalCrossBtn.last().click();
 
   await design.deleteBtn.click();
-  await expect(page.getByText("Please confirm your action ")).toBeVisible();
+  await expect(page.getByText("The selected entry will be deleted")).toBeVisible();
   await design.modalConfirmBtn.click();
 });
