@@ -141,7 +141,7 @@ test('Add new Speed', async ({}) => {
 });
 
 
-test.only('Delete Speed', async ({}) => {
+test('Delete Speed', async ({}) => {
   const page = await webContext.newPage();
   
   const loginPage = new LoginPage(page);
@@ -270,8 +270,330 @@ test.only('Delete Speed', async ({}) => {
   if(newDelete < deleteCount){
     await design.speedDrawer.getByText(/save changes/i).click();
   }
-  await page.pause();
+});
 
+// test('Speed > Edit > Cross and cancel when no data ', async ({}) => {
+//   const page = await webContext.newPage();
+  
+//   const loginPage = new LoginPage(page);
+//   const common = new Common(page);
+//   const design = new DesignPage(page);
+//   const tree = new ProjectTreePage(page);
+//   const projectName = getUniqueProjectName();
+  
+//   await loginPage.goto();
+//   await common.clickNewProject(); 
+//   await common.setProjectName(projectName);
+//   await common.submitProject();
+//   await common.searchProject(projectName);
+//   await expect(page.getByLabel(projectName).first()).toBeVisible();
+//   await common.enterIntoProject(projectName);
+//   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
+//   await tree.addLine("Line section 1");
+//   await tree.submitLineSectionBtn.isVisible();
+//   await tree.submitLineSectionBtn.click();
+//   await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+
+//   // add track 
+//   await page.getByTestId('ChevronRightIcon').click();
+//   await expect(page.getByRole('button', { name: 'AddTrackButton' })).toBeVisible();
+//   await page.getByRole('button', { name: 'AddTrackButton' }).click();
+//   await expect(page.getByRole('button', { name: 'Custom Submit Button' })).toBeVisible();
+//   await expect(page.getByRole('heading', { name: 'Add Track' })).toBeVisible();
+//   await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+
+//   // add track 
+//   await page.getByRole('textbox', { name: 'NameInput' }).click();
+//   await page.getByRole('textbox', { name: 'NameInput' }).fill('Track 1');
+//   await page.getByRole('textbox', { name: 'Number' }).click();
+//   await page.getByRole('textbox', { name: 'Number' }).fill('123456789');
+//   await page.getByRole('textbox', { name: 'Comment' }).click();
+//   await page.getByRole('textbox', { name: 'Comment' }).fill('track comment ');
+  
+//   await page.getByRole('spinbutton', { name: 'Start Localization [m]' }).fill('100');
+//   await page.getByRole('spinbutton', { name: 'End Localization [m]' }).fill('2000');
+//   await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+//   await expect(page.getByRole('alert').first()).toContainText('Track created successfully');
+//   await expect(page.getByTestId('line-section-tree-testid-child-0').getByText('Track')).toBeVisible();
+//   await page.getByTestId('line-section-tree-testid-child-0').getByText('Track').click();
+
+//   // add design
+//   await expect(page.locator(".project-tree-design")).toBeVisible();
+
+//   await design.clickAddDesign();
+
+//   // validation
+//   await design.submitEmptyForm();
+//   await design.verifyNameRequired();
+
+//   // fill form
+//   await design.fillName("Design 1");
+//   await design.openCalendar();
+//   await design.goToNextMonth();
+//   await design.selectDate(15);
+//   await design.fillComment("Design 1 comment");
+
+//   // submit
+//   await design.submitDesign();
+//   await expect(page.getByRole('alert').first()).toContainText('Design created successfully');
+  
+//   // verification
+//   await design.verifyDesignCreated(
+//     "Design 1",
+//     "Design 1 comment",
+//     "2026.04.15"
+//   );
+//   // speed add
+//   await design.speedClick();
+//   await expect(page.getByTestId("custom-side-bar").getByText(/speed/i).first()).toBeVisible();
+//   await design.clickEditIcon();
+//   await expect(design.speedDrawer).toBeVisible();
+  
+//   // speed drawer content assertion
+//   await expect(design.speedDrawer.getByRole('heading')).toContainText('Edit Speed');
+//   await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('Comment');
+//   await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('START LOCALIZATION [m]*');
+//   await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('END LOCALIZATION [m]*');
+//   await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('SPEED [km/h]*');
+//   await expect(design.speedDrawer.getByRole('button', { name: 'Cancel' })).toBeVisible();
+//   await expect(design.speedDrawer.getByText('Add Speed')).toBeVisible();
+//   await expect(design.speedDrawer.getByText('Save changes')).toBeVisible();
+//   // enter speed value 
+//   await design.speedDrawer.getByText('Add Speed').click();
+//   await design.speedDrawer.getByPlaceholder('Start Localization [m]*').click();
+//   await design.speedDrawer.getByPlaceholder('Start Localization [m]*').fill('300');
+//   await design.speedDrawer.getByPlaceholder('End Localization [m]*').click();
+//   await design.speedDrawer.getByPlaceholder('End Localization [m]*').fill('200');
+//   await design.speedDrawer.getByPlaceholder('Speed [km/h]*').click();
+//   await design.speedDrawer.getByPlaceholder('Speed [km/h]*').first().fill('120');
+//   await design.speedDrawer.getByText('Save changes').click();
+//   await expect(page.getByText('End Localization must be greater than Start Localization', { exact: true })).toBeVisible();
+//   await design.speedDrawer.getByPlaceholder('Start Localization [m]*').fill('100');
+//   await design.speedDrawer.getByText('Save changes').click();
+//   // value assertion after save 
+//   await expect(page.getByTestId('custom-side-bar')).toContainText('100.00');
+//   await expect(page.getByTestId('custom-side-bar')).toContainText('200.00');
+//   await expect(page.getByTestId('custom-side-bar')).toContainText('100.00');
+
+//   // Edit the speed again and add one more speed range
+//   await design.clickEditIcon();
+//   // mdoal cross button click 
+//   await design.clickCrossBtn();
+
+//   await design.clickEditIcon();
+//   // mdoal cancel button click 
+//   await design.clickCancelBtn();
+
+//error after first time add speed > save then edit > click cross or cancle the confirmation modal open 
+
+// });
+
+
+test('Edit > Cross and cancel When data', async ({}) => {
+  const page = await webContext.newPage();
+  
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const design = new DesignPage(page);
+  const tree = new ProjectTreePage(page);
+  const projectName = getUniqueProjectName();
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
+  await common.searchProject(projectName);
+  await expect(page.getByLabel(projectName).first()).toBeVisible();
+  await common.enterIntoProject(projectName);
+  await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
+  await tree.addLine("Line section 1");
+  await tree.submitLineSectionBtn.isVisible();
+  await tree.submitLineSectionBtn.click();
+  await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+
+  // add track 
+  await page.getByTestId('ChevronRightIcon').click();
+  await expect(page.getByRole('button', { name: 'AddTrackButton' })).toBeVisible();
+  await page.getByRole('button', { name: 'AddTrackButton' }).click();
+  await expect(page.getByRole('button', { name: 'Custom Submit Button' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Add Track' })).toBeVisible();
+  await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+
+  // add track 
+  await page.getByRole('textbox', { name: 'NameInput' }).click();
+  await page.getByRole('textbox', { name: 'NameInput' }).fill('Track 1');
+  await page.getByRole('textbox', { name: 'Number' }).click();
+  await page.getByRole('textbox', { name: 'Number' }).fill('123456789');
+  await page.getByRole('textbox', { name: 'Comment' }).click();
+  await page.getByRole('textbox', { name: 'Comment' }).fill('track comment ');
+  
+  await page.getByRole('spinbutton', { name: 'Start Localization [m]' }).fill('100');
+  await page.getByRole('spinbutton', { name: 'End Localization [m]' }).fill('2000');
+  await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+  await expect(page.getByRole('alert').first()).toContainText('Track created successfully');
+  await expect(page.getByTestId('line-section-tree-testid-child-0').getByText('Track')).toBeVisible();
+  await page.getByTestId('line-section-tree-testid-child-0').getByText('Track').click();
+
+  // add design
+  await expect(page.locator(".project-tree-design")).toBeVisible();
+
+  await design.clickAddDesign();
+
+  // validation
+  await design.submitEmptyForm();
+  await design.verifyNameRequired();
+
+  // fill form
+  await design.fillName("Design 1");
+  await design.openCalendar();
+  await design.goToNextMonth();
+  await design.selectDate(15);
+  await design.fillComment("Design 1 comment");
+
+  // submit
+  await design.submitDesign();
+  await expect(page.getByRole('alert').first()).toContainText('Design created successfully');
+  
+  // verification
+  await design.verifyDesignCreated(
+    "Design 1",
+    "Design 1 comment",
+    "2026.04.15"
+  );
+  // speed add
+  await design.speedClick();
+  await expect(page.getByTestId("custom-side-bar").getByText(/speed/i).first()).toBeVisible();
+  await design.clickEditIcon();
+  await expect(design.speedDrawer).toBeVisible();
+  
+  // speed drawer content assertion
+  await expect(design.speedDrawer.getByRole('heading')).toContainText('Edit Speed');
+  await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('Comment');
+  await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('START LOCALIZATION [m]*');
+  await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('END LOCALIZATION [m]*');
+  await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('SPEED [km/h]*');
+  await expect(design.speedDrawer.getByRole('button', { name: 'Cancel' })).toBeVisible();
+  await expect(design.speedDrawer.getByText('Add Speed')).toBeVisible();
+  await expect(design.speedDrawer.getByText('Save changes')).toBeVisible();
+  // enter speed value 
+  await design.speedDrawer.getByText('Add Speed').click();
+  await design.speedDrawer.getByPlaceholder('Start Localization [m]*').click();
+  await design.speedDrawer.getByPlaceholder('Start Localization [m]*').fill('300');
+  
+  // cross button > cross, cancel , Confirm 
+  await design.clickCrossBtn();
+  await design.modalCrossBtn.last().click();
+  
+  await design.clickCrossBtn();
+  await design.modalCancelBtn.last().click();
+
+  await design.clickCrossBtn();
+  await design.modalConfirmBtn.last().click();
 
 });
 
+test('Edit > Cancel When data', async ({}) => {
+  const page = await webContext.newPage();
+  
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const design = new DesignPage(page);
+  const tree = new ProjectTreePage(page);
+  const projectName = getUniqueProjectName();
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
+  await common.searchProject(projectName);
+  await expect(page.getByLabel(projectName).first()).toBeVisible();
+  await common.enterIntoProject(projectName);
+  await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
+  await tree.addLine("Line section 1");
+  await tree.submitLineSectionBtn.isVisible();
+  await tree.submitLineSectionBtn.click();
+  await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+
+  // add track 
+  await page.getByTestId('ChevronRightIcon').click();
+  await expect(page.getByRole('button', { name: 'AddTrackButton' })).toBeVisible();
+  await page.getByRole('button', { name: 'AddTrackButton' }).click();
+  await expect(page.getByRole('button', { name: 'Custom Submit Button' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Add Track' })).toBeVisible();
+  await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+
+  // add track 
+  await page.getByRole('textbox', { name: 'NameInput' }).click();
+  await page.getByRole('textbox', { name: 'NameInput' }).fill('Track 1');
+  await page.getByRole('textbox', { name: 'Number' }).click();
+  await page.getByRole('textbox', { name: 'Number' }).fill('123456789');
+  await page.getByRole('textbox', { name: 'Comment' }).click();
+  await page.getByRole('textbox', { name: 'Comment' }).fill('track comment ');
+  
+  await page.getByRole('spinbutton', { name: 'Start Localization [m]' }).fill('100');
+  await page.getByRole('spinbutton', { name: 'End Localization [m]' }).fill('2000');
+  await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+  await expect(page.getByRole('alert').first()).toContainText('Track created successfully');
+  await expect(page.getByTestId('line-section-tree-testid-child-0').getByText('Track')).toBeVisible();
+  await page.getByTestId('line-section-tree-testid-child-0').getByText('Track').click();
+
+  // add design
+  await expect(page.locator(".project-tree-design")).toBeVisible();
+
+  await design.clickAddDesign();
+
+  // validation
+  await design.submitEmptyForm();
+  await design.verifyNameRequired();
+
+  // fill form
+  await design.fillName("Design 1");
+  await design.openCalendar();
+  await design.goToNextMonth();
+  await design.selectDate(15);
+  await design.fillComment("Design 1 comment");
+
+  // submit
+  await design.submitDesign();
+  await expect(page.getByRole('alert').first()).toContainText('Design created successfully');
+  
+  // verification
+  await design.verifyDesignCreated(
+    "Design 1",
+    "Design 1 comment",
+    "2026.04.15"
+  );
+  // speed add
+  await design.speedClick();
+  await expect(page.getByTestId("custom-side-bar").getByText(/speed/i).first()).toBeVisible();
+  await design.clickEditIcon();
+  await expect(design.speedDrawer).toBeVisible();
+  
+  // speed drawer content assertion
+  await expect(design.speedDrawer.getByRole('heading')).toContainText('Edit Speed');
+  await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('Comment');
+  await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('START LOCALIZATION [m]*');
+  await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('END LOCALIZATION [m]*');
+  await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('SPEED [km/h]*');
+  await expect(design.speedDrawer.getByRole('button', { name: 'Cancel' })).toBeVisible();
+  await expect(design.speedDrawer.getByText('Add Speed')).toBeVisible();
+  await expect(design.speedDrawer.getByText('Save changes')).toBeVisible();
+  // enter speed value 
+  await design.speedDrawer.getByText('Add Speed').click();
+  await design.speedDrawer.getByPlaceholder('Start Localization [m]*').click();
+  await design.speedDrawer.getByPlaceholder('Start Localization [m]*').fill('300');
+
+  // cancel button > cross, cancel , Confirm 
+  await design.clickCancelBtn();
+  await expect(page.getByText("Please confirm your action")).toBeVisible();
+  await design.modalCrossBtn.last().click();
+  
+  await design.clickCancelBtn();
+  await expect(page.getByText("Please confirm your action")).toBeVisible();
+  await design.modalCancelBtn.last().click();
+
+  await design.clickCancelBtn();
+  await expect(page.getByText("Please confirm your action")).toBeVisible();
+  await design.modalConfirmBtn.last().click();
+
+});

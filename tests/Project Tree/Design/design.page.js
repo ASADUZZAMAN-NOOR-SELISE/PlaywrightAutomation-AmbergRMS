@@ -99,4 +99,14 @@ export class DesignPage {
     await expect(this.barEditIcon).toBeEnabled();
     await this.barEditIcon.click({force: true});
   }
+
+  async clickCrossBtn(){
+    await expect(this.crossBtn.first()).toBeVisible();
+    await this.crossBtn.first().click();
+  }
+
+  async clickCancelBtn(){
+    await expect(this.cancelBtn.first()).toBeVisible();
+    await this.cancelBtn.first().click();
+  }
 }
