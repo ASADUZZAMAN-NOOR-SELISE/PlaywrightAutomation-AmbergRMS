@@ -1,8 +1,8 @@
 const { test, expect } = require('@playwright/test');
-import { LoginPage } from '../../Utils/loginPage';
-import { Common } from '../../Utils/common';
-import { projecTreetData } from './projectTree.data';
-import { ProjectTreePage } from './projectTree.page';
+import { LoginPage } from '../../../Utils/loginPage';
+import { Common } from '../../../Utils/common';
+import { projecTreetData } from '../projectTree.data';
+import { ProjectTreePage } from '../projectTree.page';
 
 let webContext;
 
@@ -159,7 +159,7 @@ test('Track explore test @SANITY', async ({})  => {
   await page.getByTestId('ChevronRightIcon').click();
   await expect(page.getByRole('button', { name: 'AddTrackButton' })).toBeVisible();
   await page.getByRole('button', { name: 'AddTrackButton' }).click();
-  await expect.soft( page.locator('#add-track-section-drawer-test-id')).toBeVisible();
+  await expect(page.getByTestId('add-track-section-drawer-test-id')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Custom Submit Button' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Add Track' })).toBeVisible();   
   await page.getByRole('button', { name: 'Custom Submit Button' }).click();

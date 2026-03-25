@@ -1,8 +1,8 @@
 const { test, expect } = require('@playwright/test');
-import { LoginPage } from '../../Utils/loginPage';
-import { Common } from '../../Utils/common';
-import { projecTreetData } from './projectTree.data';
-import { ProjectTreePage } from './projectTree.page';
+import { LoginPage } from '../../../Utils/loginPage';
+import { Common } from '../../../Utils/common';
+import { projecTreetData } from '../projectTree.data';
+import { ProjectTreePage } from '../projectTree.page';
 
 let webContext;
 
