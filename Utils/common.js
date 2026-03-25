@@ -57,14 +57,14 @@ export class Common {
 
   async setProjectName(name) {
     await this.nameInput.click();
-    await this.page.waitForTimeout(1500);
-    await this.nameInput.pressSequentially(" "+ name, { delay: 500 });
+    await this.page.waitForTimeout(1000);
+    await this.nameInput.pressSequentially(" "+ name, { delay: 200 });
   }
 
   async generalInformation(data) {
     await this.nameInput.click();
     await this.page.waitForTimeout(1500);
-    await this.nameInput.pressSequentially(" "+ data.name, { delay: 500 });
+    await this.nameInput.pressSequentially(" "+ data.name, { delay: 200 });
     await this.numberInput.fill(data.number);
     await this.startPlaceInput.fill(data.startPlace);
     await this.endPlaceInput.fill(data.endPlace);

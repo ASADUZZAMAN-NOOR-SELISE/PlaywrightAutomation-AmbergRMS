@@ -1,47 +1,31 @@
-const { test, expect } = require('@playwright/test');
-import { LoginPage } from '../../Utils/loginPage';
-import { Common } from '../../Utils/common';
-import { data } from '../../Utils/Data/Information';
-import { projecTreetData } from './projectTree.data';
-import { ProjectTreePage } from './projectTree.page';
+import { test, expect } from '@playwright/test';
 
-let webContext;
-
-function getUniqueProjectName(prefix = 'Line') {
-  return `${prefix}-${Date.now()}`;
-}
-const projectName = getUniqueProjectName();
-
-test.beforeAll("Navigated to dashboard", async ({ browser }) => {
-  const context = await browser.newContext();
-  const page = await context.newPage();
-  const loginPage = new LoginPage(page);
-
-  await loginPage.goto();
-  await page.locator(".MuiGrid-root").nth(1).isVisible();
-  await loginPage.verifyInitialState();
-  await loginPage.login();
-  await loginPage.logoutVisible();
-
-  await context.storageState({ path: "state.json" });
-  webContext = await browser.newContext({ storageState: "state.json" });
-});
-
-test('Line section modal open @SANITY', async ({})  => {
-  const page = await webContext.newPage();
-  const loginPage = new LoginPage(page);
-  const common = new Common(page);
-  const tree = new ProjectTreePage(page);
-  
-  await loginPage.goto();
-  await common.clickNewProject();
-  await common.setProjectName(projectName);
-  await common.submitProject();
-  await common.searchProject(projectName);
-  await expect(page.getByLabel(projectName).first()).toBeVisible();
-  await common.enterIntoProject(projectName);
-  await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
-  await tree.lineSectionTab.click();
-  await expect(tree.lineSectionModal).toBeVisible();
-
+test('test', async ({ page }) => {
+  await expect(page.getByTestId('edit-speed-section-drawer-test-id').getByRole('heading')).toContainText('Edit Speed');
+  await expect(page.getByLabel('EditSpeedForm')).toContainText('Comment');
+  await expect(page.getByLabel('EditSpeedForm')).toContainText('START LOCALIZATION [m]*');
+  await expect(page.getByLabel('EditSpeedForm')).toContainText('END LOCALIZATION [m]*');
+  await expect(page.getByLabel('EditSpeedForm')).toContainText('SPEED [km/h]*');
+  await expect(page.getByRole('button', { name: 'Cancel' })).toBeVisible();
+  await expect(page.getByText('Add Speed')).toBeVisible();
+  await expect(page.getByText('Save changes')).toBeVisible();
+  await page.getByText('Add Speed').click();
+  await page.getByPlaceholder('Start Localization [m]*').click();
+  await page.getByPlaceholder('Start Localization [m]*').fill('100');
+  await page.getByPlaceholder('End Localization [m]*').click();
+  await page.getByPlaceholder('End Localization [m]*').fill('200');
+  await page.getByPlaceholder('Speed [km/h]*').click();
+  await page.getByPlaceholder('Speed [km/h]*').fill('100');
+  await page.getByText('Save changes').click();
+  await expect(page.getByTestId('custom-side-bar')).toContainText('100.00');
+  await expect(page.getByTestId('custom-side-bar')).toContainText('200.00');
+  await expect(page.getByTestId('custom-side-bar')).toContainText('100.00');
+  await page.getByRole('button', { name: 'Property Window Edit Button' }).click();
+  await page.getByPlaceholder('Speed [km/h]*').click();
+  await page.getByText('Add Speed').click();
+  await page.locator('input[name="Elements.1.StationingEnd"]').fill('300');
+  await page.locator('input[name="Elements.1.Speed"]').click();
+  await page.locator('input[name="Elements.1.Speed"]').fill('500');
+  await page.getByText('Save changes').click();
+  await expect(page.getByLabel('EditSpeedForm')).toContainText('Please enter speed between 0 and 360.00 km/h');
 });
