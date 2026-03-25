@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../../Utils/loginPage";
-import GeneralInformationParametersPage from "./gip.page";
+import SpeedZonePage from "./speedZone.page";
 
 let webContext;
 
@@ -19,15 +19,14 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   webContext = await browser.newContext({ storageState: "state.json" });
 });
 
-test("General Information & Parameters validation", async () => {
+test("Speed Zone validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
-  const gipPage = new GeneralInformationParametersPage(page);
+  const speedZonePage = new SpeedZonePage(page);
 
   await loginPage.goto();
-  await gipPage.navigateToGIP();
-  await gipPage.verifyGIPInformation();
-
-  console.log("General Information & Parameters tests passed successfully.");
+  await speedZonePage.navigateToSpeedZone();
+  await speedZonePage.verifyMandatoryFields();
+  console.log("Speed Zone tests passed successfully.");
 });
