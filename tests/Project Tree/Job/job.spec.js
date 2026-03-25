@@ -229,3 +229,157 @@ test('Add job > cancel when no data', async ({}) => {
   await job.clickCancelBtn();
   await expect(page.getByTestId("add-job-section-drawer-test-id")).not.toBeVisible();
 });
+
+test('Add job > cross button confirmation modal', async ({}) => {
+  const page = await webContext.newPage();
+  
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const job = new JobPage(page);
+  const tree = new ProjectTreePage(page);
+  const projectName = getUniqueProjectName();
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
+  await common.searchProject(projectName);
+  await expect(page.getByLabel(projectName).first()).toBeVisible();
+  await common.enterIntoProject(projectName);
+  await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
+  await tree.addLine("Line section 1");
+  await tree.submitLineSectionBtn.isVisible();
+  await tree.submitLineSectionBtn.click();
+  await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+
+  // add track 
+  await page.getByTestId('ChevronRightIcon').click();
+  await expect(page.getByRole('button', { name: 'AddTrackButton' })).toBeVisible();
+  await page.getByRole('button', { name: 'AddTrackButton' }).click();
+  await expect(page.getByRole('button', { name: 'Custom Submit Button' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Add Track' })).toBeVisible();
+  await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+
+  // add track 
+  await page.getByRole('textbox', { name: 'NameInput' }).click();
+  await page.getByRole('textbox', { name: 'NameInput' }).fill('Track 1');
+  await page.getByRole('textbox', { name: 'Number' }).click();
+  await page.getByRole('textbox', { name: 'Number' }).fill('123456789');
+  await page.getByRole('textbox', { name: 'Comment' }).click();
+  await page.getByRole('textbox', { name: 'Comment' }).fill('track comment ');
+  
+  await page.getByRole('spinbutton', { name: 'Start Localization [m]' }).fill('100');
+  await page.getByRole('spinbutton', { name: 'End Localization [m]' }).fill('2000');
+  await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+  await expect(page.getByTestId('line-section-tree-testid-child-0').getByText('Track')).toBeVisible();
+  await page.getByTestId('line-section-tree-testid-child-0').getByText('Track').click();
+
+  // add design
+  await expect(page.locator(".project-tree-design")).toBeVisible();
+  await page.locator(".project-tree-design").getByText("Add Design").click();
+  await expect(page.getByTestId("add-design-section-drawer-test-id")).toBeVisible();
+  await page.getByRole('textbox', { name: 'name' }).fill('Design 1');
+  await page.getByTestId("CalendarIcon").click();
+  await page.getByTestId("ArrowRightIcon").click();
+  await page.locator("div[role='row'] button").filter({ hasText: '15' }).first().click();
+  await page.getByRole('textbox', { name: 'Comment' }).fill('Design 1 comment');
+  await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+  await expect(page.getByTestId('design-tree-testid')).toBeVisible();
+
+  // add job
+  await expect(page.locator(".project-tree-job")).toBeVisible();
+  await job.clickAddJob();
+
+  // fill some data to trigger confirmation
+  await job.fillName("Job 1");
+
+  // test cross button with confirmation modal
+  await job.crossBtn.first().click();
+  await expect(page.getByText("Please confirm your action ")).toBeVisible();
+  await job.modalCrossBtn.last().click();
+
+  await job.crossBtn.first().click();
+  await expect(page.getByText("Please confirm your action ")).toBeVisible();
+  await job.modalCancelBtn.click();
+
+  await job.crossBtn.first().click();
+  await expect(page.getByText("Please confirm your action ")).toBeVisible();
+  await job.modalConfirmBtn.click();
+});
+
+test('Add job > cancel button confirmation modal', async ({}) => {
+  const page = await webContext.newPage();
+  
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+  const job = new JobPage(page);
+  const tree = new ProjectTreePage(page);
+  const projectName = getUniqueProjectName();
+  
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
+  await common.searchProject(projectName);
+  await expect(page.getByLabel(projectName).first()).toBeVisible();
+  await common.enterIntoProject(projectName);
+  await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
+  await tree.addLine("Line section 1");
+  await tree.submitLineSectionBtn.isVisible();
+  await tree.submitLineSectionBtn.click();
+  await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+
+  // add track 
+  await page.getByTestId('ChevronRightIcon').click();
+  await expect(page.getByRole('button', { name: 'AddTrackButton' })).toBeVisible();
+  await page.getByRole('button', { name: 'AddTrackButton' }).click();
+  await expect(page.getByRole('button', { name: 'Custom Submit Button' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Add Track' })).toBeVisible();
+  await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+
+  // add track 
+  await page.getByRole('textbox', { name: 'NameInput' }).click();
+  await page.getByRole('textbox', { name: 'NameInput' }).fill('Track 1');
+  await page.getByRole('textbox', { name: 'Number' }).click();
+  await page.getByRole('textbox', { name: 'Number' }).fill('123456789');
+  await page.getByRole('textbox', { name: 'Comment' }).click();
+  await page.getByRole('textbox', { name: 'Comment' }).fill('track comment ');
+  
+  await page.getByRole('spinbutton', { name: 'Start Localization [m]' }).fill('100');
+  await page.getByRole('spinbutton', { name: 'End Localization [m]' }).fill('2000');
+  await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+  await expect(page.getByTestId('line-section-tree-testid-child-0').getByText('Track')).toBeVisible();
+  await page.getByTestId('line-section-tree-testid-child-0').getByText('Track').click();
+
+  // add design
+  await expect(page.locator(".project-tree-design")).toBeVisible();
+  await page.locator(".project-tree-design").getByText("Add Design").click();
+  await expect(page.getByTestId("add-design-section-drawer-test-id")).toBeVisible();
+  await page.getByRole('textbox', { name: 'name' }).fill('Design 1');
+  await page.getByTestId("CalendarIcon").click();
+  await page.getByTestId("ArrowRightIcon").click();
+  await page.locator("div[role='row'] button").filter({ hasText: '15' }).first().click();
+  await page.getByRole('textbox', { name: 'Comment' }).fill('Design 1 comment');
+  await page.getByRole('button', { name: 'Custom Submit Button' }).click();
+  await expect(page.getByTestId('design-tree-testid')).toBeVisible();
+
+  // add job
+  await expect(page.locator(".project-tree-job")).toBeVisible();
+  await job.clickAddJob();
+
+  // fill some data to trigger confirmation
+  await job.fillName("Job 1");
+
+  // test cancel button with confirmation modal
+  await job.cancelBtn.first().click();
+  await expect(page.getByText("Please confirm your action ")).toBeVisible();
+  await job.modalCrossBtn.last().click();
+
+  await job.cancelBtn.first().click();
+  await expect(page.getByText("Please confirm your action ")).toBeVisible();
+  await job.modalCancelBtn.click();
+
+  await job.cancelBtn.first().click();
+  await expect(page.getByText("Please confirm your action ")).toBeVisible();
+  await job.modalConfirmBtn.click();
+});
