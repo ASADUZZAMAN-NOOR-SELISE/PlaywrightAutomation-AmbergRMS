@@ -22,10 +22,7 @@ class SpeedZonePage {
     );
     this.nameError = page.getByText("Speed Zone Name is required");
     this.maxError = page.locator(
-      "p:has-text('Max value must be greater tha  n Min value')",
-    );
-    this.limitInput = page.locator(
-      `input[name="Defects.${action}.0.LimitsBySpeed.6.LimitsBySeverity.${severity}.Upper"]`,
+      "p:has-text('Max value must be greater than Min value')",
     );
     this.submitBtn = page.getByRole("button", {
       name: "Custom Submit Button",
@@ -63,7 +60,10 @@ class SpeedZonePage {
     await this.submitBtn.click();
     await expect(this.maxError).toBeVisible();
 
-    const generateLimits = (action, severity) => this.limitInput;
+    const generateLimits = (action, severity) =>
+      this.page.locator(
+        `input[name="Defects.${action}.0.LimitsBySpeed.6.LimitsBySeverity.${severity}.Upper"]`,
+      );
     const actions = ["Gauge.NominalToPeakLimits"];
 
     for (const action of actions) {
