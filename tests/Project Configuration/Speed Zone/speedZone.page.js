@@ -1,6 +1,8 @@
 import { expect } from "@playwright/test";
 
 const projectName = "dummy";
+const zoneNameInput = "G";
+const maxSpeedInput = "370.00";
 
 class SpeedZonePage {
   constructor(page) {
@@ -41,17 +43,20 @@ class SpeedZonePage {
   async addSpeedZone() {
     await this.speedZonesTab.click();
     await this.addSpeedZoneBtn.click();
-    await this.zoneNameInput.click();
+
     await this.zoneNameInput.fill("");
-    await this.maxSpeedInput.click();
     await this.maxSpeedInput.fill("");
     await this.page.keyboard.press("Tab");
+
     await expect(this.nameError).toHaveText("Speed Zone Name is required");
     await expect(this.maxError).toBeVisible();
-    await this.zoneNameInput.fill("G");
-    await this.maxSpeedInput.click();
-    await this.maxSpeedInput.fill("370.00");
+
+    await this.zoneNameInput.fill(zoneNameInput);
+    // await this.page.keyboard.press("Tab");
+    await this.zoneNameInput.blur();
+    await this.maxSpeedInput.fill(maxSpeedInput);
     await this.page.keyboard.press("Tab");
+
     await expect(this.nameError).toBeHidden();
     await expect(this.maxError).toBeHidden();
   }
@@ -64,11 +69,12 @@ class SpeedZonePage {
       this.page.locator(
         `input[name="Defects.${action}.0.LimitsBySpeed.6.LimitsBySeverity.${severity}.Upper"]`,
       );
-    const actions = ["Gauge.NominalToPeakLimits"];
+    const actions = [["Gauge.NominalToPeakLimits"]];
 
     for (const action of actions) {
-      for (let i = 0; i < 3; i++) {
-        const locator = generateLimits(action, i);
+      for (let severity = 0; severity < 3; severity++) {
+        const locator = generateLimits(action, severity);
+
         await locator.fill("");
         await locator.fill("1");
       }
