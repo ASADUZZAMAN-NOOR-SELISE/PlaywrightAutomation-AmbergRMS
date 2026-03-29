@@ -117,6 +117,21 @@ export class ProjectTreePage {
     
   }
 
+  async addLineProRail(lineSectionName){
+    await this.lineSectionTab.click();
+    await this.lineSectionModal.isVisible();
+    await this.page.getByLabel('ProRail', { exact: true }).check();
+    await this.nameField.fill(lineSectionName);
+    await this.numberField.fill('123456789');
+    await this.startPlaceName.fill('a');
+    await this.endPlaceName.fill('b');
+    await this.commentField.fill('General information about the line section');
+    await this.startLocalization.fill('100');
+    await this.endLocalization.fill('3000');
+    await this.submitLineSectionBtn.isVisible();
+    
+  }
+
   async clearLine(){
     await this.lineSectionTab.click();
     await this.lineSectionModal.isVisible();
