@@ -1,11 +1,14 @@
 import { expect } from "@playwright/test";
 
+const projectName = "dummy";
 class ServiceProviderPage {
   constructor(page) {
     this.page = page;
-
     this.projectsHeading = page.getByRole("heading", { name: "Projects" });
-    this.projectName = page.getByLabel("dummy");
+    this.searchBox = page.getByRole("textbox", {
+      name: "Search by Project Name",
+    });
+    this.projectName = page.getByLabel(projectName);
     this.projectLogo = page.getByRole("img", { name: "dummy" });
     this.projectConfig = page.getByText("Project Configuration");
     this.serviceProviderInfoBtn = page.getByRole("button", {
@@ -59,9 +62,11 @@ class ServiceProviderPage {
   }
 
   async navigateToServiceProviderInfo() {
-    await this.projectsHeading.click();
-    await expect(this.projectLogo).toBeVisible();
+    await expect(this.projectsHeading).toHaveText("Projects");
+    await this.searchBox.click();
+    await this.searchBox.fill(projectName);
     await this.projectName.click();
+    await expect(this.projectLogo).toBeVisible();
     await await this.projectConfig.click();
     await this.serviceProviderInfoBtn.click();
   }

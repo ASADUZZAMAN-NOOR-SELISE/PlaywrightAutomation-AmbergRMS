@@ -1,11 +1,14 @@
 import { expect } from "@playwright/test";
+const projectName = "Samiha Test";
 
 class CustomerInformationPage {
   constructor(page) {
     this.page = page;
-
     this.projectsHeading = page.getByRole("heading", { name: "Projects" });
-    this.projectName = page.getByLabel("Samiha Test");
+    this.searchBox = page.getByRole("textbox", {
+      name: "Search by Project Name",
+    });
+    this.projectName = page.getByLabel(projectName);
     this.projectConfig = page.getByText("Project Configuration");
     this.customerInfoBtn = page.getByRole("button", {
       name: "Customer Information",
@@ -55,7 +58,9 @@ class CustomerInformationPage {
   }
 
   async navigateToCustomerInfo() {
-    await this.projectsHeading.click();
+    await expect(this.projectsHeading).toHaveText("Projects");
+    await this.searchBox.click();
+    await this.searchBox.fill(projectName);
     await this.projectName.click();
     await this.projectConfig.click();
     await this.customerInfoBtn.click();
