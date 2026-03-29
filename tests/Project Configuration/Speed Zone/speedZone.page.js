@@ -43,7 +43,6 @@ class SpeedZonePage {
   async addSpeedZone() {
     await this.speedZonesTab.click();
     await this.addSpeedZoneBtn.click();
-
     await this.zoneNameInput.fill("");
     await this.maxSpeedInput.fill("");
     await this.page.keyboard.press("Tab");
