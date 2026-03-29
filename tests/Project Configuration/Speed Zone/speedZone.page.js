@@ -51,8 +51,7 @@ class SpeedZonePage {
     await expect(this.maxError).toBeVisible();
 
     await this.zoneNameInput.fill(zoneNameInput);
-    // await this.page.keyboard.press("Tab");
-    await this.zoneNameInput.blur();
+    await this.page.keyboard.press("Tab");
     await this.maxSpeedInput.fill(maxSpeedInput);
     await this.page.keyboard.press("Tab");
 
