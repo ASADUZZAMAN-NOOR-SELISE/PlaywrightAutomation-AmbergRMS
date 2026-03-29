@@ -70,8 +70,8 @@ class SpeedZonePage {
     const actions = [["Gauge.NominalToPeakLimits"]];
 
     for (const action of actions) {
-      for (let severity = 0; severity < 3; severity++) {
-        const locator = generateLimits(action, severity);
+      for (let i = 0; i < 3; i++) {
+        const locator = generateLimits(action[0], i);
 
         await locator.fill("");
         await locator.fill("1");
@@ -79,6 +79,7 @@ class SpeedZonePage {
     }
     await this.submitBtn.click();
   }
+  async deleteSpeedZone() {}
 }
 
 export default SpeedZonePage;
