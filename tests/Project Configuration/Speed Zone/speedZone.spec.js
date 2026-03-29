@@ -27,6 +27,6 @@ test("Speed Zone validation", async () => {
 
   await loginPage.goto();
   await speedZonePage.navigateToSpeedZone();
-  await speedZonePage.verifyMandatoryFields();
+  await speedZonePage.addSpeedZone();
   console.log("Speed Zone tests passed successfully.");
 });

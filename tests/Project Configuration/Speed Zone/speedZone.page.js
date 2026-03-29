@@ -15,9 +15,10 @@ class SpeedZonePage {
       name: "Edit Configuration",
     });
     this.speedZonesTab = page.getByRole("button", { name: "Speed Zones" });
-    this.zoneNameInput = page.locator('input[name="SpeedZones.Zones.0.Name"]');
+    this.addSpeedZoneBtn = page.getByRole("button", { name: "Add Speed Zone" });
+    this.zoneNameInput = page.locator('input[name="SpeedZones.Zones.6.Name"]');
     this.maxSpeedInput = page.locator(
-      'input[name="SpeedZones.Zones.0.MaxSpeed"]',
+      'input[name="SpeedZones.Zones.6.MaxSpeed"]',
     );
     this.nameError = page.getByText("Speed Zone Name is required");
     this.maxError = page.locator(
@@ -34,8 +35,9 @@ class SpeedZonePage {
     await this.editConfigBtn.click();
   }
 
-  async verifyMandatoryFields() {
+  async addSpeedZone() {
     await this.speedZonesTab.click();
+    await this.addSpeedZoneBtn.click();
     await this.zoneNameInput.click();
     await this.zoneNameInput.fill("");
     await this.maxSpeedInput.click();
@@ -43,6 +45,12 @@ class SpeedZonePage {
     await this.page.keyboard.press("Tab");
     await expect(this.nameError).toHaveText("Speed Zone Name is required");
     await expect(this.maxError).toBeVisible();
+    await this.zoneNameInput.fill("G");
+    await this.maxSpeedInput.click();
+    await this.maxSpeedInput.fill("370.00");
+    await this.page.keyboard.press("Tab");
+    await expect(this.nameError).toBeHidden();
+    await expect(this.maxError).toBeHidden();
   }
 }
 
