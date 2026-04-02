@@ -3,6 +3,7 @@ import path from "path";
 import { LoginPage } from "../../../Utils/loginPage";
 import CustomerInformationPage from "./customerInformation.page";
 import { data } from "../../../Utils/Data/Information";
+import { Common } from "../../../Utils/common";
 const filePath = path.join(__dirname, "./Data/Images/human-resource.png");
 
 let webContext;
@@ -20,6 +21,23 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
 
   await context.storageState({ path: "state.json" });
   webContext = await browser.newContext({ storageState: "state.json" });
+});
+
+test.beforeEach("Create new project", async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.generalInformation({
+    name: data.templateName.en13848,
+    ...data.project,
+  });
+  await common.customerInformation(data.customerData);
+  await common.fillServiceProviderInfo(data.serviceProviderData);
+  await common.submitProject();
+  await expect(common.newProjectButton).toBeVisible();
 });
 
 test("Customer Information validation", async () => {

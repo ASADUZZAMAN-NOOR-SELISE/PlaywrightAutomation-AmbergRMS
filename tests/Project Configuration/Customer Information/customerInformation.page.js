@@ -1,5 +1,6 @@
 import { expect } from "@playwright/test";
-const projectName = "Samiha Test";
+import { data } from "../../../Utils/Data/Information";
+const projectName = data.templateName.en13848;
 
 class CustomerInformationPage {
   constructor(page) {
@@ -8,7 +9,7 @@ class CustomerInformationPage {
     this.searchBox = page.getByRole("textbox", {
       name: "Search by Project Name",
     });
-    this.projectName = page.getByLabel(projectName);
+    this.projectName = page.getByLabel(projectName).first();
     this.projectConfig = page.getByText("Project Configuration");
     this.customerInfoBtn = page.getByRole("button", {
       name: "Customer Information",
@@ -61,7 +62,7 @@ class CustomerInformationPage {
     await expect(this.projectsHeading).toHaveText("Projects");
     await this.searchBox.click();
     await this.searchBox.fill(projectName);
-    await this.projectName.click();
+    await this.projectName.first().click();
     await this.projectConfig.click();
     await this.customerInfoBtn.click();
   }
