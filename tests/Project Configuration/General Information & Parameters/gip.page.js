@@ -1,6 +1,7 @@
 import { expect } from "@playwright/test";
+import { data } from "../../../Utils/Data/Information";
 
-const projectName = "dummy";
+const projectName = data.templateName.en13848;
 
 class GeneralInformationParametersPage {
   constructor(page) {
@@ -9,7 +10,7 @@ class GeneralInformationParametersPage {
     this.searchBox = page.getByRole("textbox", {
       name: "Search by Project Name",
     });
-    this.projectName = page.getByLabel(projectName);
+    this.projectName = page.getByLabel(projectName).first();
     this.projectConfig = page.getByText("Project Configuration");
     this.editConfigBtn = page.getByRole("button", {
       name: "Edit Configuration",
