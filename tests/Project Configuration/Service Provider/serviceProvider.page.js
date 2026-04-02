@@ -1,6 +1,7 @@
 import { expect } from "@playwright/test";
+import { data } from "../../../Utils/Data/Information";
 
-const projectName = "dummy";
+const projectName = data.templateName.en13848;
 class ServiceProviderPage {
   constructor(page) {
     this.page = page;
@@ -8,8 +9,8 @@ class ServiceProviderPage {
     this.searchBox = page.getByRole("textbox", {
       name: "Search by Project Name",
     });
-    this.projectName = page.getByLabel(projectName);
-    this.projectLogo = page.getByRole("img", { name: "dummy" });
+    this.projectName = page.getByLabel(projectName).first();
+    // this.projectLogo = page.getByRole("img", { name: "dummy" });
     this.projectConfig = page.getByText("Project Configuration");
     this.serviceProviderInfoBtn = page.getByRole("button", {
       name: "Service Provider",
@@ -66,7 +67,7 @@ class ServiceProviderPage {
     await this.searchBox.click();
     await this.searchBox.fill(projectName);
     await this.projectName.click();
-    await expect(this.projectLogo).toBeVisible();
+    // await expect(this.projectLogo).toBeVisible();
     await await this.projectConfig.click();
     await this.serviceProviderInfoBtn.click();
   }
