@@ -35,7 +35,6 @@ test.beforeEach("Create new project", async () => {
     ...data.project,
   });
   await common.customerInformation(data.customerData);
-  await common.fillServiceProviderInfo(data.serviceProviderData);
   await common.submitProject();
   await expect(common.newProjectButton).toBeVisible();
 });
