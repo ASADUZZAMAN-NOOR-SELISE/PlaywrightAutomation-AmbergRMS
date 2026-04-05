@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../../Utils/loginPage";
 import SpeedZonePage from "./speedZone.page";
+import { Common } from "../../../Utils/common";
+import { data } from "../../../Utils/Data/Information";
 
 let webContext;
 
@@ -17,6 +19,22 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
 
   await context.storageState({ path: "state.json" });
   webContext = await browser.newContext({ storageState: "state.json" });
+});
+
+test.beforeEach("Create new project", async () => {
+  const page = await webContext.newPage();
+  const loginPage = new LoginPage(page);
+  const common = new Common(page);
+
+  await loginPage.goto();
+  await common.clickNewProject();
+  await common.generalInformation({
+    name: data.templateName.en13848,
+    ...data.project,
+  });
+  await common.fillServiceProviderInfo(data.serviceProviderData);
+  await common.submitProject();
+  await expect(common.newProjectButton).toBeVisible();
 });
 
 test("Speed Zone validation", async () => {
