@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { data } from "../../../Utils/Data/Information";
 
-const projectName = data.templateName.en13848;
+const projectName = `${data.templateName.en13848}-speedzone`;
 const zoneNameInput = "G";
 const maxSpeedInput = "370.00";
 
@@ -154,8 +154,6 @@ class SpeedZonePage {
 
   async deleteSpeedZone() {
     await this.editConfigBtn.click();
-    await this.speedZonesTab.click();
-    await this.page.getByRole("button", { name: "Speed Zones" }).click();
 
     const deleteBtn = (n) =>
       this.page.getByRole("button", { name: `SpeedZoneDeleteButton${n}` });

@@ -3,6 +3,7 @@ import { LoginPage } from "../../../Utils/loginPage";
 import SpeedZonePage from "./speedZone.page";
 import { Common } from "../../../Utils/common";
 import { data } from "../../../Utils/Data/Information";
+import AdjustSpeedZonePage from "./adjustSpeedZone.page";
 
 let webContext;
 
@@ -29,7 +30,7 @@ test.beforeEach("Create new project", async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: data.templateName.en13848,
+    name: `${data.templateName.en13848}-speedzone`,
     ...data.project,
   });
   await common.fillServiceProviderInfo(data.serviceProviderData);
@@ -61,4 +62,20 @@ test("Speed Zone: full flow", async () => {
   });
 
   await page.close();
+});
+
+test("Speed Zone: Delete middle speed zone", async () => {
+  const page = await webContext.newPage();
+
+  const loginPage = new LoginPage(page);
+  const adjustSpeedZonePage = new AdjustSpeedZonePage(page);
+
+  await test.step("Delete middle speed zone", async () => {
+    await loginPage.goto();
+    await adjustSpeedZonePage.deleteMiddleSpeedZone();
+  });
+
+  await page.close();
+
+  console.log("Speed Zone tests passed successfully.");
 });
