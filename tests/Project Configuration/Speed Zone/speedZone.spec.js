@@ -37,15 +37,28 @@ test.beforeEach("Create new project", async () => {
   await expect(common.newProjectButton).toBeVisible();
 });
 
-test("Speed Zone validation", async () => {
+test("Speed Zone: full flow", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
   const speedZonePage = new SpeedZonePage(page);
 
-  await loginPage.goto();
-  await speedZonePage.navigateToSpeedZone();
-  await speedZonePage.addSpeedZone();
-  await speedZonePage.verifyLimitTables();
-  console.log("Speed Zone tests passed successfully.");
+  await test.step("Navigate to Speed Zone", async () => {
+    await loginPage.goto();
+    await speedZonePage.navigateToSpeedZone();
+  });
+
+  await test.step("Add Speed Zone", async () => {
+    await speedZonePage.addSpeedZone();
+  });
+
+  await test.step("Verify limit tables", async () => {
+    await speedZonePage.verifyLimitTables();
+  });
+
+  await test.step("Delete Speed Zones", async () => {
+    await speedZonePage.deleteSpeedZone();
+  });
+
+  await page.close();
 });

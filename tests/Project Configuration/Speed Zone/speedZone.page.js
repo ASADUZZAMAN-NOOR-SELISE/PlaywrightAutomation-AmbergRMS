@@ -2,7 +2,6 @@ import { expect } from "@playwright/test";
 import { data } from "../../../Utils/Data/Information";
 
 const projectName = data.templateName.en13848;
-
 const zoneNameInput = "G";
 const maxSpeedInput = "370.00";
 
@@ -151,6 +150,24 @@ class SpeedZonePage {
     await expect(this.page.getByRole("alert")).toHaveText(
       "Configuration updated successfully",
     );
+  }
+
+  async deleteSpeedZone() {
+    await this.editConfigBtn.click();
+    await this.speedZonesTab.click();
+    await this.page.getByRole("button", { name: "Speed Zones" }).click();
+
+    const deleteBtn = (n) =>
+      this.page.getByRole("button", { name: `SpeedZoneDeleteButton${n}` });
+
+    for (let i = 10; i > 0; i--) {
+      const btn = deleteBtn(i);
+
+      if (await btn.isVisible().catch(() => false)) {
+        await btn.click();
+      }
+    }
+    await expect(deleteBtn(0)).not.toBeVisible();
   }
 }
 
