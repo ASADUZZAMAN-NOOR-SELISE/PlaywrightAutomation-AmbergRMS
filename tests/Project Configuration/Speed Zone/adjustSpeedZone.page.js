@@ -1,5 +1,4 @@
 import { expect } from "@playwright/test";
-import { data } from "../../../Utils/Data/Information";
 import SpeedZonePage from "./speedZone.page";
 
 class AdjustSpeedZonePage {
