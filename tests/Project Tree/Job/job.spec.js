@@ -559,13 +559,12 @@ test.only('Import measurment from source folder ', async ({}) => {
   await expect(page.getByText("This is a new measurement")).toBeVisible();
   await expect(await page.getByRole('button', { name: 'Custom Submit Button' })).toBeVisible();
   await page.getByRole('button', { name: 'Custom Submit Button' }).click();
-  //await expect(page.getByRole("alert").last()).toHaveText("Importing of the 2023-10-11 15:27:45 measurement in progress. We will notify you when data is ready to be used.");
   await expect(page.getByRole("alert").last()).toContainText("Import of the 09 Abs S_2023-10-11_11274… measurement successful. Please reload the views")
-  // await page.reload();
-  // await expect(page.getByTestId('job-tree-testid-child-0').getByText(/Job 1/i)).toBeVisible();
-  // await page.getByTestId('job-tree-testid-child-0').getByText(/Job 1/i).click();
-  // await expect(page.getByTestId('OpenInNewIcon')).toBeVisible();
-  // await page.getByTestId('OpenInNewIcon').click();
-  // await expect(page.getByText('Charts', { exact: true })).toBeVisible();
+  await page.reload();
+  await expect(page.locator(".project-tree-job li")).toBeVisible();
+  await page.locator(".project-tree-job li").click();
+  await expect(page.getByText('2023-10-11 15:27:45', { exact: true })).toBeVisible();
+  await page.getByText('2023-10-11 15:27:45', { exact: true }).click();
+  await expect(page.getByTestId("custom-side-bar").getByText("Measurement")).toBeVisible();
 
 });
