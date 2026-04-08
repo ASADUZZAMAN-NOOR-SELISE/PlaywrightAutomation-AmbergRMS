@@ -473,7 +473,7 @@ test('delete job', async ({}) => {
   await expect(page.getByRole("alert").first()).toHaveText("Job deleted successfully")
 });
 
-test.only('Import measurment from source folder ', async ({}) => {
+test('Import measurment from source folder ', async ({}) => {
   const page = await webContext.newPage();
   
   const loginPage = new LoginPage(page);
