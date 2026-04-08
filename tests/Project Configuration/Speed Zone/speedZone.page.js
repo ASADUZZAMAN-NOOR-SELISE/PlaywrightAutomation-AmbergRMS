@@ -31,7 +31,6 @@ class SpeedZonePage {
       name: "Custom Submit Button",
     });
   }
-
   async navigateToSpeedZone() {
     await expect(this.projectsHeading).toHaveText("Projects");
     await this.searchBox.click();
@@ -40,7 +39,6 @@ class SpeedZonePage {
     await await this.projectConfig.click();
     await this.editConfigBtn.click();
   }
-
   async addSpeedZonesUntilLimit() {
     const limitText = this.page.getByText("Maximum 10 speed zones can be");
 
@@ -55,7 +53,6 @@ class SpeedZonePage {
       attempts++;
     }
   }
-
   async addSpeedZone() {
     await this.speedZonesTab.click();
     await this.addSpeedZonesUntilLimit();
@@ -151,7 +148,6 @@ class SpeedZonePage {
       "Configuration updated successfully",
     );
   }
-
   async deleteSpeedZone() {
     await this.editConfigBtn.click();
 

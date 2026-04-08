@@ -19,6 +19,10 @@ class AdjustSpeedZonePage {
 
     await this.speedZonesTab.click();
     await this.getDeleteBtn(3).click();
+
+    await expect(
+      this.page.locator('span[aria-label="SpeedZoneC"]'),
+    ).toHaveCount(0);
   }
 }
 
