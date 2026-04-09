@@ -661,7 +661,7 @@ test('Import measurment from another project', async ({}) => {
 });
 
 
-test.only('Import existing measurment from another project : Measurement already exists', async ({}) => {
+test('Import existing measurment from another project : Measurement already exists', async ({}) => {
   const page = await webContext.newPage();
   
   const loginPage = new LoginPage(page);
