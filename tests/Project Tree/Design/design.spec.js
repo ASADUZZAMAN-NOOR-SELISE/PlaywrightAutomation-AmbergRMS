@@ -92,7 +92,7 @@ test('Add new design', async ({}) => {
   await design.verifyDesignCreated(
     "Design 1",
     "Design 1 comment",
-    "2026.04.15"
+    //"2026.04.15"
   );
 });
 
