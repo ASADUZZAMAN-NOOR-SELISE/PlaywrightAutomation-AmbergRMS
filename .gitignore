@@ -13,5 +13,4 @@ allure-report/
 state.json
 
 # macOS
-.DS_Store
 **/.DS_Store
