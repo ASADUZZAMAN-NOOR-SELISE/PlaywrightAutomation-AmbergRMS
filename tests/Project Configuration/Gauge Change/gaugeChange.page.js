@@ -59,6 +59,7 @@ class GauageChangePage {
     await expect(this.gauageChangeValidationMsg).toHaveCount(2);
     await this.gaugeChangeBase2.fill("2.00");
     await this.gaugeChangeBase3.fill("3.00");
+    await expect(this.gauageChangeValidationMsg).not.toBeVisible();
     await this.submitBtn.click();
     await expect(this.alert).toBeVisible();
     await expect(this.alert).toHaveText("Configuration updated successfully");
