@@ -7,7 +7,7 @@ import { data } from '../../../Utils/Data/Information';
 test('Import Project', async ({page}) => {
   const loginPage = new LoginPage(page);
   const common = new Common(page);
-  const filePath = "tests/Create Project/Import Project/Project File/260325tudelacastejon_2026-03-25_094810.rmsproj";
+  const filePath = "tests/Create Project/Import Project/Project File/project_2026-04-10_031857.rmsproj";
 
   await loginPage.goto();
   //await page.locator(".MuiGrid-root").nth(1).isVisible();
@@ -22,17 +22,17 @@ test('Import Project', async ({page}) => {
   const fileChooser = await fileChooserPromise;
   await fileChooser.setFiles(path.resolve(filePath));
 
-  const projectUploadText = page.getByText('The 260325tudelacatesjon is a new project', { exact: true });
+  const projectUploadText = page.getByText('The project is a new project', { exact: true });
   await expect(projectUploadText).toBeVisible();
 
   const importProjectBtn =  page.getByRole('button', { name: 'Custom Submit Button' });
   await expect(importProjectBtn).toBeVisible();
   await importProjectBtn.click();
 
-  const projectUploadSuccessTost = "Importing of the project in progress. We will notify you when data is ready to be used.";
+  const projectUploadSuccessTost = "Importing of the project project in progress. We will notify you when data is ready to be used.";
   await expect(page.getByRole("alert")).toHaveText(projectUploadSuccessTost);
 
-  const projectName = "260325tudelacatesjon";
+  const projectName = "project";
   await common.searchProject(projectName);
   await expect(page.getByLabel(projectName).first()).toBeVisible();
 
@@ -41,7 +41,7 @@ test('Import Project', async ({page}) => {
 test('Import Project > Existance validation check', async ({page}) => {
   const loginPage = new LoginPage(page);
   const common = new Common(page);
-  const filePath = "tests/Create Project/Import Project/Project File/260325tudelacastejon_2026-03-25_094810.rmsproj";
+  const filePath = "tests/Create Project/Import Project/Project File/project_2026-04-10_031857.rmsproj";
 
   await loginPage.goto();
   //await page.locator(".MuiGrid-root").nth(1).isVisible();
@@ -56,7 +56,7 @@ test('Import Project > Existance validation check', async ({page}) => {
   const fileChooser = await fileChooserPromise;
   await fileChooser.setFiles(path.resolve(filePath));
 
-  const projectUploadText = page.getByText('260325tudelacatesjon project already exists', { exact: true });
+  const projectUploadText = page.getByText('project project already exists');
   await expect(projectUploadText).toBeVisible();
 
 });
