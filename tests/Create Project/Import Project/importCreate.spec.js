@@ -38,7 +38,7 @@ test('Import Project', async ({page}) => {
 
 });
 
-test('Import Project > Existance validation check', async ({page}) => {
+test('Import Project > Existence validation check', async ({page}) => {
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const filePath = "tests/Create Project/Import Project/Project File/project_2026-04-10_031857.rmsproj";
