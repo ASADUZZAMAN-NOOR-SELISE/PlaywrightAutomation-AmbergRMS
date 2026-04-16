@@ -55,8 +55,19 @@ test('Import Project > Existence validation check', async ({page}) => {
   await page.locator("div img").last().click();
   const fileChooser = await fileChooserPromise;
   await fileChooser.setFiles(path.resolve(filePath));
-
+  
+  //existing file validation 
   const projectUploadText = page.getByText('project project already exists');
   await expect(projectUploadText).toBeVisible();
 
+  const importProjectBtn =  page.getByRole('button', { name: 'Custom Submit Button' });
+  await expect(importProjectBtn).toBeVisible();
+  await importProjectBtn.click();
+
+  const projectUploadSuccessTost = "Importing of the project project in progress. We will notify you when data is ready to be used.";
+  await expect(page.getByRole("alert")).toHaveText(projectUploadSuccessTost);
+
+  const projectName = "project";
+  await common.searchProject(projectName);
+  await expect(page.getByLabel(projectName).first()).toBeVisible();
 });
