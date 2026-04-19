@@ -31,7 +31,7 @@ test.beforeEach("Create new project", async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: data.templateName.en13848,
+    name: `${data.templateName.en13848}-service-provider`,
     ...data.project,
   });
   await common.fillServiceProviderInfo(data.serviceProviderData);

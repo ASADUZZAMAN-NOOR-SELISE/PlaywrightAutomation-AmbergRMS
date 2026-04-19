@@ -29,7 +29,7 @@ test.beforeEach("Create new project", async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: data.templateName.en13848,
+    name: `${data.templateName.en13848}-gip`,
     ...data.project,
   });
   await common.submitProject();
