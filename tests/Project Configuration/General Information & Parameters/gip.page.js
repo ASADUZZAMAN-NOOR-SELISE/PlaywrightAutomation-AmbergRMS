@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { data } from "../../../Utils/Data/Information";
 
-const projectName = data.templateName.en13848;
+const projectName = `${data.templateName.en13848}-gip`;
 
 class GeneralInformationParametersPage {
   constructor(page) {
