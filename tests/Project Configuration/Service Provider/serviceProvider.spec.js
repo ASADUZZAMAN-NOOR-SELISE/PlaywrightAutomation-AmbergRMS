@@ -4,6 +4,7 @@ import { LoginPage } from "../../../Utils/loginPage";
 import { data } from "../../../Utils/Data/Information";
 import ServiceProviderPage from "./serviceProvider.page";
 import { Common } from "../../../Utils/common";
+import EditUnitPage from "../Edit Unit Settings/editUnit.page";
 const filePath = path.join(__dirname, "./Data/Images/human-resource.png");
 
 let webContext;
@@ -27,6 +28,7 @@ test.beforeEach("Create new project", async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
+  const editUnit = new EditUnitPage(page);
 
   await loginPage.goto();
   await common.clickNewProject();
@@ -37,6 +39,9 @@ test.beforeEach("Create new project", async () => {
   await common.fillServiceProviderInfo(data.serviceProviderData);
   await common.submitProject();
   await expect(common.newProjectButton).toBeVisible();
+
+  // Set unit to meter for the project
+  await editUnit.setUnitMeter();
 });
 
 test("Service Provider validation", async () => {

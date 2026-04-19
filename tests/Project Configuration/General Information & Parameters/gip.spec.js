@@ -3,6 +3,7 @@ import { LoginPage } from "../../../Utils/loginPage";
 import GeneralInformationParametersPage from "./gip.page";
 import { Common } from "../../../Utils/common";
 import { data } from "../../../Utils/Data/Information";
+import EditUnitPage from "../Edit Unit Settings/editUnit.page";
 
 let webContext;
 
@@ -25,6 +26,7 @@ test.beforeEach("Create new project", async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
+  const editUnit = new EditUnitPage(page);
 
   await loginPage.goto();
   await common.clickNewProject();
@@ -34,6 +36,9 @@ test.beforeEach("Create new project", async () => {
   });
   await common.submitProject();
   await expect(common.newProjectButton).toBeVisible();
+
+  // Set unit to meter for the project
+  await editUnit.setUnitMeter();
 });
 
 test("General Information & Parameters validation", async () => {
