@@ -1,6 +1,3 @@
-import { data } from "../../../Utils/Data/Information";
-const projectName = `${data.templateName.en13848}-gaugechange`;
-
 class EditUnitPage {
   constructor(page) {
     this.page = page;
