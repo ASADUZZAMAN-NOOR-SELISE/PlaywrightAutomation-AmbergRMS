@@ -20,20 +20,19 @@ class SeverityLevelsPage {
     this.editConfigBtn = page.getByRole("button", {
       name: "Edit Configuration",
     });
-    this.maxError = page.locator(
-      "p:has-text('Max value must be greater than Min value')",
-    );
     this.submitBtn = page.getByRole("button", {
       name: "Custom Submit Button",
     });
-    this.severityLevelBtn = page.getByRole("button", {
+    this.severityLevelDropDown = page.getByRole("button", {
       name: "Severity Levels",
     });
-
     this.settingsButton = page.locator("button[aria-label='Settings']");
     this.dialog = page.getByRole("dialog");
     this.languageMenuItem = page.getByRole("menuitem", {
       name: new RegExp(languageData.languageTitles.join("|")),
+    });
+    this.addSeverityLevelBtn = page.getByRole("button", {
+      name: "Add Severity Level",
     });
   }
 
@@ -47,7 +46,7 @@ class SeverityLevelsPage {
   }
 
   async verifySeverityLevelLabels() {
-    await this.severityLevelBtn.click();
+    await this.severityLevelDropDown.click();
     for (let i = 0; i < severityLevels.length; i++) {
       const input = this.page.locator(
         `input[name="Defects.LimitInfos.${i}.Name"]`,
@@ -61,9 +60,6 @@ class SeverityLevelsPage {
       );
       await expect(input).toHaveValue(expectedAbbr[i]);
     }
-
-    // await expect(this.nameError).toBeHidden();
-    // await expect(this.maxError).toBeHidden();
   }
 
   async validateSeverity(severityLevels) {
@@ -97,9 +93,29 @@ class SeverityLevelsPage {
     const updatedAbbreviation = this.page.locator(
       `input[name="Defects.LimitInfos.0.Abbreviation"]`,
     );
+    await input.fill("");
+    await updatedAbbreviation.fill("");
+    await this.submitBtn.click();
+    await expect(
+      this.page.getByText("Severity 1 is required", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      this.page.getByText("Abbreviation is required", { exact: true }),
+    ).toBeVisible();
     await input.fill("Emergency");
     await this.page.keyboard.press("Tab");
     await expect(updatedAbbreviation).toHaveValue("EMERGE");
+    await this.submitBtn.click();
+    await this.editConfigBtn.click();
+    await this.addSeverityLevelBtn.click();
+    await expect(
+      this.page.locator(`input[name="Defects.LimitInfos.3.Name"]`),
+    ).toHaveValue("Severity 4");
+    await this.addSeverityLevelBtn.click();
+    await expect(
+      this.page.locator(`input[name="Defects.LimitInfos.4.Name"]`),
+    ).toHaveValue("Severity 5");
+    await expect(this.addSeverityLevelBtn).toBeDisabled();
   }
 }
 
