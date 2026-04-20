@@ -1,11 +1,9 @@
 import { test, expect } from "@playwright/test";
-import path from "path";
 import { LoginPage } from "../../../Utils/loginPage";
-import CustomerInformationPage from "./customerInformation.page";
-import { data } from "../../../Utils/Data/Information";
 import { Common } from "../../../Utils/common";
+import GauageChangePage from "./gaugeChange.page";
+import { data } from "../../../Utils/Data/Information";
 import EditUnitPage from "../Edit Unit Settings/editUnit.page";
-const filePath = path.join(__dirname, "./Data/Images/human-resource.png");
 
 let webContext;
 
@@ -33,10 +31,9 @@ test.beforeEach("Create new project", async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: `${data.templateName.en13848}-customerinfo`,
+    name: `${data.templateName.en13848}-gaugechange`,
     ...data.project,
   });
-  await common.customerInformation(data.customerData);
   await common.submitProject();
   await expect(common.newProjectButton).toBeVisible();
 
@@ -44,22 +41,15 @@ test.beforeEach("Create new project", async () => {
   await editUnit.setUnitMeter();
 });
 
-test("Customer Information validation", async () => {
+test("Gauge Change validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
-  const customerInformationPage = new CustomerInformationPage(page);
+  const gaugeChangePage = new GauageChangePage(page);
 
   await loginPage.goto();
-  await customerInformationPage.navigateToCustomerInfo();
-  await customerInformationPage.verifyCustomerInformation(data.customerData);
-  await customerInformationPage.editCustomerInformation(
-    data.updatedCustomerData,
-    filePath,
-  );
-  await customerInformationPage.verifyUpdatedCustomerInformation(
-    data.updatedCustomerData,
-  );
+  await gaugeChangePage.navigateToGaugeChange();
+  await gaugeChangePage.editGaugeChange();
 
-  console.log("Customer Information tests passed successfully.");
+  console.log("Gauge Change tests passed successfully.");
 });

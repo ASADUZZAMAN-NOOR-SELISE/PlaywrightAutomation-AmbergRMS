@@ -1,11 +1,9 @@
 import { test, expect } from "@playwright/test";
-import path from "path";
 import { LoginPage } from "../../../Utils/loginPage";
-import CustomerInformationPage from "./customerInformation.page";
-import { data } from "../../../Utils/Data/Information";
-import { Common } from "../../../Utils/common";
+import SeverityLevelsPage from "./severityLevels.page";
 import EditUnitPage from "../Edit Unit Settings/editUnit.page";
-const filePath = path.join(__dirname, "./Data/Images/human-resource.png");
+import { Common } from "../../../Utils/common";
+import { data } from "../../../Utils/Data/Information.js";
 
 let webContext;
 
@@ -33,10 +31,10 @@ test.beforeEach("Create new project", async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: `${data.templateName.en13848}-customerinfo`,
+    name: `${data.templateName.en13848}-severity-levels`,
     ...data.project,
   });
-  await common.customerInformation(data.customerData);
+  await common.fillServiceProviderInfo(data.serviceProviderData);
   await common.submitProject();
   await expect(common.newProjectButton).toBeVisible();
 
@@ -44,22 +42,17 @@ test.beforeEach("Create new project", async () => {
   await editUnit.setUnitMeter();
 });
 
-test("Customer Information validation", async () => {
+test("Severity levels validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
-  const customerInformationPage = new CustomerInformationPage(page);
+  const severityLevelsPage = new SeverityLevelsPage(page);
 
   await loginPage.goto();
-  await customerInformationPage.navigateToCustomerInfo();
-  await customerInformationPage.verifyCustomerInformation(data.customerData);
-  await customerInformationPage.editCustomerInformation(
-    data.updatedCustomerData,
-    filePath,
-  );
-  await customerInformationPage.verifyUpdatedCustomerInformation(
-    data.updatedCustomerData,
-  );
+  await severityLevelsPage.navigateToSeverityLevels();
+  await severityLevelsPage.verifySeverityLevelLabels();
+  await severityLevelsPage.changeLanguage();
+  await severityLevelsPage.editLabelAbbreviation();
 
-  console.log("Customer Information tests passed successfully.");
+  console.log("Severity levels tests passed successfully.");
 });
