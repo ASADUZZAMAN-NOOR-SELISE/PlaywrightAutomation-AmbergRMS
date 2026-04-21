@@ -52,6 +52,7 @@ class CantDefectPage {
     await this.cantBaseLengthInput.fill("25.00");
     await this.submitBtn.click();
     await expect(this.cantBaseLengthRangeError).not.toBeVisible();
+    await this.editConfigBtn.click();
     await this.page
       .getByRole("checkbox", { name: "Symmetric Limits" })
       .uncheck();
@@ -64,10 +65,10 @@ class CantDefectPage {
     const upperInput = this.page.locator(`input[name="${base}.Upper"]`);
 
     await lowerInput.fill(lower);
-    await this.page.keyboard.press("Tab");
 
+    await upperInput.scrollIntoViewIfNeeded();
+    await upperInput.waitFor({ state: "visible" });
     await upperInput.fill(upper);
-    await this.page.keyboard.press("Tab");
   }
 
   async fillAllSeverityLimits() {
@@ -80,7 +81,7 @@ class CantDefectPage {
     for (let i = 0; i < values.length; i++) {
       await this.fillLimit(5, i, values[i].lower, values[i].upper);
     }
-    // await this.submitBtn.click();
+    await this.submitBtn.click();
     await expect(this.alert).toBeVisible();
     await expect(this.alert).toHaveText("Configuration updated successfully");
   }
