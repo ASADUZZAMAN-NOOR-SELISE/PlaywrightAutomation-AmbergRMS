@@ -3,6 +3,12 @@ import { data } from "../../../Utils/Data/Information.js";
 
 const projectName = `${data.templateName.en13848}-cantDefect`;
 
+const expectedLimits = [
+  { lower: "-8.0", upper: "8.0" },
+  { lower: "-9.0", upper: "9.0" },
+  { lower: "-10.0", upper: "10.0" },
+];
+
 class CantDefectPage {
   constructor(page) {
     this.page = page;
@@ -72,18 +78,29 @@ class CantDefectPage {
   }
 
   async fillAllSeverityLimits() {
-    const values = [
-      { lower: "-8.0", upper: "8.00" },
-      { lower: "-9.00", upper: "9.00" },
-      { lower: "-10.00", upper: "10.00" },
-    ];
-
-    for (let i = 0; i < values.length; i++) {
-      await this.fillLimit(5, i, values[i].lower, values[i].upper);
+    for (let i = 0; i < expectedLimits.length; i++) {
+      await this.fillLimit(
+        5,
+        i,
+        expectedLimits[i].lower,
+        expectedLimits[i].upper,
+      );
     }
     await this.submitBtn.click();
     await expect(this.alert).toBeVisible();
     await expect(this.alert).toHaveText("Configuration updated successfully");
+  }
+
+  async verifyNoCheckboxValues() {
+    const minValues = this.page.locator('[aria-label="MinValueALCant5"]');
+    const maxValues = this.page.locator('[aria-label="MaxValueALCant5"]');
+
+    for (let i = 0; i < expectedLimits.length; i++) {
+      const { lower, upper } = expectedLimits[i];
+
+      await expect(minValues.nth(i)).toHaveText(lower);
+      await expect(maxValues.nth(i)).toHaveText(upper);
+    }
   }
 }
 
