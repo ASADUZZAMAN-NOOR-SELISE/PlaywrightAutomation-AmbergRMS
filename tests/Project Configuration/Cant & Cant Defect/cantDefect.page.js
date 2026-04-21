@@ -18,6 +18,7 @@ class CantDefectPage {
     this.submitBtn = page.getByRole("button", {
       name: "Custom Submit Button",
     });
+    this.alert = page.getByRole("alert");
     this.settingsButton = page.locator("button[aria-label='Settings']");
     this.cantDefectDropDown = page.getByRole("button", {
       name: "Cant & Cant Defect",
@@ -48,6 +49,40 @@ class CantDefectPage {
     await this.submitBtn.click();
     await expect(this.cantBaseLengthError).not.toBeVisible();
     await expect(this.cantBaseLengthRangeError).toBeVisible();
+    await this.cantBaseLengthInput.fill("25.00");
+    await this.submitBtn.click();
+    await expect(this.cantBaseLengthRangeError).not.toBeVisible();
+    await this.page
+      .getByRole("checkbox", { name: "Symmetric Limits" })
+      .uncheck();
+  }
+
+  async fillLimit(speedIndex, severityIndex, lower, upper) {
+    const base = `Defects.Cant.MeanToPeakLimits.0.LimitsBySpeed.${speedIndex}.LimitsBySeverity.${severityIndex}`;
+
+    const lowerInput = this.page.locator(`input[name="${base}.Lower"]`);
+    const upperInput = this.page.locator(`input[name="${base}.Upper"]`);
+
+    await lowerInput.fill(lower);
+    await this.page.keyboard.press("Tab");
+
+    await upperInput.fill(upper);
+    await this.page.keyboard.press("Tab");
+  }
+
+  async fillAllSeverityLimits() {
+    const values = [
+      { lower: "-8.0", upper: "8.00" },
+      { lower: "-9.00", upper: "9.00" },
+      { lower: "-10.00", upper: "10.00" },
+    ];
+
+    for (let i = 0; i < values.length; i++) {
+      await this.fillLimit(5, i, values[i].lower, values[i].upper);
+    }
+    // await this.submitBtn.click();
+    await expect(this.alert).toBeVisible();
+    await expect(this.alert).toHaveText("Configuration updated successfully");
   }
 }
 

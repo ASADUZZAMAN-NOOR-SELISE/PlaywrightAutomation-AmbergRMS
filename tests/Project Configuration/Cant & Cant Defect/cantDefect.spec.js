@@ -51,6 +51,7 @@ test("Cant Defect validation", async () => {
   await loginPage.goto();
   await cantDefectPage.navigateToCantDefect();
   await cantDefectPage.verifyBaseLengthValue();
+  await cantDefectPage.fillAllSeverityLimits();
 
   console.log("Cant Defect tests passed successfully.");
 });
