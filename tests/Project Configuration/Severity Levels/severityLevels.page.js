@@ -41,12 +41,12 @@ class SeverityLevelsPage {
     await this.searchBox.click();
     await this.searchBox.fill(projectName);
     await this.projectName.first().click();
-    await await this.projectConfig.click();
+    await this.projectConfig.click();
     await this.editConfigBtn.click();
+    await this.severityLevelDropDown.click();
   }
 
   async verifySeverityLevelLabels() {
-    await this.severityLevelDropDown.click();
     for (let i = 0; i < severityLevels.length; i++) {
       const input = this.page.locator(
         `input[name="Defects.LimitInfos.${i}.Name"]`,
