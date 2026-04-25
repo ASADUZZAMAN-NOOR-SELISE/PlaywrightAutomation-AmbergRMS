@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-        "test-ci": "npx playwright test tests/CreateProject/Default/en-13848.spec.js"
+        "test-ci": "npx playwright test tests/ProjectTree/Line/lineSection.spec.js"
   },
   "repository": {
     "type": "git",

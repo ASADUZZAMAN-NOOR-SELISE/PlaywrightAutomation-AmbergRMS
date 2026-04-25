@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-import { JobPage } from '../Job/job.page';
+import { JobPage } from './job.page';
 import { LoginPage } from '../../../Utils/loginPage';
 import { Common } from '../../../Utils/common';
 import { ProjectTreePage } from '../projectTree.page';
