@@ -7,7 +7,7 @@ import { ProjectTreePage } from '../ProjectTree/projectTree.page';
 import { loginForAll } from '../Logedin/loginForAll.page';
 import { ChartPage } from './chart.page';
 
-// let webContext;
+let webContext;
 
 // // function getUniqueProjectName(prefix = 'Line') {
 // //   return `${prefix}-${Date.now()}`;
