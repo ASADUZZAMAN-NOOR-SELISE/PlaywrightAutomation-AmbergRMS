@@ -1,8 +1,8 @@
 const { test, expect } = require('@playwright/test');
-import { JobPage } from '../Project Tree/Job/job.page';
+import { JobPage } from '../ProjectTree/Job/job.page';
 import { LoginPage } from '../../Utils/loginPage';
 import { Common } from '../../Utils/common';
-import { ProjectTreePage } from '../Project Tree/projectTree.page';
+import { ProjectTreePage } from '../ProjectTree/projectTree.page';
 import path from 'path';
 import { loginForAll } from '../Logedin/loginForAll.page';
 
