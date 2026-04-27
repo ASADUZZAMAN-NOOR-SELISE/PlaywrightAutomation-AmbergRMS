@@ -102,6 +102,8 @@ class SeverityLevelsPage {
     await expect(
       this.page.getByText("Abbreviation is required", { exact: true }),
     ).toBeVisible();
+    await expect(input).toBeVisible();
+    await expect(input).toBeEditable();
     await input.fill("Emergency");
     await this.page.keyboard.press("Tab");
     await expect(updatedAbbreviation).toHaveValue("EMERGE");
