@@ -58,10 +58,9 @@ jobs:
                   "facts": [
                     { "name": "Repository", "value": "${{ github.repository }}" },
                     { "name": "Workflow", "value": "${{ github.workflow }}" },
-                    { "name": "Branch", "value": "${{ github.ref_name }}" },
                     { "name": "Triggered By", "value": "${{ github.actor }}" },
-                    { "name": "Run Number", "value": "#${{ github.run_number }}" },
-                    { "name": "Trigger Type", "value": "${{ github.event_name }}" }
+                    { "name": "Trigger Type", "value": "${{ github.event_name }}" },
+                    { "name": "Branch", "value": "${{ github.ref_name }}" }
                   ]
                 }
               ],
@@ -97,10 +96,9 @@ jobs:
                   "facts": [
                     { "name": "Repository", "value": "${{ github.repository }}" },
                     { "name": "Workflow", "value": "${{ github.workflow }}" },
-                    { "name": "Branch", "value": "${{ github.ref_name }}" },
                     { "name": "Triggered By", "value": "${{ github.actor }}" },
-                    { "name": "Run Number", "value": "#${{ github.run_number }}" },
-                    { "name": "Trigger Type", "value": "${{ github.event_name }}" }
+                    { "name": "Trigger Type", "value": "${{ github.event_name }}" },
+                    { "name": "Branch", "value": "${{ github.ref_name }}" }
                   ]
                 },
                 {
