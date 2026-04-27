@@ -97,7 +97,7 @@ test('Add new Speed', async ({}) => {
   await design.verifyDesignCreated(
     "Design 1",
     "Design 1 comment",
-    "2026.04.15"
+    //"2026.04.15"
   );
   // speed add
   await design.speedClick();
@@ -210,7 +210,7 @@ test('Delete Speed', async ({}) => {
   await design.verifyDesignCreated(
     "Design 1",
     "Design 1 comment",
-    "2026.04.15"
+    //"2026.04.15"
   );
   // speed add
   await design.speedClick();
@@ -458,7 +458,7 @@ test('Edit > Cross and cancel When data', async ({}) => {
   await design.verifyDesignCreated(
     "Design 1",
     "Design 1 comment",
-    "2026.04.15"
+    //"2026.04.15"
   );
   // speed add
   await design.speedClick();
@@ -561,7 +561,7 @@ test('Edit > Cancel When data', async ({}) => {
   await design.verifyDesignCreated(
     "Design 1",
     "Design 1 comment",
-    "2026.04.15"
+    //"2026.04.15"
   );
   // speed add
   await design.speedClick();

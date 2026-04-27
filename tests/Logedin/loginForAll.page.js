@@ -10,7 +10,7 @@ class loginForAll {
     async loginforall() {
 
       await this.loginPage.goto();
-      await this.page.locator(".MuiGrid-root").nth(1).isVisible();
+      await this.page.getByTestId('login-image').isVisible();
       await this.loginPage.verifyInitialState();
       await this.loginPage.login();
       await this.loginPage.logoutVisible();

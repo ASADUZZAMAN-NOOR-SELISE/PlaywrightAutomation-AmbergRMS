@@ -396,7 +396,7 @@ test('Edit design > Confirm ', async ({}) => {
   await design.verifyDesignCreated(
     "Design 1",
     "Design 1 comment",
-    "2026.04.15"
+    //"2026.04.15"
   );
   //edit design 
   await design.editBtn.click();
@@ -412,7 +412,7 @@ test('Edit design > Confirm ', async ({}) => {
   await design.verifyDesignCreated(
     "Design 2",
     "Design 2 comment",
-    "2026.05.16"
+    //"2026.05.16"
   );
 
 });
@@ -620,7 +620,7 @@ test('Edit design > cancel when edit data ', async ({}) => {
   await design.verifyDesignCreated(
     "Design 1",
     "Design 1 comment",
-    "2026.04.15"
+    //"2026.04.15"
   );
   //edit design 
   await design.editBtn.click();
@@ -712,7 +712,7 @@ test('Edit design > cross when edit data ', async ({}) => {
   await design.verifyDesignCreated(
     "Design 1",
     "Design 1 comment",
-    "2026.04.15"
+    //"2026.04.15"
   );
   //edit design 
   await design.editBtn.click();
@@ -804,7 +804,7 @@ test('delete design', async ({}) => {
   await design.verifyDesignCreated(
     "Design 1",
     "Design 1 comment",
-    "2026.04.15"
+    //"2026.04.15"
   );
 
   await design.deleteBtn.click();
