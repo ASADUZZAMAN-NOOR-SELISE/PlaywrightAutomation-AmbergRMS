@@ -128,10 +128,13 @@ test('Chart Filter', async () => {
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
-  const project = new Project(page);
-  
+  const tree = new ProjectTreePage(page);
+  const projectName = "#Auto Inspection";
+
   await loginPage.goto();
-  await page.locator("tbody tr").first().isVisible();
-  await page.locator("tbody tr").first().click();
+  await common.clickNewProject();
+  await common.searchProject(projectName);
+  await expect(page.getByLabel(projectName).first()).toBeVisible();
+  await common.enterIntoProject(projectName);
  
 });

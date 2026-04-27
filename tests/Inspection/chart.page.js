@@ -11,4 +11,4 @@ export class ChartPage {
     await this.filterInput.click();
     await this.filterOption(filterName).click();
   }
-}
+} 
