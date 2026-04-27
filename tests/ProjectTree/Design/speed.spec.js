@@ -594,6 +594,8 @@ test('Edit > Cancel When data', async ({}) => {
 
   await design.clickCancelBtn();
   await expect(page.getByText("Please confirm your action")).toBeVisible();
+  await expect(design.modalConfirmBtn.last()).toBeVisible();
+  await expect(design.modalConfirmBtn.last()).toBeEnabled();
   await design.modalConfirmBtn.last().click();
 
 });
