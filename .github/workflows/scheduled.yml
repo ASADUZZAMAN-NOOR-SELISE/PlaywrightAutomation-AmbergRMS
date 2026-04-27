@@ -1,97 +1,132 @@
 name: Playwright Scheduled Tests
- 
+
 on:
   schedule:
-    - cron: '0 18 * * *'
+    - cron: '0 18 * * *'  # 12:00 AM BD Time
   workflow_dispatch:
- 
+
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
- 
+
 jobs:
   test:
     runs-on: windows-latest
     timeout-minutes: 60
- 
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
- 
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
- 
+
       - name: Install dependencies
         run: npm ci
- 
+
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
- 
+        run: npx playwright install chromium
+
       - name: Run Playwright tests
         run: npm run test-ci
- 
-      - name: Upload test results
+
+      - name: Upload Playwright Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report
           retention-days: 7
- 
-      - name: Send Teams notification on success
+
+      # ✅ SUCCESS NOTIFICATION
+      - name: Notify Teams (Success)
         if: success()
         uses: skitionek/notify-microsoft-teams@master
         with:
           webhook_url: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          raw: >
+          raw: |
             {
               "@type": "MessageCard",
               "@context": "http://schema.org/extensions",
-              "themeColor": "00FF00",
-              "summary": "Playwright Tests Passed",
-              "sections": [{
-                "activityTitle": "✅ Playwright Tests Passed!",
-                "activitySubtitle": "All tests completed successfully",
-                "facts": [
-                  { "name": "Repository", "value": "${{ github.repository }}" },
-                  { "name": "Workflow", "value": "${{ github.workflow }}" },
-                  { "name": "Triggered by", "value": "${{ github.actor }}" },
-                  { "name": "Branch", "value": "${{ github.ref_name }}" }
-                ],
-                "potentialAction": [{
+              "themeColor": "00C853",
+              "title": "✅ Test Suite Passed",
+              "text": "All Playwright tests completed successfully.",
+              "sections": [
+                {
+                  "facts": [
+                    { "name": "Repository", "value": "${{ github.repository }}" },
+                    { "name": "Workflow", "value": "${{ github.workflow }}" },
+                    { "name": "Branch", "value": "${{ github.ref_name }}" },
+                    { "name": "Triggered By", "value": "${{ github.actor }}" },
+                    { "name": "Run Number", "value": "#${{ github.run_number }}" },
+                    { "name": "Trigger Type", "value": "${{ github.event_name }}" }
+                  ]
+                }
+              ],
+              "potentialAction": [
+                {
                   "@type": "OpenUri",
-                  "name": "View Run",
-                  "targets": [{ "os": "default", "uri": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" }]
-                }]
-              }]
+                  "name": "🔍 View Run",
+                  "targets": [
+                    {
+                      "os": "default",
+                      "uri": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    }
+                  ]
+                }
+              ]
             }
- 
-      - name: Send Teams notification on failure
+
+      # ❌ FAILURE NOTIFICATION (Styled like your image)
+      - name: Notify Teams (Failure)
         if: failure()
         uses: skitionek/notify-microsoft-teams@master
         with:
           webhook_url: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          raw: >
+          raw: |
             {
               "@type": "MessageCard",
               "@context": "http://schema.org/extensions",
               "themeColor": "FF0000",
-              "summary": "Playwright Tests Failed",
-              "sections": [{
-                "activityTitle": "❌ Playwright Tests Failed!",
-                "activitySubtitle": "One or more tests failed — immediate attention required",
-                "facts": [
-                  { "name": "Repository", "value": "${{ github.repository }}" },
-                  { "name": "Workflow", "value": "${{ github.workflow }}" },
-                  { "name": "Triggered by", "value": "${{ github.actor }}" },
-                  { "name": "Branch", "value": "${{ github.ref_name }}" }
-                ],
-                "potentialAction": [{
+              "title": "❌ Test Suite Failed — Action Required!",
+              "text": "🚨 One or more Playwright tests have failed. Please investigate immediately.",
+              "sections": [
+                {
+                  "facts": [
+                    { "name": "Repository", "value": "${{ github.repository }}" },
+                    { "name": "Workflow", "value": "${{ github.workflow }}" },
+                    { "name": "Branch", "value": "${{ github.ref_name }}" },
+                    { "name": "Triggered By", "value": "${{ github.actor }}" },
+                    { "name": "Run Number", "value": "#${{ github.run_number }}" },
+                    { "name": "Trigger Type", "value": "${{ github.event_name }}" }
+                  ]
+                },
+                {
+                  "text": "⚠️ Check the uploaded **Playwright Report** artifact for detailed failure logs and screenshots."
+                }
+              ],
+              "potentialAction": [
+                {
                   "@type": "OpenUri",
-                  "name": "View Failed Run",
-                  "targets": [{ "os": "default", "uri": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" }]
-                }]
-              }]
+                  "name": "🔍 View Failed Run",
+                  "targets": [
+                    {
+                      "os": "default",
+                      "uri": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    }
+                  ]
+                },
+                {
+                  "@type": "OpenUri",
+                  "name": "📁 View Repository",
+                  "targets": [
+                    {
+                      "os": "default",
+                      "uri": "${{ github.server_url }}/${{ github.repository }}"
+                    }
+                  ]
+                }
+              ]
             }
