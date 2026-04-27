@@ -111,6 +111,10 @@ class SpeedZonePage {
     };
 
     const fillField = async (locator, value) => {
+      await locator.scrollIntoViewIfNeeded();
+      await expect(locator).toBeVisible();
+      await expect(locator).toBeEditable();
+
       await locator.fill(value);
       await locator.press("Tab");
     };
