@@ -36,6 +36,12 @@ class CantDefectPage {
     this.cantBaseLengthRangeError = page.getByText(
       "Please enter Base Length between 0.1 and 200.00 m",
     );
+    this.symmetricLimitsCheckbox = page.getByRole("checkbox", {
+      name: "Symmetric Limits",
+    });
+    this.consisderCurvatureCheckbox = page.getByRole("checkbox", {
+      name: "Consider Curvature",
+    });
   }
 
   async navigateToCantDefect() {
@@ -59,22 +65,24 @@ class CantDefectPage {
     await this.submitBtn.click();
     await expect(this.cantBaseLengthRangeError).not.toBeVisible();
     await this.editConfigBtn.click();
-    await this.page
-      .getByRole("checkbox", { name: "Symmetric Limits" })
-      .uncheck();
+    await this.symmetricLimitsCheckbox.uncheck();
   }
 
   async fillLimit(speedIndex, severityIndex, lower, upper) {
     const base = `Defects.Cant.MeanToPeakLimits.0.LimitsBySpeed.${speedIndex}.LimitsBySeverity.${severityIndex}`;
-
     const lowerInput = this.page.locator(`input[name="${base}.Lower"]`);
     const upperInput = this.page.locator(`input[name="${base}.Upper"]`);
 
-    await lowerInput.fill(lower);
+    await lowerInput.scrollIntoViewIfNeeded();
+    if (lower !== undefined) {
+      await lowerInput.fill(lower);
+    }
 
     await upperInput.scrollIntoViewIfNeeded();
     await upperInput.waitFor({ state: "visible" });
-    await upperInput.fill(upper);
+    if (upper !== undefined) {
+      await upperInput.fill(upper);
+    }
   }
 
   async fillAllSeverityLimits() {
@@ -94,13 +102,36 @@ class CantDefectPage {
   async verifyNoCheckboxValues() {
     const minValues = this.page.locator('[aria-label="MinValueALCant5"]');
     const maxValues = this.page.locator('[aria-label="MaxValueALCant5"]');
-
     for (let i = 0; i < expectedLimits.length; i++) {
       const { lower, upper } = expectedLimits[i];
-
       await expect(minValues.nth(i)).toHaveText(lower);
       await expect(maxValues.nth(i)).toHaveText(upper);
     }
+  }
+
+  async symmetricLimitsCheckboxValidation() {
+    await this.editConfigBtn.click();
+    await this.symmetricLimitsCheckbox.check();
+    for (let i = 0; i < expectedLimits.length; i++) {
+      await this.fillLimit(5, i, undefined, expectedLimits[i].upper);
+    }
+    await this.submitBtn.click();
+    await expect(this.alert).toBeVisible();
+    await expect(this.alert).toHaveText("Configuration updated successfully");
+  }
+
+  async verifySymmetricLimits() {
+    const maxValues = this.page.locator('[aria-label="MaxValueALCant5"]');
+    for (let i = 0; i < expectedLimits.length; i++) {
+      const { upper } = expectedLimits[i];
+      await expect(maxValues.nth(i)).toHaveText(upper);
+    }
+  }
+
+  async considerCurvatureCheckboxValidation() {
+    await this.editConfigBtn.click();
+    await this.symmetricLimitsCheckbox.uncheck();
+    await this.consisderCurvatureCheckbox.check();
   }
 }
 

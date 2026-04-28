@@ -53,6 +53,8 @@ test("Cant Defect validation", async () => {
   await cantDefectPage.verifyBaseLengthValue();
   await cantDefectPage.fillAllSeverityLimits();
   await cantDefectPage.verifyNoCheckboxValues();
+  await cantDefectPage.symmetricLimitsCheckboxValidation();
+  await cantDefectPage.verifySymmetricLimits();
 
   console.log("Cant Defect tests passed successfully.");
 });
