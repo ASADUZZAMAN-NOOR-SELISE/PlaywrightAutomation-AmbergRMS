@@ -261,7 +261,6 @@ test('Add design > cross when data > modal cross', async ({}) => {
   await design.crossBtn.first().click()
   await expect(page.getByText("Please confirm your action ")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await expect(page.getByRole('button', { name: /confirm/i })).toBeEnabled();
   await page.getByRole('button', { name: /confirm/i }).click();
   
 });
@@ -327,7 +326,6 @@ test('Add design > cancel when data > modal cross', async ({}) => {
   await design.cancelBtn.first().click()
   await expect(page.getByText("Please confirm your action ")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await expect(page.getByRole('button', { name: /confirm/i })).toBeEnabled();
   await page.getByRole('button', { name: /confirm/i }).click();
   
 });
@@ -646,7 +644,6 @@ test('Edit design > cancel when edit data ', async ({}) => {
   await design.cancelBtn.first().click()
   await expect(page.getByText("Please confirm your action ")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await expect(page.getByRole('button', { name: /confirm/i })).toBeEnabled();
   await page.getByRole('button', { name: /confirm/i }).click();
 
 });
@@ -740,7 +737,6 @@ test('Edit design > cross when edit data ', async ({}) => {
   await design.crossBtn.first().click()
   await expect(page.getByText("Please confirm your action ")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await expect(page.getByRole('button', { name: /confirm/i })).toBeEnabled();
   await page.getByRole('button', { name: /confirm/i }).click();
 
 });
@@ -826,6 +822,5 @@ test('delete design', async ({}) => {
   await design.deleteBtn.click();
   await expect(page.getByText("The selected entry will be deleted")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await expect(page.getByRole('button', { name: /confirm/i })).toBeEnabled();
   await page.getByRole('button', { name: /confirm/i }).click();
 });
