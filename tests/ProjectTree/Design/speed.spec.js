@@ -488,7 +488,7 @@ test('Edit > Cross and cancel When data', async ({}) => {
   await design.modalCancelBtn.last().click();
 
   await design.clickCrossBtn();
-  await design.modalConfirmBtn.last().click();
+  await page.getByRole('button', { name: /confirm/i }).click();
 
 });
 
