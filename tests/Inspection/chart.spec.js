@@ -129,10 +129,9 @@ test('Chart Filter', async () => {
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const tree = new ProjectTreePage(page);
-  const projectName = "#Auto Inspection";
+  const projectName = "Auto Inspection";
 
   await loginPage.goto();
-  await common.clickNewProject();
   await common.searchProject(projectName);
   await expect(page.getByLabel(projectName).first()).toBeVisible();
   await common.enterIntoProject(projectName);
