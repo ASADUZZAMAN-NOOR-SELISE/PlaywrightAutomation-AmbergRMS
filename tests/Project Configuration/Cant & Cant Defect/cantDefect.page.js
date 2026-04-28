@@ -42,6 +42,9 @@ class CantDefectPage {
     this.consisderCurvatureCheckbox = page.getByRole("checkbox", {
       name: "Consider Curvature",
     });
+    this.limitTab = page.getByRole("tab", {
+      name: "Limit table(s) Cant: Curve",
+    });
   }
 
   async navigateToCantDefect() {
@@ -68,8 +71,8 @@ class CantDefectPage {
     await this.symmetricLimitsCheckbox.uncheck();
   }
 
-  async fillLimit(speedIndex, severityIndex, lower, upper) {
-    const base = `Defects.Cant.MeanToPeakLimits.0.LimitsBySpeed.${speedIndex}.LimitsBySeverity.${severityIndex}`;
+  async fillLimit(limitsSpeed, speedIndex, severityIndex, lower, upper) {
+    const base = `Defects.Cant.MeanToPeakLimits.${limitsSpeed}.LimitsBySpeed.${speedIndex}.LimitsBySeverity.${severityIndex}`;
     const lowerInput = this.page.locator(`input[name="${base}.Lower"]`);
     const upperInput = this.page.locator(`input[name="${base}.Upper"]`);
 
@@ -88,6 +91,7 @@ class CantDefectPage {
   async fillAllSeverityLimits() {
     for (let i = 0; i < expectedLimits.length; i++) {
       await this.fillLimit(
+        0,
         5,
         i,
         expectedLimits[i].lower,
@@ -113,7 +117,7 @@ class CantDefectPage {
     await this.editConfigBtn.click();
     await this.symmetricLimitsCheckbox.check();
     for (let i = 0; i < expectedLimits.length; i++) {
-      await this.fillLimit(5, i, undefined, expectedLimits[i].upper);
+      await this.fillLimit(0, 5, i, undefined, expectedLimits[i].upper);
     }
     await this.submitBtn.click();
     await expect(this.alert).toBeVisible();
@@ -129,9 +133,41 @@ class CantDefectPage {
   }
 
   async considerCurvatureCheckboxValidation() {
+    const limits = [
+      { lower: "-1.0", upper: "1.0" },
+      { lower: "-2.0", upper: "2.0" },
+      { lower: "-3.0", upper: "3.0" },
+    ];
+
     await this.editConfigBtn.click();
     await this.symmetricLimitsCheckbox.uncheck();
     await this.consisderCurvatureCheckbox.check();
+
+    const fillAllLimits = async (limitsSpeed) => {
+      for (let speedIndex = 0; speedIndex < 6; speedIndex++) {
+        for (
+          let severityIndex = 0;
+          severityIndex < limits.length;
+          severityIndex++
+        ) {
+          const { lower, upper } = limits[severityIndex];
+          await this.fillLimit(
+            limitsSpeed,
+            speedIndex,
+            severityIndex,
+            lower,
+            upper,
+          );
+        }
+      }
+    };
+
+    await fillAllLimits(1);
+    await this.limitTab.click();
+    await fillAllLimits(2);
+    await this.submitBtn.click();
+    await expect(this.alert).toBeVisible();
+    await expect(this.alert).toHaveText("Configuration updated successfully");
   }
 }
 
