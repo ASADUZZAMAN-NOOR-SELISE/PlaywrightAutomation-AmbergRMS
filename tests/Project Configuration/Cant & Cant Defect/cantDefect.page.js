@@ -56,6 +56,7 @@ class CantDefectPage {
     await this.editConfigBtn.click();
     await this.cantDefectDropDown.click();
   }
+
   async verifyBaseLengthValue() {
     await this.cantBaseLengthInput.fill("");
     await this.submitBtn.click();
@@ -156,6 +157,38 @@ class CantDefectPage {
             speedIndex,
             severityIndex,
             lower,
+            upper,
+          );
+        }
+      }
+    };
+
+    await fillAllLimits(1);
+    await this.limitTab.click();
+    await fillAllLimits(2);
+    await this.submitBtn.click();
+    await expect(this.alert).toBeVisible();
+    await expect(this.alert).toHaveText("Configuration updated successfully");
+  }
+
+  async considerSymmetricCurvatureLimitsVerification() {
+    const limits = [{ upper: "1.0" }, { upper: "2.0" }, { upper: "3.0" }];
+    await this.editConfigBtn.click();
+    await this.symmetricLimitsCheckbox.check();
+
+    const fillAllLimits = async (limitsSpeed) => {
+      for (let speedIndex = 0; speedIndex < 6; speedIndex++) {
+        for (
+          let severityIndex = 0;
+          severityIndex < limits.length;
+          severityIndex++
+        ) {
+          const { lower, upper } = limits[severityIndex];
+          await this.fillLimit(
+            limitsSpeed,
+            speedIndex,
+            severityIndex,
+            undefined,
             upper,
           );
         }
