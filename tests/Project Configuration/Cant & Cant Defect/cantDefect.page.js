@@ -183,7 +183,7 @@ class CantDefectPage {
           severityIndex < limits.length;
           severityIndex++
         ) {
-          const { lower, upper } = limits[severityIndex];
+          const { upper } = limits[severityIndex];
           await this.fillLimit(
             limitsSpeed,
             speedIndex,
