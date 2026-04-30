@@ -51,6 +51,7 @@ test("Twist validation", async () => {
     await loginPage.goto();
     await twistPage.navigateToTwist();
     await twistPage.verifyBaseValue();
+    await twistPage.addNewTwistBase();
 
     console.log("Twist tests passed successfully.");
 });

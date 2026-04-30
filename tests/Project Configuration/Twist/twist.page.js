@@ -29,10 +29,17 @@ class TwistPage {
         this.twistDropDown = page.getByRole("button", {
             name: "Twist",
         });
+        this.addTwistBtn = page.getByRole('button', { name: 'Add Twist Base' })
         this.twistBaseLengthInput = page.locator(
             '[name="Cant.TwistBaseLengths.0"]',
         );
+        this.twistBase2Input = page.locator(
+            '[name="Cant.TwistBaseLengths.1"]',
+        );
         this.twistBaseLengthError = page.getByText("Twist Base 1 is required", {
+            exact: true,
+        });
+        this.twistBase2Error = page.getByText("Twist Base 2 is required", {
             exact: true,
         });
         this.twistBaseLengthRangeError = page.getByText(
@@ -68,6 +75,21 @@ class TwistPage {
         await expect(this.twistBaseLengthError).not.toBeVisible();
         await expect(this.twistBaseLengthRangeError).toBeVisible();
         await this.twistBaseLengthInput.fill("2.00");
+        await this.submitBtn.click();
+        await expect(this.twistBaseLengthRangeError).not.toBeVisible();
+    }
+
+    async addNewTwistBase() {
+        await this.editConfigBtn.click();
+        await this.addTwistBtn.click();
+        await this.twistBase2Input.fill("");
+        await this.submitBtn.click();
+        await expect(this.twistBase2Error).toBeVisible();
+        await this.twistBase2Input.fill("300");
+        await this.submitBtn.click();
+        await expect(this.twistBase2Error).not.toBeVisible();
+        await expect(this.twistBaseLengthRangeError).toBeVisible();
+        await this.twistBase2Input.fill("2.00");
         await this.submitBtn.click();
         await expect(this.twistBaseLengthRangeError).not.toBeVisible();
     }
