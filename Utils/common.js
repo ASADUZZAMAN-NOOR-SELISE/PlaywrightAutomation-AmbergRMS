@@ -129,7 +129,7 @@ export class Common {
   const row = this.page.getByLabel(projectName).first();
   await row.isVisible();
   await row.click();
-}
+  }
 
   // delete acction perfome 
   async deleteInProjectTree() {
