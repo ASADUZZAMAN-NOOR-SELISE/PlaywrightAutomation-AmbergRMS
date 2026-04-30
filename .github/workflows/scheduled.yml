@@ -2,7 +2,7 @@ name: Playwright Scheduled Tests
 
 on:
   schedule:
-    - cron: '0 18 * * *'  # 12:00 AM BD Time
+    - cron: '0 18 * * *' # 12:00 AM BD Time
   workflow_dispatch:
 
 env:
@@ -26,8 +26,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright browsers
+      - name: Install Playwright browser
         run: npx playwright install chromium
+
+      - name: Clean old Playwright outputs
+        shell: cmd
+        run: |
+          if exist playwright-report rmdir /s /q playwright-report
+          if exist test-results rmdir /s /q test-results
 
       - name: Run Playwright tests
         run: npm run test-ci
@@ -38,7 +44,8 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report
-          retention-days: 7
+          retention-days: 3
+          if-no-files-found: ignore
 
       # ✅ SUCCESS NOTIFICATION
       - name: Notify Teams (Success)
@@ -90,7 +97,7 @@ jobs:
               "@context": "http://schema.org/extensions",
               "themeColor": "FF0000",
               "title": "❌ Test Suite Failed — Action Required!",
-              "text": "🚨 One or more Playwright tests have failed. Please investigate immediately.",
+              "text": "One or more Playwright tests have failed. Please investigate immediately.",
               "sections": [
                 {
                   "facts": [

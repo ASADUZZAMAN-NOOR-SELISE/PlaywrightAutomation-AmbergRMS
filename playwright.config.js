@@ -39,9 +39,9 @@ export default defineConfig({
     baseURL: 'https://dev-amberg.seliselocal.com/login?go=/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'retain-on-failure',
+    trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    //video: "only-on-failure",
+    video: "off",
   },
 
   /* Configure projects for major browsers */
