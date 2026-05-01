@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { ChartPage } from './chart.page';
 
-test.only('test', async ({ page }) => {
+test('test', async ({ page }) => {
   const chartPage = new ChartPage(page);
   
   await page.goto('https://dev-amberg.seliselocal.com/login?go=/projects');
