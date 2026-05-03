@@ -25,7 +25,7 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   webContext = await browser.newContext({ storageState: "state.json" });
 });
 
-test('GIVEN a new project is created WHEN the user opens the line section tab THEN the line section modal is displayed', async ({}) => {
+test('GIVEN a new project is created, WHEN the user opens the line section tab, THEN the line section modal is displayed', async ({}) => {
 
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
@@ -63,38 +63,47 @@ test('GIVEN a new project is created WHEN the user opens the line section tab TH
 
 });
 
-test('Line section Add @SANITY', async ({})  => {
+test('GIVEN a new project is created, WHEN the user adds a line section, THEN the line section is successfully created @SANITY', async ({}) => {
+
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const tree = new ProjectTreePage(page);
   const projectName = getUniqueProjectName();
 
-  await loginPage.goto();
-  await common.clickNewProject();
-  await common.setProjectName(projectName);
-  await common.submitProject();
-  await common.searchProject(projectName);
-  await expect(page.getByLabel(projectName).first()).toBeVisible();
-  await common.enterIntoProject(projectName);
-  await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
-  await tree.addLine("Line section 1");
-  await tree.submitLineSectionBtn.isVisible();
-  await tree.submitLineSectionBtn.click();
-  //await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+  await test.step('GIVEN a new project is created', async () => {
+    await loginPage.goto();
+    await common.clickNewProject();
+    await common.setProjectName(projectName);
+    await common.submitProject();
+    await common.searchProject(projectName);
+    await expect(page.getByLabel(projectName).first()).toBeVisible();
+    await common.enterIntoProject(projectName);
+    await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
+  });
 
-  //delete project 
-  await page.getByTestId('ArrowBackIcon').isEnabled();
-  await page.getByTestId('ArrowBackIcon').click();
-  await common.searchProject(projectName);
-  await expect(page.getByLabel(projectName).first()).toBeVisible();
-  await common.enterIntoProject(projectName);
-  await page.getByTestId("DeleteIcon").isEnabled();
-  await page.getByTestId("DeleteIcon").click();
-  await page.getByRole("button", {name : "Confirm"}).isEnabled();
-  await page.getByRole("button", {name : "Confirm"}).click();
-  await expect(page.getByRole("alert")).toContainText("Project deleted successfully");
-  
+  await test.step('WHEN the user adds a line section', async () => {
+    await tree.addLine("Line section 1");
+    await expect(tree.submitLineSectionBtn).toBeVisible();
+    await tree.submitLineSectionBtn.click();
+  });
+
+  await test.step('THEN the line section is successfully created', async () => {
+    // Uncomment if toast is stable
+    await expect(page.getByRole('alert').first()).toContainText('Line section created successfully');
+  });
+
+  await test.step('CLEANUP delete created project', async () => {
+    await page.getByTestId('ArrowBackIcon').click();
+    await common.searchProject(projectName);
+    await expect(page.getByLabel(projectName).first()).toBeVisible();
+    await common.enterIntoProject(projectName);
+    await page.getByTestId("DeleteIcon").click();
+    await page.getByRole("button", { name: "Confirm" }).click();
+    await expect(page.getByRole("alert"))
+      .toContainText("Project deleted successfully");
+  });
+
 });
 
 test('Line Section addModal > Cancel @SANITY', async ({})  => {
