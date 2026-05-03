@@ -106,47 +106,46 @@ test('GIVEN a new project is created, WHEN the user adds a line section, THEN th
 
 });
 
-test('Line Section addModal > Cancel @SANITY', async ({})  => {
+test('GIVEN a new project is created, WHEN the user clicks cancel on line section add modal, THEN the cancel confirmation modal is confirmed and the add modal is closed @SANITY', async ({}) => {
+
   const page = await webContext.newPage();
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const tree = new ProjectTreePage(page);
   const projectName = getUniqueProjectName();
-  
-  await loginPage.goto();
-  await common.clickNewProject();
-  await common.setProjectName(projectName);
-  await common.submitProject();
-  await common.searchProject(projectName);
-  await expect(page.getByLabel(projectName).first()).toBeVisible();
-  await common.enterIntoProject(projectName);
-  await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
-  await tree.addLine("Line section 1");
-  await tree.cancelBtn.isVisible();
-  await tree.cancelBtn.click();
-  await expect(tree.cancelModal).toBeVisible();
-  await page.getByRole('button', { name: 'confirm' }).click();
 
-  // //delete project 
-  // await page.getByTestId('ArrowBackIcon').isEnabled();
-  // await page.getByTestId('ArrowBackIcon').click();
-  // await common.searchProject(projectName);
-  // await expect(page.getByLabel(projectName).first()).toBeVisible();
-  // await common.enterIntoProject(projectName);
-  // await page.getByTestId("DeleteIcon").isEnabled();
-  // await page.getByTestId("DeleteIcon").click();
-  // await page.getByRole("button", {name : "Confirm"}).isEnabled();
-  // await page.getByRole("button", {name : "Confirm"}).click();
-  // await expect(page.getByRole("alert")).toContainText("Project deleted successfully");
+  await test.step('GIVEN a new project is created', async () => {
+    await loginPage.goto();
+    await common.clickNewProject();
+    await common.setProjectName(projectName);
+    await common.submitProject();
+    await common.searchProject(projectName);
+    await expect(page.getByLabel(projectName).first()).toBeVisible();
+    await common.enterIntoProject(projectName);
+    await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
+  });
 
-  //project delete
-  await page.reload();
-  await page.getByRole('heading').click();
-  await page.getByTestId("DeleteIcon").isEnabled();
-  await page.getByTestId("DeleteIcon").click({timeout:1000});
-  await page.getByRole("button", {name : "Confirm"}).isEnabled();
-  await page.getByRole("button", {name : "Confirm"}).click();
-  await expect(page.getByRole("alert").first()).toContainText("Project deleted successfully");
+  await test.step('WHEN the user opens line section add modal AND the user clicks cancelAND confirms the cancel action', async () => {
+    await tree.addLine("Line section 1");
+    await expect(tree.cancelBtn).toBeVisible(); // fixed
+    await tree.cancelBtn.click();
+    await expect(tree.cancelModal).toBeVisible();
+    await page.getByRole('button', { name: /confirm/i }).click();
+  });
+
+  await test.step('THEN the add line section modal is closed', async () => {
+    await expect(tree.lineSectionModal).toBeHidden();
+  });
+
+  await test.step('CLEANUP delete created project', async () => {
+    await page.reload();
+    await page.getByRole('heading').click();
+    await page.getByTestId("DeleteIcon").click({ timeout: 1000 });
+    await page.getByRole("button", { name: "Confirm" }).click();
+    await expect(page.getByRole("alert").first())
+      .toContainText("Project deleted successfully");
+  });
+
 });
 
 test('Line section Edit modal open @SANITY ', async ({})  => {
