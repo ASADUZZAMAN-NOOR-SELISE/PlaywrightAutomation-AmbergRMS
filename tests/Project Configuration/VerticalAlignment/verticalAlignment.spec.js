@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../../../Utils/loginPage";
-import EditUnitPage from "../Edit Unit Settings/editUnit.page";
-import { Common } from "../../../Utils/common";
+import { LoginPage } from "../../../Utils/loginPage.js";
+import EditUnitPage from "../EditUnitSettings/editUnit.page.js";
+import { Common } from "../../../Utils/common.js";
 import { data } from "../../../Utils/Data/Information.js";
-import CantDefectPage from "./cantDefect.page.js";
+import VerticalAlignmentPage from "./verticalAlignment.page.js";
 
 let webContext;
 
@@ -31,7 +31,7 @@ test.beforeEach("Create new project", async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: `${data.templateName.en13848}-cantDefect`,
+    name: `${data.templateName.en13848}-vertical-alignment`,
     ...data.project,
   });
   await common.fillServiceProviderInfo(data.serviceProviderData);
@@ -42,21 +42,15 @@ test.beforeEach("Create new project", async () => {
   await editUnit.setUnitMeter();
 });
 
-test("Cant Defect validation", async () => {
+test("Vertical Alignment validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
-  const cantDefectPage = new CantDefectPage(page);
-
+  const verticalAlignmentPage = new VerticalAlignmentPage(page);
   await loginPage.goto();
-  await cantDefectPage.navigateToCantDefect();
-  await cantDefectPage.verifyBaseLengthValue();
-  await cantDefectPage.fillAllSeverityLimits();
-  await cantDefectPage.verifyNoCheckboxValues();
-  await cantDefectPage.symmetricLimitsCheckboxValidation();
-  await cantDefectPage.verifySymmetricLimits();
-  await cantDefectPage.considerCurvatureCheckboxValidation();
-  await cantDefectPage.considerSymmetricCurvatureLimitsVerification();
+  await verticalAlignmentPage.navigateToVA();
+  await verticalAlignmentPage.verifyMandatoryFieldValidation();
+  await verticalAlignmentPage.addChordLength();
 
-  console.log("Cant Defect tests passed successfully.");
+  console.log("Vertical Alignment tests passed successfully.");
 });

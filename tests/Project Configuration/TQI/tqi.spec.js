@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../../Utils/loginPage";
-import EditUnitPage from "../Edit Unit Settings/editUnit.page";
+import EditUnitPage from "../EditUnitSettings/editUnit.page.js";
 import { Common } from "../../../Utils/common";
 import { data } from "../../../Utils/Data/Information.js";
-import TwistPage from "./twist.page.js";
+import TQIPage from "./tqi.page.js";
 
 let webContext;
 
@@ -13,7 +13,8 @@ test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   const loginPage = new LoginPage(page);
 
   await loginPage.goto();
-  await page.locator(".MuiGrid-root").nth(1).isVisible();
+  //   await page.locator(".MuiGrid-root").nth(1).isVisible();
+  await expect(page.getByTestId("login-image")).toBeVisible();
   await loginPage.verifyInitialState();
   await loginPage.login();
   await loginPage.logoutVisible();
@@ -31,7 +32,7 @@ test.beforeEach("Create new project", async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: `${data.templateName.en13848}-twist`,
+    name: `${data.templateName.en13848}-tqi`,
     ...data.project,
   });
   await common.fillServiceProviderInfo(data.serviceProviderData);
@@ -42,17 +43,17 @@ test.beforeEach("Create new project", async () => {
   await editUnit.setUnitMeter();
 });
 
-test("Twist validation", async () => {
+test("TQI validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
-  const twistPage = new TwistPage(page);
-
+  const tqiPage = new TQIPage(page);
   await loginPage.goto();
-  await twistPage.navigateToTwist();
-  await twistPage.verifyBaseValue();
-  await twistPage.addNewTwistBase();
-  await twistPage.autoCalculateTwistLimits();
+  await tqiPage.navigateToTQI();
+  await tqiPage.verifyMandatoryFieldValidation();
+  await tqiPage.tqiCalculationMethod();
 
-  console.log("Twist tests passed successfully.");
+  //   await tqiPage.addChordLength();
+
+  console.log("TQI tests passed successfully.");
 });

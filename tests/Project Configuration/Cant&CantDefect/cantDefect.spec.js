@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../../../Utils/loginPage";
-import EditUnitPage from "../Edit Unit Settings/editUnit.page";
-import { Common } from "../../../Utils/common";
+import { LoginPage } from "../../../Utils/loginPage.js";
+import EditUnitPage from "../EditUnitSettings/editUnit.page.js";
+import { Common } from "../../../Utils/common.js";
 import { data } from "../../../Utils/Data/Information.js";
-import TwistPage from "./twist.page.js";
+import CantDefectPage from "./cantDefect.page.js";
 
 let webContext;
 
@@ -31,7 +31,7 @@ test.beforeEach("Create new project", async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: `${data.templateName.en13848}-twist`,
+    name: `${data.templateName.en13848}-cantDefect`,
     ...data.project,
   });
   await common.fillServiceProviderInfo(data.serviceProviderData);
@@ -42,17 +42,21 @@ test.beforeEach("Create new project", async () => {
   await editUnit.setUnitMeter();
 });
 
-test("Twist validation", async () => {
+test("Cant Defect validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
-  const twistPage = new TwistPage(page);
+  const cantDefectPage = new CantDefectPage(page);
 
   await loginPage.goto();
-  await twistPage.navigateToTwist();
-  await twistPage.verifyBaseValue();
-  await twistPage.addNewTwistBase();
-  await twistPage.autoCalculateTwistLimits();
+  await cantDefectPage.navigateToCantDefect();
+  await cantDefectPage.verifyBaseLengthValue();
+  await cantDefectPage.fillAllSeverityLimits();
+  await cantDefectPage.verifyNoCheckboxValues();
+  await cantDefectPage.symmetricLimitsCheckboxValidation();
+  await cantDefectPage.verifySymmetricLimits();
+  await cantDefectPage.considerCurvatureCheckboxValidation();
+  await cantDefectPage.considerSymmetricCurvatureLimitsVerification();
 
-  console.log("Twist tests passed successfully.");
+  console.log("Cant Defect tests passed successfully.");
 });

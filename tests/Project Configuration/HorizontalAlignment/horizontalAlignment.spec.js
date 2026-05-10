@@ -3,7 +3,7 @@ import { LoginPage } from "../../../Utils/loginPage";
 import EditUnitPage from "../Edit Unit Settings/editUnit.page";
 import { Common } from "../../../Utils/common";
 import { data } from "../../../Utils/Data/Information.js";
-import TwistPage from "./twist.page.js";
+import HorizontalAlignmentPage from "./horizontalAlignment.page.js";
 
 let webContext;
 
@@ -31,7 +31,7 @@ test.beforeEach("Create new project", async () => {
   await loginPage.goto();
   await common.clickNewProject();
   await common.generalInformation({
-    name: `${data.templateName.en13848}-twist`,
+    name: `${data.templateName.en13848}-horizontal-alignment`,
     ...data.project,
   });
   await common.fillServiceProviderInfo(data.serviceProviderData);
@@ -42,17 +42,15 @@ test.beforeEach("Create new project", async () => {
   await editUnit.setUnitMeter();
 });
 
-test("Twist validation", async () => {
+test("Horizontal Alignment validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
-  const twistPage = new TwistPage(page);
-
+  const horizontalAlignmentPage = new HorizontalAlignmentPage(page);
   await loginPage.goto();
-  await twistPage.navigateToTwist();
-  await twistPage.verifyBaseValue();
-  await twistPage.addNewTwistBase();
-  await twistPage.autoCalculateTwistLimits();
+  await horizontalAlignmentPage.navigateToHA();
+  await horizontalAlignmentPage.verifyMandatoryFieldValidation();
+  await horizontalAlignmentPage.addChordLength();
 
-  console.log("Twist tests passed successfully.");
+  console.log("Horizontal Alignment tests passed successfully.");
 });
