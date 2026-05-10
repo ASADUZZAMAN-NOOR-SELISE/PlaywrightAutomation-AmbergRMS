@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../../Utils/loginPage";
-import EditUnitPage from "../Edit Unit Settings/editUnit.page";
+import EditUnitPage from "../EditUnitSettings/editUnit.page.js";
 import { Common } from "../../../Utils/common";
 import { data } from "../../../Utils/Data/Information.js";
 import TQIPage from "./tqi.page.js";
