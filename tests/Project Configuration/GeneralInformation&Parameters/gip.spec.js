@@ -3,7 +3,7 @@ import { LoginPage } from "../../../Utils/loginPage";
 import GeneralInformationParametersPage from "./gip.page";
 import { Common } from "../../../Utils/common";
 import { data } from "../../../Utils/Data/Information";
-import EditUnitPage from "../Edit Unit Settings/editUnit.page";
+import EditUnitPage from "../EditUnitSettings/editUnit.page";
 
 let webContext;
 
