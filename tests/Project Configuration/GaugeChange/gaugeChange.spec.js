@@ -3,7 +3,7 @@ import { LoginPage } from "../../../Utils/loginPage";
 import { Common } from "../../../Utils/common";
 import GauageChangePage from "./gaugeChange.page";
 import { data } from "../../../Utils/Data/Information";
-import EditUnitPage from "../Edit Unit Settings/editUnit.page";
+import EditUnitPage from "../EditUnitSettings/editUnit.page";
 
 let webContext;
 

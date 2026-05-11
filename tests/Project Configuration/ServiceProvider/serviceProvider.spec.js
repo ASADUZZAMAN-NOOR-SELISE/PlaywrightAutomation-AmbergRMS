@@ -4,7 +4,8 @@ import { LoginPage } from "../../../Utils/loginPage";
 import { data } from "../../../Utils/Data/Information";
 import ServiceProviderPage from "./serviceProvider.page";
 import { Common } from "../../../Utils/common";
-import EditUnitPage from "../Edit Unit Settings/editUnit.page";
+import EditUnitPage from "../EditUnitSettings/editUnit.page";
+
 const filePath = path.join(__dirname, "./Data/Images/human-resource.png");
 
 let webContext;
