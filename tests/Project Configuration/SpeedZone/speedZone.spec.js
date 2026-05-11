@@ -4,7 +4,7 @@ import SpeedZonePage from "./speedZone.page";
 import { Common } from "../../../Utils/common";
 import { data } from "../../../Utils/Data/Information";
 import AdjustSpeedZonePage from "./adjustSpeedZone.page";
-import EditUnitPage from "../Edit Unit Settings/editUnit.page";
+import EditUnitPage from "../EditUnitSettings/editUnit.page";
 
 let webContext;
 
