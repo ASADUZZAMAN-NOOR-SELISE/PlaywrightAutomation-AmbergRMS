@@ -3,7 +3,7 @@ import { data } from "../../../Utils/Data/Information";
 
 const projectName = `${data.templateName.en13848}-gip`;
 
-class GeneralInformationParametersPage {
+export class GeneralInformationParametersPage {
   constructor(page) {
     this.page = page;
     this.projectsHeading = page.getByRole("heading", { name: "Projects" });
@@ -49,5 +49,3 @@ class GeneralInformationParametersPage {
     );
   }
 }
-
-export default GeneralInformationParametersPage;

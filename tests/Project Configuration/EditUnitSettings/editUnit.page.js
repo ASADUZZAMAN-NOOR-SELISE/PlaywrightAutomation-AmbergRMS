@@ -1,4 +1,4 @@
-class EditUnitPage {
+export class EditUnitPage {
   constructor(page) {
     this.page = page;
     this.settingsBtn = page.getByRole("button", { name: "Settings" });
@@ -24,5 +24,3 @@ class EditUnitPage {
     await this.customSubmitBtn.click();
   }
 }
-
-export default EditUnitPage;

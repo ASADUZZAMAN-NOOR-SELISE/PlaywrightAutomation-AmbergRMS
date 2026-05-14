@@ -2,7 +2,7 @@ import { expect } from "@playwright/test";
 import { data } from "../../../Utils/Data/Information";
 const projectName = `${data.templateName.en13848}-gaugechange`;
 
-class GauageChangePage {
+export class GaugeChangePage {
   constructor(page) {
     this.page = page;
     this.projectsHeading = page.getByRole("heading", { name: "Projects" });
@@ -65,5 +65,3 @@ class GauageChangePage {
     await expect(this.alert).toHaveText("Configuration updated successfully");
   }
 }
-
-export default GauageChangePage;

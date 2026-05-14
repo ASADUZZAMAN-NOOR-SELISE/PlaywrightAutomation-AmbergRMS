@@ -9,7 +9,7 @@ const expectedLimits = [
   { lower: "-10.0", upper: "10.0" },
 ];
 
-class CantDefectPage {
+export class CantDefectPage {
   constructor(page) {
     this.page = page;
     this.projectsHeading = page.getByRole("heading", { name: "Projects" });
@@ -203,5 +203,3 @@ class CantDefectPage {
     await expect(this.alert).toHaveText("Configuration updated successfully");
   }
 }
-
-export default CantDefectPage;
