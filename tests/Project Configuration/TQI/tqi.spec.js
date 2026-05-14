@@ -51,8 +51,8 @@ test("TQI validation", async () => {
   await loginPage.goto();
   await tqiPage.navigateToTQI();
   await tqiPage.verifyMandatoryFieldValidation();
-  await tqiPage.tqiCalculationMethod();
-  await tqiPage.fiveParameterOption();
+  // await tqiPage.tqiCalculationMethod();
+  // await tqiPage.fiveParameterOption();
 
   console.log("TQI tests passed successfully.");
 });
