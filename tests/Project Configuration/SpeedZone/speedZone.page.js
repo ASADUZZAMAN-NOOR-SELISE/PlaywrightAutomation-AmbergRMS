@@ -5,7 +5,7 @@ const projectName = `${data.templateName.en13848}-speedzone`;
 const zoneNameInput = "G";
 const maxSpeedInput = "370.00";
 
-class SpeedZonePage {
+export class SpeedZonePage {
   constructor(page) {
     this.page = page;
     this.projectsHeading = page.getByRole("heading", { name: "Projects" });
@@ -168,5 +168,3 @@ class SpeedZonePage {
     await expect(deleteBtn(0)).not.toBeVisible();
   }
 }
-
-export default SpeedZonePage;

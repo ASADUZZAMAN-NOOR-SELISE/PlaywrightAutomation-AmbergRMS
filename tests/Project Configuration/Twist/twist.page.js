@@ -9,7 +9,7 @@ const expectedLimits = [
   { lower: "-10.0", upper: "10.0" },
 ];
 
-class TwistPage {
+export class TwistPage {
   constructor(page) {
     this.page = page;
     this.projectsHeading = page.getByRole("heading", { name: "Projects" });
@@ -122,5 +122,3 @@ class TwistPage {
     await expect(this.limitTable).toBeVisible();
   }
 }
-
-export default TwistPage;

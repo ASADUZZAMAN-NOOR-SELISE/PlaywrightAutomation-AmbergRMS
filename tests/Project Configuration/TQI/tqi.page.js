@@ -9,7 +9,7 @@ const expectedLimits = [
   { lower: "-10.0", upper: "10.0" },
 ];
 
-class TQIPage {
+export class TQIPage {
   constructor(page) {
     this.page = page;
     this.projectsHeading = page.getByRole("heading", { name: "Projects" });
@@ -160,5 +160,3 @@ class TQIPage {
     // await expect(this.severityLevelImmediateActionText).toBeVisible();
   }
 }
-
-export default TQIPage;

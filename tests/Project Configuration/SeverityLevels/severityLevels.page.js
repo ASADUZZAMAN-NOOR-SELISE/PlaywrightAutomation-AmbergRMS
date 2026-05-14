@@ -7,7 +7,7 @@ const projectName = `${data.templateName.en13848}-severity-levels`;
 const severityLevels = [/^Alert$/i, /^Intervention$/i, /^Immediate Action$/i];
 const expectedAbbr = [/^AL$/i, /^IL$/i, /^IAL$/i];
 
-class SeverityLevelsPage {
+export class SeverityLevelsPage {
   constructor(page) {
     this.page = page;
     this.languagePage = new LanguagePage(page);
@@ -120,5 +120,3 @@ class SeverityLevelsPage {
     await expect(this.addSeverityLevelBtn).toBeDisabled();
   }
 }
-
-export default SeverityLevelsPage;
