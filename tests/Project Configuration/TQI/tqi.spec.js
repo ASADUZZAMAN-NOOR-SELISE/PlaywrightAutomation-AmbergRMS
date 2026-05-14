@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../../Utils/loginPage";
-import EditUnitPage from "../EditUnitSettings/editUnit.page.js";
+import { EditUnitPage } from "../EditUnitSettings/editUnit.page.js";
 import { Common } from "../../../Utils/common";
 import { data } from "../../../Utils/Data/Information.js";
-import TQIPage from "./tqi.page.js";
+import { TQIPage } from "./tqi.page.js";
 
 let webContext;
 
@@ -52,8 +52,7 @@ test("TQI validation", async () => {
   await tqiPage.navigateToTQI();
   await tqiPage.verifyMandatoryFieldValidation();
   await tqiPage.tqiCalculationMethod();
-
-  //   await tqiPage.addChordLength();
+  await tqiPage.fiveParameterOption();
 
   console.log("TQI tests passed successfully.");
 });
