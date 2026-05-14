@@ -1,6 +1,6 @@
 const { expect } = require("@playwright/test");
 
-class AboutUsPage {
+export class AboutUsPage {
   constructor(page) {
     this.page = page;
 
@@ -78,5 +78,3 @@ class AboutUsPage {
     await expect(this.dialog).not.toBeVisible();
   }
 }
-
-export { AboutUsPage };

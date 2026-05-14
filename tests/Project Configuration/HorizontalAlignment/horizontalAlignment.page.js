@@ -9,7 +9,7 @@ const expectedLimits = [
   { lower: "-10.0", upper: "10.0" },
 ];
 
-class HorizontalAlignmentPage {
+export class HorizontalAlignmentPage {
   constructor(page) {
     this.page = page;
     this.projectsHeading = page.getByRole("heading", { name: "Projects" });
@@ -130,5 +130,3 @@ class HorizontalAlignmentPage {
     await this.submitBtn.click();
   }
 }
-
-export default HorizontalAlignmentPage;

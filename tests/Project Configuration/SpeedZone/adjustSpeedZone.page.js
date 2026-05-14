@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { SpeedZonePage } from "./speedZone.page";
 
-class AdjustSpeedZonePage {
+export class AdjustSpeedZonePage {
   constructor(page) {
     this.page = page;
     this.speedZonesTab = page.getByRole("button", { name: "Speed Zones" });
@@ -25,5 +25,3 @@ class AdjustSpeedZonePage {
     ).toHaveCount(0);
   }
 }
-
-export default AdjustSpeedZonePage;
