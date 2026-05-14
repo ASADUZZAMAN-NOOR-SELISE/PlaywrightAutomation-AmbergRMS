@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import { languageData } from "../Language Settings/language";
+import { languageData } from "./language";
 
 class LanguagePage {
   constructor(page) {

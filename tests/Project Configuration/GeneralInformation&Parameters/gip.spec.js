@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../../Utils/loginPage";
-import GeneralInformationParametersPage from "./gip.page";
+import { GeneralInformationParametersPage } from "./gip.page";
 import { Common } from "../../../Utils/common";
 import { data } from "../../../Utils/Data/Information";
-import EditUnitPage from "../EditUnitSettings/editUnit.page";
+import { EditUnitPage } from "../EditUnitSettings/editUnit.page";
 
 let webContext;
 

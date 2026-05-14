@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import SpeedZonePage from "./speedZone.page";
+import { SpeedZonePage } from "./speedZone.page";
 
 class AdjustSpeedZonePage {
   constructor(page) {

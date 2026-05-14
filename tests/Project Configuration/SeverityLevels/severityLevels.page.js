@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { data } from "../../../Utils/Data/Information.js";
-import { languageData } from "../../Settings/Language Settings/language.js";
-import { LanguagePage } from "../../Settings/Language Settings/language.page.js";
+import { languageData } from "../../Settings/LanguageSettings/language.js";
+import { LanguagePage } from "../../Settings/LanguageSettings/language.page.js";
 
 const projectName = `${data.templateName.en13848}-severity-levels`;
 const severityLevels = [/^Alert$/i, /^Intervention$/i, /^Immediate Action$/i];

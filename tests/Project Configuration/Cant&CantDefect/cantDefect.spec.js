@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../../Utils/loginPage.js";
-import EditUnitPage from "../EditUnitSettings/editUnit.page.js";
+import { EditUnitPage } from "../EditUnitSettings/editUnit.page.js";
 import { Common } from "../../../Utils/common.js";
 import { data } from "../../../Utils/Data/Information.js";
-import CantDefectPage from "./cantDefect.page.js";
+import { CantDefectPage } from "./cantDefect.page.js";
 
 let webContext;
 

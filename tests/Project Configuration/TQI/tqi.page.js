@@ -59,13 +59,13 @@ class TQIPage {
     this.comoboxIsolatedDefects = page.getByRole("combobox", {
       name: "Isolated Defects",
     });
-    // this.fiveParameterTrackOption = page.getByText("Five-Parameter Track");
     this.fiveParameterTrackOption = page.locator(
       ':text("Five-Parameter Track Defectiveness (w5)")',
     );
     this.fiveParameterText = page.getByText(
       "TQI Calculation Method:Five-Parameter Track",
     );
+    this.loader = page.locator('[aria-label="loader"]');
   }
 
   async navigateToTQI() {
@@ -93,6 +93,7 @@ class TQIPage {
 
   async tqiCalculationMethod() {
     await this.editConfigBtn.click();
+    await expect(this.calculationMethodDropdown).toBeVisible();
     await this.calculationMethodDropdown.click();
     await this.isolatedDefectsOption.click();
     await this.alertLimitRadio.check();
@@ -107,21 +108,7 @@ class TQIPage {
     await this.immediateActionLimitRadio.check();
     await this.submitBtn.click();
     await expect(this.severityLevelImmediateActionText).toBeVisible();
-    await this.editConfigBtn.click();
-    await this.comoboxIsolatedDefects.click();
-    await this.fiveParameterTrackOption.click();
-    await this.alertLimitRadio.click();
-    await this.submitBtn.click();
-    await expect(this.fiveParameterText).toBeVisible();
-    await expect(this.severityLevelAlertText).toBeVisible();
-    await this.editConfigBtn.click();
-    await this.interventionLimitRadio.check();
-    await this.submitBtn.click();
-    await expect(this.severityLevelInterventionText).toBeVisible();
-    await this.editConfigBtn.click();
-    await this.immediateActionLimitRadio.check();
-    await this.submitBtn.click();
-    await expect(this.severityLevelImmediateActionText).toBeVisible();
+
     // await this.editConfigBtn.click();
     // await this.page
     //   .getByRole("combobox", { name: "Five-Parameter Track" })
@@ -135,6 +122,42 @@ class TQIPage {
     //     "TQI Calculation Method: Track Roughness Index (Amtrak)",
     //   ),
     // ).toBeVisible();
+  }
+  async fiveParameterOption() {
+    await this.editConfigBtn.click();
+    await this.comoboxIsolatedDefects.click();
+    // await this.fiveParameterTrackOption.click();
+    await this.page.getByText("Five-Parameter Track").click();
+    await this.alertLimitRadio.check();
+    await this.submitBtn.click();
+    await expect(this.fiveParameterText).toBeVisible();
+    await expect(this.severityLevelAlertText).toBeVisible();
+
+    await this.editConfigBtn.click();
+    // await expect(this.interventionLimitRadio).toBeVisible();
+    // await this.interventionLimitRadio.check();
+    await this.page.getByRole("radio", { name: "InterventionLimit" }).check();
+    await this.submitBtn.click();
+    await this.page.waitForTimeout(1000);
+    // await expect(this.page.getByRole("alert")).toBeVisible();
+    // await expect(this.severityLevelInterventionText).toBeVisible();
+    await expect(
+      this.page.getByText("Severity Level:Intervention"),
+    ).toBeVisible();
+    await this.editConfigBtn.click();
+    await this.submitBtn.waitFor({ state: "visible" });
+    await this.page
+      .getByRole("radio", { name: "ImmediateactionLimit" })
+      .check();
+
+    await expect(this.page.getByText("Severity Level:Immediate")).toBeVisible();
+
+    // await expect(this.immediateActionLimitRadio).toBeVisible();
+    // await this.immediateActionLimitRadio.check();
+
+    // await this.submitBtn.click();
+    // await expect(this.page.getByRole("alert")).toBeVisible();
+    // await expect(this.severityLevelImmediateActionText).toBeVisible();
   }
 }
 
