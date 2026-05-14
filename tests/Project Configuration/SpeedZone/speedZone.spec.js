@@ -1,10 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../../Utils/loginPage";
-import SpeedZonePage from "./speedZone.page";
+import { SpeedZonePage } from "./speedZone.page";
 import { Common } from "../../../Utils/common";
 import { data } from "../../../Utils/Data/Information";
-import AdjustSpeedZonePage from "./adjustSpeedZone.page";
-import EditUnitPage from "../EditUnitSettings/editUnit.page";
+import { AdjustSpeedZonePage } from "./adjustSpeedZone.page";
+import { EditUnitPage } from "../EditUnitSettings/editUnit.page";
 
 let webContext;
 

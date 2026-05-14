@@ -1,10 +1,10 @@
 import { test, expect } from "@playwright/test";
 import path from "path";
 import { LoginPage } from "../../../Utils/loginPage";
-import CustomerInformationPage from "./customerInformation.page";
+import { CustomerInformationPage } from "./customerInformation.page";
 import { data } from "../../../Utils/Data/Information";
 import { Common } from "../../../Utils/common";
-import EditUnitPage from "../EditUnitSettings/editUnit.page";
+import { EditUnitPage } from "../EditUnitSettings/editUnit.page";
 
 const filePath = path.join(__dirname, "./Data/Images/human-resource.png");
 
