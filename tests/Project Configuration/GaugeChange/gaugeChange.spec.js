@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../../Utils/loginPage";
 import { Common } from "../../../Utils/common";
-import { GauageChangePage } from "./gaugeChange.page";
+import { GaugeChangePage } from "./gaugeChange.page";
 import { data } from "../../../Utils/Data/Information";
 import { EditUnitPage } from "../EditUnitSettings/editUnit.page";
 
@@ -45,7 +45,7 @@ test("Gauge Change validation", async () => {
   const page = await webContext.newPage();
 
   const loginPage = new LoginPage(page);
-  const gaugeChangePage = new GauageChangePage(page);
+  const gaugeChangePage = new GaugeChangePage(page);
 
   await loginPage.goto();
   await gaugeChangePage.navigateToGaugeChange();
