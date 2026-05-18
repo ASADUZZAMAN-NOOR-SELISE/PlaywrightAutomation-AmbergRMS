@@ -140,7 +140,7 @@ export class CantDefectPage {
       { lower: "-3.0", upper: "3.0" },
     ];
 
-    await this.page.waitForTimeout(1000); // To avoid CLI error due to rapid interactions
+    await this.page.waitForTimeout(3000); // To avoid CLI error due to rapid interactions
     await this.editConfigBtn.click();
     await this.symmetricLimitsCheckbox.uncheck();
     await this.consisderCurvatureCheckbox.check();
