@@ -99,30 +99,49 @@ export class VerticalAlignmentPage {
     await this.submitBtn.click();
   }
 
+  async validateField({
+    input,
+    requiredError,
+    rangeError,
+    validValue = "2.00",
+    invalidValue = "300",
+  }) {
+    await input.clear();
+    await input.blur();
+
+    await expect(requiredError).toBeVisible();
+
+    await input.fill(invalidValue);
+    // await input.blur();
+    // await expect(this.submitBtn).toBeEnabled();
+    await this.submitBtn.click();
+
+    await expect(requiredError).not.toBeVisible();
+    await expect(rangeError).toBeVisible();
+
+    await input.fill(validValue);
+    // await input.blur();
+    await this.submitBtn.click();
+    await expect(rangeError).not.toBeVisible();
+  }
+
   async verifyMandatoryFieldValidation() {
-    await this.chordLengthInput.fill("");
-    await this.clickSubmit();
-    await expect(this.chordLengthError).toBeVisible();
-    await this.chordLengthInput.fill("300");
-    await this.clickSubmit();
-    await expect(this.chordLengthError).not.toBeVisible();
-    await expect(this.chordLengthRangeError).toBeVisible();
-    await this.chordLengthInput.fill("2.00");
-    await this.clickSubmit();
-    await expect(this.chordLengthRangeError).not.toBeVisible();
-    await this.baseLengthInput.fill("");
-    await this.clickSubmit();
-    await expect(this.baseLengthError).toBeVisible();
-    await this.baseLengthInput.fill("300");
-    await this.clickSubmit();
-    await expect(this.baseLengthError).not.toBeVisible();
-    await expect(this.baseLengthRangeError).toBeVisible();
-    await this.baseLengthInput.fill("2.00");
-    await this.clickSubmit();
-    await expect(this.baseLengthRangeError).not.toBeVisible();
+    await this.validateField({
+      input: this.chordLengthInput,
+      requiredError: this.chordLengthError,
+      rangeError: this.chordLengthRangeError,
+    });
+
+    await this.validateField({
+      input: this.baseLengthInput,
+      requiredError: this.baseLengthError,
+      rangeError: this.baseLengthRangeError,
+    });
   }
 
   async addChordLength() {
+    // await this.page.waitForTimeout(2000); // To avoid CLI error due to rapid interactions
+    // // await this.editConfigBtn.waitFor({ state: "visible", timeout: 5000 });
     await this.editConfigBtn.click();
     await this.addChordLengthBtn.click();
     await expect(this.chrordLength2Input).toBeVisible();
