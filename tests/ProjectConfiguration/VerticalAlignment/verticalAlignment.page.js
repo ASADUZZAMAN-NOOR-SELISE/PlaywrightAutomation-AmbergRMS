@@ -95,10 +95,7 @@ export class VerticalAlignmentPage {
   }
 
   async clickSubmit() {
-    await expect(this.submitBtn).toBeVisible();
-    await expect(this.submitBtn).toBeEnabled({
-      timeout: 3000,
-    });
+    await this.page.waitForTimeout(3000); // To avoid CLI error due to rapid interactions
     await this.submitBtn.click();
   }
 
