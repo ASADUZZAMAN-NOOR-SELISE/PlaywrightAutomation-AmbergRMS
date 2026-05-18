@@ -94,26 +94,34 @@ export class HorizontalAlignmentPage {
     await this.hztVersineCheckbox.check();
   }
 
+  async clickSubmit() {
+    await expect(this.submitBtn).toBeVisible();
+    await expect(this.submitBtn).toBeEnabled({
+      timeout: 3000,
+    });
+    await this.submitBtn.click();
+  }
+
   async verifyMandatoryFieldValidation() {
     await this.chordLengthInput.fill("");
-    await this.submitBtn.click();
+    await this.clickSubmit();
     await expect(this.chordLengthError).toBeVisible();
     await this.chordLengthInput.fill("300");
-    await this.submitBtn.click();
+    await this.clickSubmit();
     await expect(this.chordLengthError).not.toBeVisible();
     await expect(this.chordLengthRangeError).toBeVisible();
     await this.chordLengthInput.fill("2.00");
-    await this.submitBtn.click();
+    await this.clickSubmit();
     await expect(this.chordLengthRangeError).not.toBeVisible();
     await this.baseLengthInput.fill("");
-    await this.submitBtn.click();
+    await this.clickSubmit();
     await expect(this.baseLengthError).toBeVisible();
     await this.baseLengthInput.fill("300");
-    await this.submitBtn.click();
+    await this.clickSubmit();
     await expect(this.baseLengthError).not.toBeVisible();
     await expect(this.baseLengthRangeError).toBeVisible();
     await this.baseLengthInput.fill("2.00");
-    await this.submitBtn.click();
+    await this.clickSubmit();
     await expect(this.baseLengthRangeError).not.toBeVisible();
   }
 
@@ -126,7 +134,6 @@ export class HorizontalAlignmentPage {
     await this.baseLength2Input.fill("3.00");
     await this.movingChrod.click();
     await this.movingChrodOption.click();
-
-    await this.submitBtn.click();
+    await this.clickSubmit();
   }
 }
