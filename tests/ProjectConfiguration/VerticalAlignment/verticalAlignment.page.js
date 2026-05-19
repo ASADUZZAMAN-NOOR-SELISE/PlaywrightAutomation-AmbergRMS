@@ -94,11 +94,6 @@ export class VerticalAlignmentPage {
     await this.vrtVersineCheckbox.check();
   }
 
-  async clickSubmit() {
-    await this.page.waitForTimeout(3000); // To avoid CLI error due to rapid interactions
-    await this.submitBtn.click();
-  }
-
   async validateField({
     input,
     requiredError,
@@ -107,7 +102,7 @@ export class VerticalAlignmentPage {
     invalidValue = "300",
   }) {
     await input.clear();
-    await input.blur();
+    await input.press("Tab");
     await expect(requiredError).toBeVisible();
     await input.fill(invalidValue);
     await this.submitBtn.click({ force: true });
