@@ -77,11 +77,15 @@ export class CantDefectPage {
     const lowerInput = this.page.locator(`input[name="${base}.Lower"]`);
     const upperInput = this.page.locator(`input[name="${base}.Upper"]`);
 
+    await lowerInput.waitFor({ state: "visible" });
+    await expect(lowerInput).toBeVisible();
     await lowerInput.scrollIntoViewIfNeeded();
     if (lower !== undefined) {
       await lowerInput.fill(lower);
     }
 
+    await upperInput.waitFor({ state: "visible" });
+    await expect(upperInput).toBeVisible();
     await upperInput.scrollIntoViewIfNeeded();
     await upperInput.waitFor({ state: "visible" });
     if (upper !== undefined) {
@@ -140,7 +144,6 @@ export class CantDefectPage {
       { lower: "-3.0", upper: "3.0" },
     ];
 
-    await this.page.waitForTimeout(3000); // To avoid CLI error due to rapid interactions
     await this.editConfigBtn.click();
     await this.symmetricLimitsCheckbox.uncheck();
     await this.consisderCurvatureCheckbox.check();
@@ -166,6 +169,7 @@ export class CantDefectPage {
 
     await fillAllLimits(1);
     await this.limitTab.click();
+    await this.page.waitForLoadState("networkidle");
     await fillAllLimits(2);
     await this.submitBtn.click();
     await expect(this.alert).toBeVisible();
@@ -174,6 +178,8 @@ export class CantDefectPage {
 
   async considerSymmetricCurvatureLimitsVerification() {
     const limits = [{ upper: "1.0" }, { upper: "2.0" }, { upper: "3.0" }];
+    await this.editConfigBtn.waitFor({ state: "visible" });
+    await expect(this.editConfigBtn).toBeVisible();
     await this.editConfigBtn.click();
     await this.symmetricLimitsCheckbox.check();
 
