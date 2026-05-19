@@ -3,6 +3,7 @@ import { DesignPage } from '../Design/design.page';
 import { LoginPage } from '../../../Utils/loginPage';
 import { Common } from '../../../Utils/common';
 import { ProjectTreePage } from '../projectTree.page';
+import { time } from 'node:console';
 
 let webContext;
 
@@ -140,7 +141,7 @@ test('Add design > cross when no data', async ({}) => {
   await expect(page.getByTestId('line-section-tree-testid-child-0').getByText('Track')).toBeVisible();
   await page.getByTestId('line-section-tree-testid-child-0').getByText('Track').click();
 
-  // add design
+  // add designancel when data > modal cross 
   await expect(page.locator(".project-tree-design")).toBeVisible();
   await design.clickAddDesign();
   
@@ -196,7 +197,7 @@ test('Add design > cancel when no data', async ({}) => {
   await expect(page.locator(".project-tree-design")).toBeVisible();
   await design.clickAddDesign();
   
-  await design.cancelBtn.click();
+  await design.cancelBtn.click({timeout: 5000});
   //await expect(page.locator(".project-tree-design")).not.toBeVisible()
 });
 
@@ -261,7 +262,7 @@ test('Add design > cross when data > modal cross', async ({}) => {
   await design.crossBtn.first().click()
   await expect(page.getByText("Please confirm your action ")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await page.getByRole('button', { name: /confirm/i }).click();
+  await page.getByRole('button', { name: /confirm/i }).click({timeout: 5000});
   
 });
 
@@ -326,7 +327,7 @@ test('Add design > cancel when data > modal cross', async ({}) => {
   await design.cancelBtn.first().click()
   await expect(page.getByText("Please confirm your action ")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await page.getByRole('button', { name: /confirm/i }).click();
+  await page.getByRole('button', { name: /confirm/i }).click({timeout: 5000});
   
 });
 
@@ -483,7 +484,7 @@ test('Edit design > cancel > when no edit', async ({}) => {
   await design.submitDesign();
   //edit 
   await design.editBtn.click();
-  await design.crossBtn.first().click();
+  await design.crossBtn.first().click({timeout: 5000});
   //await expect(page.locator(".project-tree-design")).not.toBeVisible()
 });
 
@@ -550,8 +551,9 @@ test('Edit design > cross > when no edit', async ({}) => {
   // submit
   await design.submitDesign();
   //edit 
-  await design.editBtn.click();
-  await design.cancelBtn.first().click();
+  await design.editBtn.click({timeout: 5000});
+  await expect(await design.cancelBtn.first()).toBeVisible();
+  await design.cancelBtn.first().click({timeout: 5000});
  // await expect(page.locator(".project-tree-design")).not.toBeVisible()
 });
 
@@ -644,7 +646,7 @@ test('Edit design > cancel when edit data ', async ({}) => {
   await design.cancelBtn.first().click()
   await expect(page.getByText("Please confirm your action ")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await page.getByRole('button', { name: /confirm/i }).click();
+  await page.getByRole('button', { name: /confirm/i }).click({timeout: 5000});
 
 });
 
@@ -737,7 +739,7 @@ test('Edit design > cross when edit data ', async ({}) => {
   await design.crossBtn.first().click()
   await expect(page.getByText("Please confirm your action ")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await page.getByRole('button', { name: /confirm/i }).click();
+  await page.getByRole('button', { name: /confirm/i }).click({timeout: 5000});
 
 });
 

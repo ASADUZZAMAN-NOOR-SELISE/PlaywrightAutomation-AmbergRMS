@@ -3,6 +3,7 @@ import { DesignPage } from '../Design/design.page';
 import { LoginPage } from '../../../Utils/loginPage';
 import { Common } from '../../../Utils/common';
 import { ProjectTreePage } from '../projectTree.page';
+import { time } from 'node:console';
 
 let webContext;
 
@@ -134,7 +135,7 @@ test('Add new Speed', async ({}) => {
   await design.speedDrawer.locator('input[name="Elements.1.StationingEnd"]').fill('300');
   await design.speedDrawer.locator('input[name="Elements.1.Speed"]').click();
   await design.speedDrawer.locator('input[name="Elements.1.Speed"]').fill('500');
-  await design.speedDrawer.getByText('Save changes').click();
+  await design.speedDrawer.getByText('Save changes').click({timeout: 5000});
   await expect(design.speedDrawer.getByLabel('EditSpeedForm')).toContainText('Please enter speed between 0 and 360.00 km/h');
 
 
@@ -268,7 +269,7 @@ test('Delete Speed', async ({}) => {
   const newDelete = await page.getByTestId("DeleteIcon").count()
   console.log(newDelete);
   if(newDelete < deleteCount){
-    await design.speedDrawer.getByText(/save changes/i).click();
+    await design.speedDrawer.getByText(/save changes/i).click({timeout: 5000});
   }
 });
 
@@ -490,7 +491,7 @@ test('Edit > Cross and cancel When data', async ({}) => {
   await design.clickCrossBtn();
   await expect(page.getByText("Please confirm your action")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await page.getByRole('button', { name: /confirm/i }).click();
+  await page.getByRole('button', { name: /confirm/i }).click({timeout: 5000});
 
 });
 
@@ -597,6 +598,6 @@ test('Edit > Cancel When data', async ({}) => {
   await design.clickCancelBtn();
   await expect(page.getByText("Please confirm your action")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await page.getByRole('button', { name: /confirm/i }).click();
+  await page.getByRole('button', { name: /confirm/i }).click({timeout: 5000});
 
 });
