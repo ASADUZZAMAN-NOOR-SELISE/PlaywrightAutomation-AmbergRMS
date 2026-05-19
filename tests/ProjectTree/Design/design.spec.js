@@ -197,7 +197,7 @@ test('Add design > cancel when no data', async ({}) => {
   await expect(page.locator(".project-tree-design")).toBeVisible();
   await design.clickAddDesign();
   
-  await design.cancelBtn.click({timeout: 5000});
+  await design.cancelBtn.click();
   //await expect(page.locator(".project-tree-design")).not.toBeVisible()
 });
 
@@ -262,7 +262,7 @@ test('Add design > cross when data > modal cross', async ({}) => {
   await design.crossBtn.first().click()
   await expect(page.getByText("Please confirm your action ")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await page.getByRole('button', { name: /confirm/i }).click({timeout: 5000});
+  await page.getByRole('button', { name: /confirm/i }).click();
   
 });
 
@@ -327,7 +327,7 @@ test('Add design > cancel when data > modal cross', async ({}) => {
   await design.cancelBtn.first().click()
   await expect(page.getByText("Please confirm your action ")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await page.getByRole('button', { name: /confirm/i }).click({timeout: 5000});
+  await page.getByRole('button', { name: /confirm/i }).click();
   
 });
 
@@ -484,7 +484,7 @@ test('Edit design > cancel > when no edit', async ({}) => {
   await design.submitDesign();
   //edit 
   await design.editBtn.click();
-  await design.crossBtn.first().click({timeout: 5000});
+  await design.crossBtn.first().click();
   //await expect(page.locator(".project-tree-design")).not.toBeVisible()
 });
 
@@ -551,9 +551,9 @@ test('Edit design > cross > when no edit', async ({}) => {
   // submit
   await design.submitDesign();
   //edit 
-  await design.editBtn.click({timeout: 5000});
+  await design.editBtn.click();
   await expect(await design.cancelBtn.first()).toBeVisible();
-  await design.cancelBtn.first().click({timeout: 5000});
+  await design.cancelBtn.first().click();
  // await expect(page.locator(".project-tree-design")).not.toBeVisible()
 });
 
@@ -646,7 +646,7 @@ test('Edit design > cancel when edit data ', async ({}) => {
   await design.cancelBtn.first().click()
   await expect(page.getByText("Please confirm your action ")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await page.getByRole('button', { name: /confirm/i }).click({timeout: 5000});
+  await page.getByRole('button', { name: /confirm/i }).click();
 
 });
 
@@ -739,7 +739,7 @@ test('Edit design > cross when edit data ', async ({}) => {
   await design.crossBtn.first().click()
   await expect(page.getByText("Please confirm your action ")).toBeVisible();
   await expect(page.getByRole('button', { name: /confirm/i })).toBeVisible();
-  await page.getByRole('button', { name: /confirm/i }).click({timeout: 5000});
+  await page.getByRole('button', { name: /confirm/i }).click();
 
 });
 
