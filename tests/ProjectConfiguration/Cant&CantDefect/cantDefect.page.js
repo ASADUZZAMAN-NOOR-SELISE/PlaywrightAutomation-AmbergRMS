@@ -77,15 +77,15 @@ export class CantDefectPage {
     const lowerInput = this.page.locator(`input[name="${base}.Lower"]`);
     const upperInput = this.page.locator(`input[name="${base}.Upper"]`);
 
-    await lowerInput.first().waitFor({ state: "visible" });
-    await expect(lowerInput).toBeVisible();
+    await lowerInput.waitFor({ state: "visible" });
+    await expect(lowerInput.first()).toBeVisible();
     await lowerInput.scrollIntoViewIfNeeded();
     if (lower !== undefined) {
       await lowerInput.fill(lower);
     }
 
     await upperInput.first().waitFor({ state: "visible" });
-    await expect(upperInput).toBeVisible();
+    await expect(upperInput.first()).toBeVisible();
     await upperInput.scrollIntoViewIfNeeded();
     await upperInput.waitFor({ state: "visible" });
     if (upper !== undefined) {
@@ -120,6 +120,7 @@ export class CantDefectPage {
 
   async symmetricLimitsCheckboxValidation() {
     await this.editConfigBtn.click();
+    await expect(this.symmetricLimitsCheckbox).toBeVisible();
     await this.symmetricLimitsCheckbox.check();
     for (let i = 0; i < expectedLimits.length; i++) {
       await this.fillLimit(0, 5, i, undefined, expectedLimits[i].upper);
