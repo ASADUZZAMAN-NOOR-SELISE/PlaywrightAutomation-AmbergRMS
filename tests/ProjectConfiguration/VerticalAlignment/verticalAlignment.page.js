@@ -94,11 +94,6 @@ export class VerticalAlignmentPage {
     await this.vrtVersineCheckbox.check();
   }
 
-  async clickSubmit() {
-    await this.page.waitForTimeout(3000); // To avoid CLI error due to rapid interactions
-    await this.submitBtn.click();
-  }
-
   async validateField({
     input,
     requiredError,
@@ -112,15 +107,12 @@ export class VerticalAlignmentPage {
     await expect(requiredError).toBeVisible();
 
     await input.fill(invalidValue);
-    // await input.blur();
-    // await expect(this.submitBtn).toBeEnabled();
     await this.submitBtn.click();
 
     await expect(requiredError).not.toBeVisible();
     await expect(rangeError).toBeVisible();
 
     await input.fill(validValue);
-    // await input.blur();
     await this.submitBtn.click();
     await expect(rangeError).not.toBeVisible();
   }
@@ -140,8 +132,6 @@ export class VerticalAlignmentPage {
   }
 
   async addChordLength() {
-    // await this.page.waitForTimeout(2000); // To avoid CLI error due to rapid interactions
-    // // await this.editConfigBtn.waitFor({ state: "visible", timeout: 5000 });
     await this.editConfigBtn.click();
     await this.addChordLengthBtn.click();
     await expect(this.chrordLength2Input).toBeVisible();
