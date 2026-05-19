@@ -3,6 +3,7 @@ import { DesignPage } from '../Design/design.page';
 import { LoginPage } from '../../../Utils/loginPage';
 import { Common } from '../../../Utils/common';
 import { ProjectTreePage } from '../projectTree.page';
+import { time } from 'node:console';
 
 let webContext;
 
@@ -140,7 +141,7 @@ test('Add design > cross when no data', async ({}) => {
   await expect(page.getByTestId('line-section-tree-testid-child-0').getByText('Track')).toBeVisible();
   await page.getByTestId('line-section-tree-testid-child-0').getByText('Track').click();
 
-  // add design
+  // add designancel when data > modal cross 
   await expect(page.locator(".project-tree-design")).toBeVisible();
   await design.clickAddDesign();
   
@@ -551,6 +552,7 @@ test('Edit design > cross > when no edit', async ({}) => {
   await design.submitDesign();
   //edit 
   await design.editBtn.click();
+  await expect(await design.cancelBtn.first()).toBeVisible();
   await design.cancelBtn.first().click();
  // await expect(page.locator(".project-tree-design")).not.toBeVisible()
 });

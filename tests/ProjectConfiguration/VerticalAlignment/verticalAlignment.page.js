@@ -117,6 +117,32 @@ export class VerticalAlignmentPage {
     await expect(rangeError).not.toBeVisible();
   }
 
+  async validateField({
+    input,
+    requiredError,
+    rangeError,
+    validValue = "2.00",
+    invalidValue = "300",
+  }) {
+    await input.clear();
+    await input.blur();
+
+    await expect(requiredError).toBeVisible();
+
+    await input.fill(invalidValue);
+    // await input.blur();
+    // await expect(this.submitBtn).toBeEnabled();
+    await this.submitBtn.click();
+
+    await expect(requiredError).not.toBeVisible();
+    await expect(rangeError).toBeVisible();
+
+    await input.fill(validValue);
+    // await input.blur();
+    await this.submitBtn.click();
+    await expect(rangeError).not.toBeVisible();
+  }
+
   async verifyMandatoryFieldValidation() {
     await this.validateField({
       input: this.chordLengthInput,
@@ -132,6 +158,8 @@ export class VerticalAlignmentPage {
   }
 
   async addChordLength() {
+    // await this.page.waitForTimeout(2000); // To avoid CLI error due to rapid interactions
+    // // await this.editConfigBtn.waitFor({ state: "visible", timeout: 5000 });
     await this.editConfigBtn.click();
     await this.addChordLengthBtn.click();
     await expect(this.chrordLength2Input).toBeVisible();
