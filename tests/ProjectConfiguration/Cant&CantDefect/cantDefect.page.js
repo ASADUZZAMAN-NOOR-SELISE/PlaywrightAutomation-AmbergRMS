@@ -77,14 +77,14 @@ export class CantDefectPage {
     const lowerInput = this.page.locator(`input[name="${base}.Lower"]`);
     const upperInput = this.page.locator(`input[name="${base}.Upper"]`);
 
-    await lowerInput.waitFor({ state: "visible" });
+    await lowerInput.first().waitFor({ state: "visible" });
     await expect(lowerInput).toBeVisible();
     await lowerInput.scrollIntoViewIfNeeded();
     if (lower !== undefined) {
       await lowerInput.fill(lower);
     }
 
-    await upperInput.waitFor({ state: "visible" });
+    await upperInput.first().waitFor({ state: "visible" });
     await expect(upperInput).toBeVisible();
     await upperInput.scrollIntoViewIfNeeded();
     await upperInput.waitFor({ state: "visible" });
