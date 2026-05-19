@@ -1,5 +1,6 @@
 import { expect } from "@playwright/test";
 import { data } from "../../../Utils/Data/Information.js";
+import { time } from "node:console";
 
 const projectName = `${data.templateName.en13848}-horizontal-alignment`;
 
@@ -94,32 +95,36 @@ export class HorizontalAlignmentPage {
     await this.hztVersineCheckbox.check();
   }
 
-  async clickSubmit() {
-    await this.page.waitForTimeout(3000); // To avoid CLI error due to rapid interactions
-    await this.submitBtn.click();
+  async validateField({
+    input,
+    requiredError,
+    rangeError,
+    validValue = "2.00",
+    invalidValue = "300",
+  }) {
+    await input.clear();
+    await input.press("Tab");
+    await expect(requiredError).toBeVisible();
+    await input.fill(invalidValue);
+    await this.submitBtn.click({ force: true });
+    await expect(requiredError).not.toBeVisible();
+    await expect(rangeError).toBeVisible();
+    await input.fill(validValue);
+    await this.submitBtn.click({ force: true });
+    await expect(rangeError).not.toBeVisible();
   }
 
   async verifyMandatoryFieldValidation() {
-    await this.chordLengthInput.fill("");
-    await this.clickSubmit();
-    await expect(this.chordLengthError).toBeVisible();
-    await this.chordLengthInput.fill("300");
-    await this.clickSubmit();
-    await expect(this.chordLengthError).not.toBeVisible();
-    await expect(this.chordLengthRangeError).toBeVisible();
-    await this.chordLengthInput.fill("2.00");
-    await this.clickSubmit();
-    await expect(this.chordLengthRangeError).not.toBeVisible();
-    await this.baseLengthInput.fill("");
-    await this.clickSubmit();
-    await expect(this.baseLengthError).toBeVisible();
-    await this.baseLengthInput.fill("300");
-    await this.clickSubmit();
-    await expect(this.baseLengthError).not.toBeVisible();
-    await expect(this.baseLengthRangeError).toBeVisible();
-    await this.baseLengthInput.fill("2.00");
-    await this.clickSubmit();
-    await expect(this.baseLengthRangeError).not.toBeVisible();
+    await this.validateField({
+      input: this.chordLengthInput,
+      requiredError: this.chordLengthError,
+      rangeError: this.chordLengthRangeError,
+    });
+    await this.validateField({
+      input: this.baseLengthInput,
+      requiredError: this.baseLengthError,
+      rangeError: this.baseLengthRangeError,
+    });
   }
 
   async addChordLength() {
@@ -131,6 +136,6 @@ export class HorizontalAlignmentPage {
     await this.baseLength2Input.fill("3.00");
     await this.movingChrod.click();
     await this.movingChrodOption.click();
-    await this.clickSubmit();
+    await this.submitBtn.click({ force: true });
   }
 }
