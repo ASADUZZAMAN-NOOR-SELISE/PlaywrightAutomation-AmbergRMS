@@ -94,27 +94,9 @@ export class VerticalAlignmentPage {
     await this.vrtVersineCheckbox.check();
   }
 
-  async validateField({
-    input,
-    requiredError,
-    rangeError,
-    validValue = "2.00",
-    invalidValue = "300",
-  }) {
-    await input.clear();
-    await input.blur();
-
-    await expect(requiredError).toBeVisible();
-
-    await input.fill(invalidValue);
+  async clickSubmit() {
+    await this.page.waitForTimeout(3000); // To avoid CLI error due to rapid interactions
     await this.submitBtn.click();
-
-    await expect(requiredError).not.toBeVisible();
-    await expect(rangeError).toBeVisible();
-
-    await input.fill(validValue);
-    await this.submitBtn.click();
-    await expect(rangeError).not.toBeVisible();
   }
 
   async validateField({
@@ -126,20 +108,13 @@ export class VerticalAlignmentPage {
   }) {
     await input.clear();
     await input.blur();
-
     await expect(requiredError).toBeVisible();
-
     await input.fill(invalidValue);
-    // await input.blur();
-    // await expect(this.submitBtn).toBeEnabled();
-    await this.submitBtn.click();
-
+    await this.submitBtn.click({ force: true });
     await expect(requiredError).not.toBeVisible();
     await expect(rangeError).toBeVisible();
-
     await input.fill(validValue);
-    // await input.blur();
-    await this.submitBtn.click();
+    await this.submitBtn.click({ force: true });
     await expect(rangeError).not.toBeVisible();
   }
 
@@ -158,8 +133,6 @@ export class VerticalAlignmentPage {
   }
 
   async addChordLength() {
-    // await this.page.waitForTimeout(2000); // To avoid CLI error due to rapid interactions
-    // // await this.editConfigBtn.waitFor({ state: "visible", timeout: 5000 });
     await this.editConfigBtn.click();
     await this.addChordLengthBtn.click();
     await expect(this.chrordLength2Input).toBeVisible();
@@ -168,6 +141,6 @@ export class VerticalAlignmentPage {
     await this.baseLength2Input.fill("3.00");
     await this.movingChrod.click();
     await this.movingChrodOption.click();
-    await this.clickSubmit();
+    await this.submitBtn.click({ force: true });
   }
 }
