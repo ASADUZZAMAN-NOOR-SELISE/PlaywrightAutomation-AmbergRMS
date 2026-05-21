@@ -1,0 +1,157 @@
+name: Playwright Scheduled Tests
+
+on:
+  schedule:
+    - cron: '0 */12 * * *' # Every 12 hours
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install chromium --with-deps
+
+      - name: Clean old Playwright outputs
+        run: |
+          rm -rf playwright-report
+          rm -rf test-results
+
+      - name: Run Playwright tests
+        run: npm run test-ci
+
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Notify Teams Success
+        if: success()
+        uses: skitionek/notify-microsoft-teams@master
+        with:
+          webhook_url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          raw: |
+            {
+              "@type": "MessageCard",
+              "@context": "http://schema.org/extensions",
+              "themeColor": "00C853",
+              "title": "🎭 ✅ All Tests Passed Successfully!",
+              "text": "🎉 Your Playwright test suite completed without any failures.",
+              "sections": [
+                {
+                  "facts": [
+                    { "name": "📁 Repository", "value": "${{ github.repository }}" },
+                    { "name": "⚙️ Workflow", "value": "${{ github.workflow }}" },
+                    { "name": "🌿 Branch", "value": "${{ github.ref_name }}" },
+                    { "name": "👤 Triggered By", "value": "${{ github.actor }}" },
+                    { "name": "🔢 Run Number", "value": "#${{ github.run_number }}" },
+                    { "name": "⏱️ Trigger", "value": "${{ github.event_name }}" },
+                    { "name": "💻 Runner OS", "value": "${{ runner.os }} (X64)" },
+                    { "name": "📦 Node Version", "value": "20" },
+                    { "name": "🌐 Browser", "value": "Chromium" },
+                    { "name": "🔗 Commit SHA", "value": "${{ github.sha }}" }
+                  ]
+                },
+                {
+                  "text": "✔ Chromium browser tests passed | 📊 Report retained for **7 days** | 🔁 Next run in ~12 hours"
+                }
+              ],
+              "potentialAction": [
+                {
+                  "@type": "OpenUri",
+                  "name": "🔍 View Run",
+                  "targets": [
+                    {
+                      "os": "default",
+                      "uri": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    }
+                  ]
+                },
+                {
+                  "@type": "OpenUri",
+                  "name": "📁 View Repository",
+                  "targets": [
+                    {
+                      "os": "default",
+                      "uri": "${{ github.server_url }}/${{ github.repository }}"
+                    }
+                  ]
+                }
+              ]
+            }
+
+      - name: Notify Teams Failure
+        if: failure()
+        uses: skitionek/notify-microsoft-teams@master
+        with:
+          webhook_url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          raw: |
+            {
+              "@type": "MessageCard",
+              "@context": "http://schema.org/extensions",
+              "themeColor": "FF0000",
+              "title": "🎭 ❌ Test Suite Failed — Action Required!",
+              "text": "🚨 One or more Playwright tests failed. Please investigate immediately.",
+              "sections": [
+                {
+                  "facts": [
+                    { "name": "📁 Repository", "value": "${{ github.repository }}" },
+                    { "name": "⚙️ Workflow", "value": "${{ github.workflow }}" },
+                    { "name": "🌿 Branch", "value": "${{ github.ref_name }}" },
+                    { "name": "👤 Triggered By", "value": "${{ github.actor }}" },
+                    { "name": "🔢 Run Number", "value": "#${{ github.run_number }}" },
+                    { "name": "⏱️ Trigger", "value": "${{ github.event_name }}" },
+                    { "name": "💻 Runner OS", "value": "${{ runner.os }} (X64)" },
+                    { "name": "📦 Node Version", "value": "20" },
+                    { "name": "🌐 Browser", "value": "Chromium" },
+                    { "name": "🔗 Commit SHA", "value": "${{ github.sha }}" }
+                  ]
+                },
+                {
+                  "text": "⚠️ Check the uploaded **Playwright Report** artifact for detailed failure logs and screenshots."
+                }
+              ],
+              "potentialAction": [
+                {
+                  "@type": "OpenUri",
+                  "name": "🔍 View Failed Run",
+                  "targets": [
+                    {
+                      "os": "default",
+                      "uri": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    }
+                  ]
+                },
+                {
+                  "@type": "OpenUri",
+                  "name": "📁 View Repository",
+                  "targets": [
+                    {
+                      "os": "default",
+                      "uri": "${{ github.server_url }}/${{ github.repository }}"
+                    }
+                  ]
+                }
+              ]
+            }
