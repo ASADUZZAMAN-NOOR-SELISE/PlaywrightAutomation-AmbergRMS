@@ -5,7 +5,7 @@ export class AdifIbericoProject {
     this.page = page;
     this.configurationTemplateDropdown = page.getByRole('combobox', { name: 'Select configuration template' });
     this.templateOptionDropdown = page.getByRole('combobox', { name: 'Select Template Option' });
-    this.ibericoGeneral = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Generales' });
+    this.ibericoGeneral = page.getByRole('option', { name: 'ADIF Ibérico 1668 - No Generales' });
     this.ibericoA = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea A' });
     this.ibericoB = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea B' });
     this.ibericoC = page.getByRole('option', { name: 'ADIF Ibérico 1668 - Tipo de línea C' });
