@@ -4,7 +4,7 @@ import { AboutUsPage } from "./aboutUs.page";
 
 let webContext;
 
-const verifyVersion = "1.7";
+const verifyVersion = "1.8";
 
 test.beforeAll("Navigated to dashboard", async ({ browser }) => {
   const context = await browser.newContext();
