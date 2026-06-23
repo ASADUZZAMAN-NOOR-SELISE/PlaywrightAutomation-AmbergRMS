@@ -132,6 +132,9 @@ test('Chart Filter', async () => {
   const projectName = "Auto Inspection";
 
   await loginPage.goto();
+  await common.clickNewProject();
+  await common.setProjectName(projectName);
+  await common.submitProject();
   await common.searchProject(projectName);
   await expect(page.getByLabel(projectName).first()).toBeVisible();
   await common.enterIntoProject(projectName);
