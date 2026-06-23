@@ -99,7 +99,6 @@ test('Add new design', async ({}) => {
 
 test('Add design > cross when no data', async ({}) => {
   const page = await webContext.newPage();
-  
   const loginPage = new LoginPage(page);
   const common = new Common(page);
   const design = new DesignPage(page);
@@ -111,6 +110,7 @@ test('Add design > cross when no data', async ({}) => {
   await common.setProjectName(projectName);
   await common.submitProject();
   await common.searchProject(projectName);
+  await page.waitForTimeout(2000);
   await expect(page.getByLabel(projectName).first()).toBeVisible();
   await common.enterIntoProject(projectName);
   await expect(page.getByRole('heading', { name: projectName })).toBeVisible();
