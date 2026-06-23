@@ -7,7 +7,7 @@ export class AdifProject {
     this.configurationTemplateDropdown = page.getByRole('combobox', { name: 'Select configuration template' });
     this.templateOptionDropdown = page.getByRole('combobox', { name: 'Select Template Option' });
     
-    this.adifGeneral = page.getByRole('option', { name: 'ADIF Estándar 1435 - Generales' });
+    this.adifGeneral = page.getByRole('option', { name: 'ADIF Estándar 1435 - No Generales' });
     this.adifA = page.getByRole('option', { name: 'ADIF Estándar 1435 - Tipo de línea A' });
     this.adifB = page.getByRole('option', { name: 'ADIF Estándar 1435 - Tipo de línea B' });
     this.adifC = page.getByRole('option', { name: 'ADIF Estándar 1435 - Tipo de línea C' });

@@ -156,6 +156,7 @@ export class Common {
 
   //searcch project from searchh bar
   async searchProject(projectName) {
+    await this.page.waitForTimeout(1000);
     await this.searchByProjectNameInput.click();
     await this.searchByProjectNameInput.pressSequentially(projectName, {
       delay: 300,

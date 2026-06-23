@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-        "test-ci": "npx playwright test tests"
+    "test-ci": "npx playwright test tests"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,6 @@
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.1.0",
-    "allure-playwright": "^3.4.5"
+    "allure-playwright": "^3.10.0"
   }
 }
